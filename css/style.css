@@ -1,0 +1,24 @@
+h1 {
+  font-family: 'Cabin', sans-serif;
+}
+
+body {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 15px;
+  background-color: #EDF4FF;
+}
+
+code {
+  padding: 0;
+  color: #0056A0;
+  background-color: inherit;
+  border-radius: 0;
+}
+
+.center {
+  text-align: center;
+}
+
+.vcenter {
+  margin-top: 20%;
+}
