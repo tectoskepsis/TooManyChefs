@@ -5,14 +5,19 @@ h1 {
 body {
   font-family: 'Share Tech Mono', monospace;
   font-size: 15px;
-  background-color: #EDF4FF;
+  background-color: #edf4ff;
 }
 
 code {
+  color: #90959a;
   padding: 0;
-  color: #0056A0;
   background-color: inherit;
   border-radius: 0;
+}
+
+code > .input {
+  color: #0056a0;
+  font-weight: 600;
 }
 
 .center {

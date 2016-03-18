@@ -1,15 +1,18 @@
 var React = require('react');
 
-//var Storybox = require('./Storybox.react.js');
-//var StoryMixin = require('./StoryMixin.react.js');
+var Inst = require('./Instruction.react.js');
 
-var TextGame = React.createClass({
+var Game = React.createClass({
   //mixins: [StoryMixin],
 
   /*componentDidMount: function() {
     this.refs.storybox4.setActive(true);
     this.refs.storybox4.appendText(this.storyText(4, 'menu'));
   },*/
+
+  onStartGame: function() {
+    console.log("whee");
+  },
 
   render: function() {
     return (
@@ -20,10 +23,10 @@ var TextGame = React.createClass({
         </div>
 
         <br/>
-        <p>Type <code>start</code> to begin</p>
+        <p>Type <Inst text="start" onComplete={this.onStartGame}/> to begin</p>
       </div>
     );
   },
 });
 
-module.exports = TextGame;
+module.exports = Game;

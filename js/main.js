@@ -1,8 +1,8 @@
 var React = require('react');
 
-var TextGame = require('./TextGame.react.js');
+var Game = require('./Game.react.js');
 
 React.render(
-  <TextGame />,
+  <Game />,
   document.getElementById('content')
 );
