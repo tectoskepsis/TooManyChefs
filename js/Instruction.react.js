@@ -2,7 +2,7 @@ var React = require('react');
 
 var Instruction = React.createClass({
   propTypes: {
-    text: React.PropTypes.string.isRequired,
+    children: React.PropTypes.string.isRequired,
     onComplete: React.PropTypes.func,
   },
 
@@ -26,9 +26,12 @@ var Instruction = React.createClass({
       return;
     }
 
-    if (e.keyCode + 32 === this.props.text.charCodeAt(this.state.progress)) {
+    if (e.keyCode + 32 === this.props.children.charCodeAt(this.state.progress)) {
       var newProgress = this.state.progress + 1;
-      var complete = newProgress === this.props.text.length;
+      while (newProgress < this.props.children.length && this.props.children.charAt(newProgress) === ' ') {
+        newProgress++;
+      }
+      var complete = newProgress === this.props.children.length;
       this.setState({
         progress: newProgress,
         complete: complete,
@@ -41,8 +44,8 @@ var Instruction = React.createClass({
   },
 
   render: function() {
-    var prefix = this.props.text.substring(0, this.state.progress);
-    var suffix = this.props.text.substring(this.state.progress);
+    var prefix = this.props.children.substring(0, this.state.progress);
+    var suffix = this.props.children.substring(this.state.progress);
     return (
       <code>
         <span className="input">{prefix}</span>

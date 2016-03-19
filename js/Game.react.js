@@ -3,6 +3,9 @@ var React = require('react');
 var ChefBox = require('./ChefBox.react.js');
 var Inst = require('./Instruction.react.js');
 
+/* Recipes */
+var friedRice = require('./recipes/FriedRice.js');
+
 var Game = React.createClass({
   getInitialState: function() {
     return {
@@ -19,7 +22,7 @@ var Game = React.createClass({
   onStartGame: function(numPlayers) {
     var chefs = new Array(numPlayers);
     for (var i = 0; i < numPlayers; i++) {
-      chefs[i] = i;
+      chefs[i] = friedRice; // TODO: give each chef a distinct random recipe
     }
 
     this.setState({
@@ -35,8 +38,11 @@ var Game = React.createClass({
 
       return (
         <div>
-          {this.state.chefs.map((i) =>
-            <ChefBox key={i} chefId={i} widthClass={widthClass} />)}
+          {this.state.chefs.map((recipe, i) =>
+            <ChefBox key={i} chefId={i}
+                     recipe={recipe}
+                     widthClass={widthClass}
+            />)}
         </div>
       );
     }
@@ -45,9 +51,9 @@ var Game = React.createClass({
       <div>
         <p>Number of players:</p>
         <ul className="list-inline">
-          <li><Inst text="four" onComplete={this.onStartGame.bind(this, 4)} /></li>
-          <li><Inst text="five" onComplete={this.onStartGame.bind(this, 5)} /></li>
-          <li><Inst text="six" onComplete={this.onStartGame.bind(this, 6)} /></li>
+          <li><Inst onComplete={this.onStartGame.bind(this, 4)}>four</Inst></li>
+          <li><Inst onComplete={this.onStartGame.bind(this, 5)}>five</Inst></li>
+          <li><Inst onComplete={this.onStartGame.bind(this, 6)}>six</Inst></li>
         </ul>
       </div>
     );
@@ -60,7 +66,7 @@ var Game = React.createClass({
         </div>
 
         <br/>
-        <p>Type <Inst text="start" onComplete={this.onShowMenu}/> to begin</p>
+        <p>Type <Inst onComplete={this.onShowMenu}>start</Inst> to begin</p>
         <br/>
         {this.state.gameState === 'menu' ? playerMenu : null}
       </div>
