@@ -89,7 +89,7 @@ var ChefBox = React.createClass({
         content: null,
         timer: timer,
         decrement: !increment,
-        onTimeout: onTimeout === 'nextStep' ? this.nextStep : null,
+        onTimeout: onTimeout ? onTimeout.bind(this) : null,
       });
 
       // Wait 250ms before updating for fade effect
@@ -132,7 +132,8 @@ var ChefBox = React.createClass({
 
   renderRecipeDone: function() {
     return (
-      <div>Recipe complete!</div>
+      <div>Great work! You've completed the recipe for {this.props.recipe.name}.</div>
+      // TODO: include total time taken
     );
   },
 

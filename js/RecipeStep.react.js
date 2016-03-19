@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Dial = require('./Dial.react.js');
 var Inst = require('./Instruction.react.js');
 var TextInput = require('./TextInput.react.js');
 
@@ -20,6 +21,7 @@ var RecipeStep = React.createClass({
                    React.PropTypes.func,
                  ]),
     textinput: React.PropTypes.string,
+    dial: React.PropTypes.string,
     onComplete: React.PropTypes.func.isRequired,
   },
 
@@ -43,9 +45,13 @@ var RecipeStep = React.createClass({
       ? <TextInput onComplete={this.props.onComplete}>{this.props.textinput}</TextInput>
       : null;
 
+    var dial = this.props.dial
+      ? <Dial onComplete={this.props.onComplete}>{this.props.dial}</Dial>
+      : null;
+
     return (
       <p>
-        {pretext} {instruction}{textinput} {posttext}
+        {pretext} {instruction || textinput || dial} {posttext}
       </p>
     );
   },
