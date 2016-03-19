@@ -1,4 +1,5 @@
 var React = require('react');
+var TransitionGroup = require('timeout-transition-group');
 
 var ChefBox = require('./ChefBox.react.js');
 var Inst = require('./Instruction.react.js');
@@ -68,7 +69,11 @@ var Game = React.createClass({
         <br/>
         <p>Type <Inst onComplete={this.onShowMenu}>start</Inst> to begin</p>
         <br/>
-        {this.state.gameState === 'menu' ? playerMenu : null}
+        <TransitionGroup enterTimeout={250}
+                         leaveTimeout={250}
+                         transitionName="fade">
+          {this.state.gameState === 'menu' ? playerMenu : null}
+        </TransitionGroup>
       </div>
     );
   },

@@ -1,5 +1,6 @@
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
+var TransitionGroup = require('timeout-transition-group');
 
 var cx = require('classnames');
 
@@ -31,7 +32,10 @@ var ChefBox = React.createClass({
   },
 
   componentDidMount: function() {
-    this.setInterval(this.updateTimer, 1000);
+    this.timerInterval = this.setInterval(this.updateTimer, 1000);
+    this.setState({
+      content: this.renderRecipeStart(),
+    });
   },
 
   updateTimer: function() {
@@ -46,6 +50,7 @@ var ChefBox = React.createClass({
   },
 
   onTimeout: function() {
+    this.clearInterval(this.timerInterval);
     if (this.state.onTimeout) {
       this.state.onTimeout();
     } else {
@@ -56,25 +61,43 @@ var ChefBox = React.createClass({
 
   nextStep: function() {
     var newStep = this.state.step + 1;
+    this.clearInterval(this.timerInterval);
+
+    // Completed recipe
     if (newStep === this.props.recipe.steps.length) {
-      // TODO: done with recipe
-      this.setState({step: newStep});
-      console.log('completed recipe!');
+      this.setState({
+        content: null,
+        timer: 0,
+      });
+
+      // Wait 250ms before updating for fade effect
+      this.setTimeout(() => this.setState({
+        content: this.renderRecipeDone(),
+        step: newStep,
+      }), 250);
+
     } else {
       var {timer, increment, onTimeout, ...stepProps} = this.props.recipe.steps[newStep];
       if (!stepProps.onComplete) {
         stepProps.onComplete = this.nextStep;
       }
-      // Clear content of recipe step first
-      this.setState({content: null});
 
+      // Clear content of recipe step first
       this.setState({
+        content: null,
         timer: timer,
         decrement: !increment,
         onTimeout: onTimeout,
-        content: <RecipeStep {...stepProps} />,
-        step: newStep,
       });
+
+      // Wait 250ms before updating for fade effect
+      this.setTimeout(() => {
+        this.timerInterval = this.setInterval(this.updateTimer, 1000);
+        this.setState({
+          content: <RecipeStep {...stepProps} />,
+          step: newStep,
+        });
+      }, 250);
     }
   },
 
@@ -91,30 +114,40 @@ var ChefBox = React.createClass({
     return padZero(min) + ':' + padZero(sec);
   },
 
+  renderRecipeStart: function() {
+    return (
+      <div>
+        <b>{this.props.recipe.name}</b> ({this.props.recipe.difficulty})
+        <h5>Ingredients</h5>
+        <ul className="ingredients">
+          {this.props.recipe.ingredients.map((ing, i) =>
+            <li key={i}>{ing}</li>)}
+        </ul>
+        <p>{this.props.recipe.description}</p>
+      </div>
+    );
+  },
+
+  renderRecipeDone: function() {
+    return (
+      <div>Recipe complete!</div>
+    );
+  },
+
   render: function() {
     var classes = cx('chefBox', 'col-xs-12', 'col-sm-6',
       {[`col-md-${this.props.widthClass}`]: true}
     );
 
-    var content = this.state.step < 0
-      ? <div>
-          <b>{this.props.recipe.name}</b> ({this.props.recipe.difficulty})
-          <h5>Ingredients</h5>
-          <ul className="ingredients">
-            {this.props.recipe.ingredients.map((ing, i) =>
-              <li key={i}>{ing}</li>)}
-          </ul>
-          <p>{this.props.recipe.description}</p>
-        </div>
-      : this.state.step === this.props.recipe.steps.length
-      ? <div>Recipe complete!</div>
-      : this.state.content;
-
     return (
       <div className={classes}>
         <h5>Chef {this.props.chefId + 1}</h5>
         <h5 className="pull-right">{this.renderTime()}</h5>
-        {content}
+        <TransitionGroup enterTimeout={250}
+                         leaveTimeout={250}
+                         transitionName="fade">
+          {this.state.content}
+        </TransitionGroup>
       </div>
     );
   },
