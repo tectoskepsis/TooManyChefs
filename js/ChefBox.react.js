@@ -80,6 +80,8 @@ var ChefBox = React.createClass({
       var {timer, increment, onTimeout, ...stepProps} = this.props.recipe.steps[newStep];
       if (!stepProps.onComplete) {
         stepProps.onComplete = this.nextStep;
+      } else {
+        stepProps.onComplete = stepProps.onComplete.bind(this);
       }
 
       // Clear content of recipe step first
@@ -87,7 +89,7 @@ var ChefBox = React.createClass({
         content: null,
         timer: timer,
         decrement: !increment,
-        onTimeout: onTimeout,
+        onTimeout: onTimeout === 'nextStep' ? this.nextStep : null,
       });
 
       // Wait 250ms before updating for fade effect

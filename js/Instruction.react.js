@@ -14,22 +14,23 @@ var Instruction = React.createClass({
   },
 
   componentDidMount: function() {
-    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keypress', this.onKeyPress);
   },
 
   componentWillUnmount: function() {
-    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keypress', this.onKeyPress);
   },
 
-  onKeyDown: function(e) {
+  onKeyPress: function(e) {
     if (this.state.complete) {
       return;
     }
 
-    if (e.keyCode + 32 === this.props.children.charCodeAt(this.state.progress)) {
+    var keyCode = e.which || e.keyCode || 0;
+    if (keyCode === this.props.children.charCodeAt(this.state.progress)) {
       var newProgress = this.state.progress + 1;
       while (newProgress < this.props.children.length && this.props.children.charAt(newProgress) === ' ') {
-        newProgress++;
+        newProgress++; // skip spaces
       }
       var complete = newProgress === this.props.children.length;
       this.setState({
