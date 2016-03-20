@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Counter = require('./Counter.react.js');
 var Dial = require('./Dial.react.js');
 var Inst = require('./Instruction.react.js');
 var Mash = require('./Mash.react.js');
@@ -19,10 +20,11 @@ var RecipeStep = React.createClass({
               ]),
     instruction: React.PropTypes.oneOfType([
                    React.PropTypes.string,
+                   React.PropTypes.number,
                    React.PropTypes.func,
                  ]),
     type: React.PropTypes.oneOf(
-      ['word', 'textinput', 'dial', 'mash']
+      ['word', 'textinput', 'counter', 'dial', 'mash']
     ),
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func.isRequired,
@@ -54,6 +56,10 @@ var RecipeStep = React.createClass({
 
         case 'textinput':
           Elem = TextInput;
+          break;
+
+        case 'counter':
+          Elem = Counter;
           break;
 
         case 'dial':

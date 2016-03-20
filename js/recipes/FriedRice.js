@@ -18,7 +18,7 @@ var FriedRice = {
 
   /* A recipe is a list of json steps */
   steps: [
-/*    {
+    {
       pretext: 'Grab a',
       instruction: 'cutting board',
       posttext: 'from the kitchen cabinet.',
@@ -129,7 +129,6 @@ var FriedRice = {
       instruction: 'crack crack',
       timer: 10,
     },
-*/
     {
       pretext: <span>Beat some sense into the eggs by mashing 'b'.<br/></span>,
       instruction: 'b',

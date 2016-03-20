@@ -6,6 +6,7 @@ var Inst = require('./Instruction.react.js');
 
 /* Recipes */
 var friedRice = require('./recipes/FriedRice.js');
+var cheesecake = require('./recipes/Cheesecake.js');
 
 var Game = React.createClass({
   getInitialState: function() {
@@ -23,7 +24,12 @@ var Game = React.createClass({
   onStartGame: function(numPlayers) {
     var chefs = new Array(numPlayers);
     for (var i = 0; i < numPlayers; i++) {
-      chefs[i] = friedRice; // TODO: give each chef a distinct random recipe
+      // TODO: give each chef a distinct random recipe
+      if (i % 2 === 0) {
+        chefs[i] = friedRice;
+      } else {
+        chefs[i] = cheesecake;
+      }
     }
 
     this.setState({
