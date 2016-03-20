@@ -27,6 +27,7 @@ var ChefBox = React.createClass({
       timer: 10,
       decrement: true,
       onTimeout: this.nextStep,
+      progress: 0,
       content: null,
     };
   },
@@ -52,7 +53,7 @@ var ChefBox = React.createClass({
   onTimeout: function() {
     this.clearInterval(this.timerInterval);
     if (this.state.onTimeout) {
-      this.state.onTimeout();
+      this.state.onTimeout(this.state.progress);
     } else {
       // TODO: lose
       console.log('out of time!');
@@ -81,7 +82,8 @@ var ChefBox = React.createClass({
       if (!stepProps.onComplete) {
         stepProps.onComplete = this.nextStep;
       } else {
-        stepProps.onComplete = stepProps.onComplete.bind(this);
+        stepProps.onComplete = stepProps.onComplete.bind(
+          this, this.state.progress);
       }
 
       // Clear content of recipe step first
@@ -96,11 +98,15 @@ var ChefBox = React.createClass({
       this.setTimeout(() => {
         this.timerInterval = this.setInterval(this.updateTimer, 1000);
         this.setState({
-          content: <RecipeStep {...stepProps} />,
+          content: <RecipeStep onProgress={this.onProgress} {...stepProps} />,
           step: newStep,
         });
       }, 250);
     }
+  },
+
+  onProgress: function(progress) {
+    this.setState({progress: progress});
   },
 
   renderTime: function() {

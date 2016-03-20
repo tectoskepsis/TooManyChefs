@@ -3,7 +3,8 @@ var React = require('react');
 var Instruction = React.createClass({
   propTypes: {
     children: React.PropTypes.string.isRequired,
-    onComplete: React.PropTypes.func,
+    onComplete: React.PropTypes.func.isRequired,
+    onProgress: React.PropTypes.func,
   },
 
   getInitialState: function() {
@@ -19,6 +20,12 @@ var Instruction = React.createClass({
 
   componentWillUnmount: function() {
     window.removeEventListener('keypress', this.onKeyPress);
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.props.onProgress && this.state.progress != prevState.progress) {
+      this.props.onProgress(this.state.progress);
+    }
   },
 
   onKeyPress: function(e) {

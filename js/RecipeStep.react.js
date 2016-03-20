@@ -2,6 +2,7 @@ var React = require('react');
 
 var Dial = require('./Dial.react.js');
 var Inst = require('./Instruction.react.js');
+var Mash = require('./Mash.react.js');
 var TextInput = require('./TextInput.react.js');
 
 var RecipeStep = React.createClass({
@@ -20,39 +21,54 @@ var RecipeStep = React.createClass({
                    React.PropTypes.string,
                    React.PropTypes.func,
                  ]),
-    textinput: React.PropTypes.string,
-    dial: React.PropTypes.string,
+    type: React.PropTypes.oneOf(
+      ['word', 'textinput', 'dial', 'mash']
+    ),
     onComplete: React.PropTypes.func.isRequired,
+    onProgress: React.PropTypes.func.isRequired,
+  },
+
+  getDefaultProps: function() {
+    return {
+      type: 'word',
+    };
   },
 
   render: function() {
+    var {pretext, instruction, posttext, type, ...props} = this.props;
+
     // Unravel closures in case they are functions
-    var instText = (typeof this.props.instruction === 'function')
-      ? this.props.instruction()
-      : this.props.instruction;
-    var pretext = (typeof this.props.pretext === 'function')
-      ? this.props.pretext()
-      : this.props.pretext;
-    var posttext = (typeof this.props.posttext === 'function')
-      ? this.props.posttext()
-      : this.props.posttext;
+    function unravel(data) {
+      return (typeof data === 'function') ? data() : data;
+    }
+    pretext = unravel(pretext);
+    posttext = unravel(posttext);
 
-    var instruction = this.props.instruction
-      ? <Inst onComplete={this.props.onComplete}>{instText}</Inst>
-      : null;
+    if (instruction) {
+      var instText = unravel(instruction);
+      var Elem = Inst;
+      switch (type) {
+        case 'word':
+          Elem = Inst;
+          break;
 
-    var textinput = this.props.textinput
-      ? <TextInput onComplete={this.props.onComplete}>{this.props.textinput}</TextInput>
-      : null;
+        case 'textinput':
+          Elem = TextInput;
+          break;
 
-    var dial = this.props.dial
-      ? <Dial onComplete={this.props.onComplete}>{this.props.dial}</Dial>
-      : null;
+        case 'dial':
+          Elem = Dial;
+          break;
+
+        case 'mash':
+          Elem = Mash;
+          break;
+      }
+      instruction = <Elem {...props}>{instText}</Elem>;
+    }
 
     return (
-      <p>
-        {pretext} {instruction || textinput || dial} {posttext}
-      </p>
+      <p>{pretext} {instruction} {posttext}</p>
     );
   },
 });

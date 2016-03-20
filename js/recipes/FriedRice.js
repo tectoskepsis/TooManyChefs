@@ -3,7 +3,7 @@ var React = require('react');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
-  chickenName: '',
+  chickenName: 'alfred',
 };
 
 var nextStep = function() {
@@ -31,13 +31,17 @@ var FriedRice = {
       timer: 15,
     },
     {
-      pretext: <span>Dice up the carrots into little cubes.<br/></span>,
-      instruction: 'dicedicedicedice',
+      pretext: <span>Dice up the carrots into little cubes by mashing 'd'.<br/></span>,
+      instruction: 'd',
+      type: 'mash',
+      mashCount: 10,
       timer: 15,
     },
     {
       pretext: <span>Next, cut up the onions like they threatened your family.<br/></span>,
-      instruction: 'chopchopchopchopchop',
+      instruction: 'c',
+      type: 'mash',
+      mashCount: 10,
       timer: 15,
     },
     {
@@ -67,12 +71,12 @@ var FriedRice = {
       timer: 10,
       onTimeout: nextStep,
     },
-*/
     {
-      pretext: <span>Take the chicken out and give it a name (press Enter when you're done).<br/></span>,
-      textinput: 'Name:',
+      pretext: <span>Take the chicken out and give it a name.<br/></span>,
+      instruction: 'Name: ',
+      type: 'textinput',
       timer: 10,
-      onComplete: function(name) {
+      onTimeout: function(name) {
         recipeData.chickenName = name;
         this.nextStep();
       },
@@ -83,28 +87,36 @@ var FriedRice = {
       timer: 10,
     },
     {
-      pretext: <span>All done! It's time for start cooking. Pour some oil, but not too much, into a wok.<br/></span>,
+      pretext: <span>All done! It's time to start cooking. Pour some oil, but not too much, into a wok.<br/></span>,
       instruction: 'ooooooooooooooooooooooooooooooooooooooooooooooooil',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too little&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
       timer: 10,
-      onComplete: () => {},
-      onTimeout: function() {
-        // TODO: somehow check how many o's there are
-        this.nextStep();
+      onComplete: () => {}, // TODO: too much oil
+      onTimeout: function(progress) {
+        if (progress >= 18 && progress <= 30) {
+          this.nextStep();
+        } else {
+          // TODO: too much or too little?
+        }
       },
     },
     {
       pretext: <span>Use the arrow keys to turn the dial on the stove to HIGH.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
-      dial: '^',
+      instruction: '^',
+      type: 'dial',
       timer: 10,
-      onTimeout: function() {
-        // TODO: check dial
-        this.nextStep();
+      onTimeout: function(value) {
+        if (value >= 18 && value <= 25) {
+          this.nextStep();
+        } else {
+          // TODO: too high or too low?
+        }
       },
     },
     {
       pretext: 'Check your Facebook status while the oil heats up.',
       timer: 10,
+      onTimeout: nextStep,
     },
     {
       pretext: 'Toss in the onions to',
@@ -117,9 +129,11 @@ var FriedRice = {
       instruction: 'crack crack',
       timer: 10,
     },
+*/
     {
       pretext: <span>Beat some sense into the eggs by mashing 'b'.<br/></span>,
-      instruction: 'b', // TODO: mash b 20 times with countdown
+      instruction: 'b',
+      type: 'mash',
       timer: 10,
     },
     {
@@ -144,19 +158,24 @@ var FriedRice = {
       timer: 10,
     },
     {
-      pretext: 'Toss the wok to mix everything up every so often by pressing t (but not too often!)',
-      instruction: 't', // TODO: tap 5 times with countdown
+      pretext: <span>Toss the wok to mix everything up every so often by pressing t (but not too often!)<br/></span>,
+      instruction: 't',
+      type: 'mash',
+      mashCount: 5,
       timer: 30,
     },
     {
       pretext: 'Pour in some soy sauce by holding p.',
-      instruction: 'ppppppppppppppppppppppppppppppppppp',
+      instruction: 'ppppppppppppppppppppppppppppppppppppppppppppppppppp',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too little&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
       timer: 10,
       onComplete: () => {},
-      onTimeout: function() {
-        // TODO: somehow check how many p's there are
-        this.nextStep();
+      onTimeout: function(progress) {
+        if (progress >= 18 && progress <= 30) {
+          this.nextStep();
+        } else {
+          // TODO: too much or too little?
+        }
       },
     },
     {
@@ -167,11 +186,16 @@ var FriedRice = {
     },
     {
       pretext: <span>Use the arrow keys to turn off the stove.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
-      dial: '^', // TODO: start at high
+      instruction: '^',
+      type: 'dial',
+      startValue: 21,
       timer: 10,
-      onTimeout: function() {
-        // TODO: check dial
-        this.nextStep();
+      onTimeout: function(value) {
+        if (value <= 3) {
+          this.nextStep();
+        } else {
+          // TODO: not turned off!
+        }
       },
     },
   ],

@@ -5,19 +5,22 @@ require('./helper.js');
 var Dial = React.createClass({
   propTypes: {
     children: React.PropTypes.string,
-    onComplete: React.PropTypes.func,
+    startValue: React.PropTypes.number,
     maxValue: React.PropTypes.number,
+    onComplete: React.PropTypes.func.isRequired,
+    onProgress: React.PropTypes.func.isRequired,
   },
 
   getDefaultProps: function() {
     return {
+      startValue: 0,
       maxValue: 50,
     };
   },
 
   getInitialState: function() {
     return {
-      value: 0,
+      value: this.props.startValue,
     };
   },
 
@@ -27,6 +30,12 @@ var Dial = React.createClass({
 
   componentWillUnmount: function() {
     window.removeEventListener('keydown', this.onKeyDown);
+  },
+
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.state.value != prevState.value) {
+      this.props.onProgress(this.state.value);
+    }
   },
 
   onKeyDown: function(e) {

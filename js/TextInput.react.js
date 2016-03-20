@@ -3,7 +3,8 @@ var React = require('react');
 var TextInput = React.createClass({
   propTypes: {
     children: React.PropTypes.string,
-    onComplete: React.PropTypes.func,
+    onComplete: React.PropTypes.func.isRequired,
+    onProgress: React.PropTypes.func.isRequired,
   },
 
   getInitialState: function() {
@@ -20,18 +21,28 @@ var TextInput = React.createClass({
     window.removeEventListener('keypress', this.onKeyPress);
   },
 
+  componentDidUpdate: function(prevProps, prevState) {
+    if (this.state.value != prevState.value) {
+      this.props.onProgress(this.state.value);
+    }
+  },
+
   onKeyPress: function(e) {
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === 13) { // enter pressed
-      if (this.state.value && this.props.onComplete) {
+      // TODO: decide if we should use enter?
+      /*if (this.state.value && this.props.onComplete) {
         this.props.onComplete(this.state.value);
-      }
+      }*/
       return;
     }
 
-    // normal key
-    var newValue = this.state.value.concat(String.fromCharCode(keyCode));
-    this.setState({value: newValue});
+    // normal key (only accept alphanumeric values)
+    var key = String.fromCharCode(keyCode);
+    if (/[a-zA-Z0-9-_ ]/.test(key)) {
+      var newValue = this.state.value.concat(key);
+      this.setState({value: newValue});
+    }
   },
 
   render: function() {
