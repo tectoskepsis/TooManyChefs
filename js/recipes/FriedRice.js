@@ -141,8 +141,17 @@ var FriedRice = {
       timer: 10,
     },
     {
-      pretext: <span>Pour the eggs into the wok.<br/></span>,
-      instruction: 'eggs->wok',
+      pretext: <span>Pour the eggs into the wok with the arrow keys.<br/></span>,
+      instruction: '\\eggs\\',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|_wok_|</span>,
+      type: 'dial',
+      onTimeout: function(value) {
+        if (value >= 10 && value <= 14) {
+          this.nextStep();
+        } else {
+          this.failure(<p>Recipe failed. Failed to pour eggs in wok.</p>);
+        }
+      },
       timer: 10,
     },
     {

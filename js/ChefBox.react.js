@@ -77,7 +77,7 @@ var ChefBox = React.createClass({
       }), 250);
 
     } else {
-      var {timer, increment, onTimeout, ...stepProps} = this.props.recipe.steps[newStep];
+      var {timer, increment, onStart, onTimeout, ...stepProps} = this.props.recipe.steps[newStep];
       if (!stepProps.onComplete) {
         stepProps.onComplete = this.nextStep;
       } else {
@@ -100,6 +100,10 @@ var ChefBox = React.createClass({
           content: <RecipeStep onProgress={this.onProgress} {...stepProps} />,
           step: newStep,
         });
+
+        if (onStart) {
+          onStart.apply(this);
+        }
       }, 250);
     }
   },

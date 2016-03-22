@@ -19,7 +19,7 @@ var Cheesecake = {
       pretext: <span>Using the arrow keys, preheat the oven to 325°F.<br/></span>,
       instruction: 300,
       type: 'counter',
-      timer: 15,
+      timer: 10,
       onTimeout: function(value) {
         if (value >= 320 && value <= 330) {
           this.nextStep();
@@ -46,7 +46,7 @@ var Cheesecake = {
       instruction: 'sssssssssssssssssssssssssssssssssssssssssssssugar',
       posttext: <span><br/>TBSP:&nbsp;&nbsp;&nbsp;&nbsp;^ 1&nbsp;&nbsp;&nbsp;&nbsp;^ 2&nbsp;&nbsp;&nbsp;&nbsp;^ 3&nbsp;&nbsp;&nbsp;&nbsp;^ ALL THE SUGAR</span>,
       timer: 15,
-      onComplete: () => {}, // TODO: too much sugar
+      onComplete: () => {},
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 30) {
           this.nextStep();
@@ -64,9 +64,11 @@ var Cheesecake = {
       timer: 10,
     },
     {
-      pretext: <span>Toss cream cheese, 1 cup sugar, and vanilla into a large bowl.<br/></span>,
-      instruction: 'ccsv->bowl',
-      timer: 10,
+      pretext: <span>Toss cream cheese, 1 cup sugar, and vanilla into a large bowl by tapping 't'.<br/></span>,
+      instruction: 't',
+      type: 'mash',
+      mashCount: 3,
+      timer: 7,
     },
     {
       pretext: 'Equip the electric',
@@ -135,12 +137,14 @@ var Cheesecake = {
     {
       pretext: 'Twiddle your thumbs for 55 minutes.',
       timer: 3300,
-      // TODO: set timeout so next message appears after a bit.
+      onStart: function() {
+        this.setTimeout(nextStep, 10000); // just wait 10 seconds
+      },
       onTimeout: nextStep,
     },
     {
       pretext: <span>Maybe we should play a game to pass the time. Mash the caps-lock key to mess with the other chefs.<br/></span>,
-      instruction: 'CAPSLOCK', // TODO: custom case of mash
+      instruction: 'CAPSLOCK',
       type: 'mash',
       mashCount: 6,
       timer: 10,
