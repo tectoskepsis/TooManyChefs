@@ -1,5 +1,5 @@
 {
-  "name": "TooManyCooks",
+  "name": "TooManyChefs",
   "main": "js/main.js",
   "dependencies": {
     "react": "^0.13.0",

@@ -1,4 +1,5 @@
 var React = require('react');
+var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('timeout-transition-group');
 
 var ChefBox = require('./ChefBox.react.js');
@@ -9,9 +10,11 @@ var friedRice = require('./recipes/FriedRice.js');
 var cheesecake = require('./recipes/Cheesecake.js');
 
 var Game = React.createClass({
+  mixins: [TimerMixin],
+
   getInitialState: function() {
     return {
-      gameState: 'title',  // title | menu | started
+      gameState: 'title',  // title | menu | started | loading
       numPlayers: 0,
       chefs: [],
     };
@@ -32,11 +35,19 @@ var Game = React.createClass({
       }
     }
 
-    this.setState({
-      gameState: 'started',
-      numPlayers: numPlayers,
-      chefs: chefs,
-    });
+    this.setState({gameState: ''});
+    this.setTimeout(() => {
+      this.setState({gameState: 'loading'});
+    }, 500);
+
+    // Wait a bit to fade out
+    this.setTimeout(() => {
+      this.setState({
+        gameState: 'started',
+        numPlayers: numPlayers,
+        chefs: chefs,
+      });
+    }, 3000);
   },
 
   render: function() {
@@ -56,7 +67,7 @@ var Game = React.createClass({
 
     var playerMenu = (
       <div>
-        <p>Number of players:</p>
+        <p>Number of chefs:</p>
         <ul className="list-inline">
           <li><Inst onComplete={this.onStartGame.bind(this, 4)}>four</Inst></li>
           <li><Inst onComplete={this.onStartGame.bind(this, 5)}>five</Inst></li>
@@ -65,10 +76,12 @@ var Game = React.createClass({
       </div>
     );
 
+    var loading = <div>Compiling recipes...</div>;
+
     return (
       <div className="center">
         <div className="vcenter">
-          <h1>Too Many Cooks</h1>
+          <h1>Too Many Chefs</h1>
           <h4>A text-based cooperative cooking game</h4>
         </div>
 
@@ -78,7 +91,8 @@ var Game = React.createClass({
         <TransitionGroup enterTimeout={250}
                          leaveTimeout={250}
                          transitionName="fade">
-          {this.state.gameState === 'menu' ? playerMenu : null}
+          {this.state.gameState === 'menu' ? playerMenu :
+           this.state.gameState === 'loading' ? loading : null}
         </TransitionGroup>
       </div>
     );

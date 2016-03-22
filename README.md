@@ -1,4 +1,4 @@
-# Too Many Cooks
+# Too Many Chefs
 A text-based cooperative action cooking game
 
 ### Getting Started
