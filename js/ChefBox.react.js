@@ -55,8 +55,7 @@ var ChefBox = React.createClass({
     if (this.state.onTimeout) {
       this.state.onTimeout(this.state.progress);
     } else {
-      // TODO: lose
-      console.log('out of time!');
+      this.failure();
     }
   },
 
@@ -105,6 +104,19 @@ var ChefBox = React.createClass({
     }
   },
 
+  failure: function(text) {
+    this.setState({
+      content: null,
+    });
+
+    // Wait 250ms before updating for fade effect
+    this.setTimeout(() => {
+      this.setState({content: this.renderFailure(text)});
+    }, 250);
+
+    // TODO: propagate failure to other chefs
+  },
+
   onProgress: function(progress) {
     this.setState({progress: progress});
   },
@@ -132,6 +144,16 @@ var ChefBox = React.createClass({
             <li key={i}>{ing}</li>)}
         </ul>
         <p>{this.props.recipe.description}</p>
+      </div>
+    );
+  },
+
+  renderFailure: function(text) {
+    text = text || <p>Recipe failed, out of time!</p>;
+    return (
+      <div>
+        <h4>FAILURE</h4>
+        {text}
       </div>
     );
   },

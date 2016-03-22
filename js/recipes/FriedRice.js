@@ -12,6 +12,7 @@ var nextStep = function() {
 
 var FriedRice = {
   name: 'Chicken Fried Rice',
+  type: 'entree',
   difficulty: 'medium',
   ingredients: ['1 onion', '2 cups steamed rice', '2 eggs', '2 tbsp vegetable oil', '8 oz chicken breast', '1/2 cup carrots', 'soy sauce to taste'],
   description: 'A tasty balanced meal, perfect for getting rid of leftover rice.',
@@ -91,12 +92,14 @@ var FriedRice = {
       instruction: 'ooooooooooooooooooooooooooooooooooooooooooooooooil',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too little&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
       timer: 10,
-      onComplete: () => {}, // TODO: too much oil
+      onComplete: () => {},
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 30) {
           this.nextStep();
+        } else if (progress > 30) {
+          this.failure(<p>Recipe failed. Too much oil!</p>);
         } else {
-          // TODO: too much or too little?
+          this.failure(<p>Recipe failed. Too little oil!</p>);
         }
       },
     },
@@ -108,8 +111,10 @@ var FriedRice = {
       onTimeout: function(value) {
         if (value >= 18 && value <= 25) {
           this.nextStep();
+        } else if (value > 25) {
+          this.failure(<p>Recipe failed. Stove too hot!</p>);
         } else {
-          // TODO: too high or too low?
+          this.failure(<p>Recipe failed. Stove too low!</p>);
         }
       },
     },
@@ -172,8 +177,10 @@ var FriedRice = {
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 30) {
           this.nextStep();
+        } else if (progress > 30) {
+          this.failure(<p>Recipe failed. Too much soy sauce!</p>);
         } else {
-          // TODO: too much or too little?
+          this.failure(<p>Recipe failed. Not enough soy sauce!</p>);
         }
       },
     },
@@ -193,7 +200,7 @@ var FriedRice = {
         if (value <= 3) {
           this.nextStep();
         } else {
-          // TODO: not turned off!
+          this.failure(<p>Recipe failed. Forgot to turn off stove!</p>);
         }
       },
     },

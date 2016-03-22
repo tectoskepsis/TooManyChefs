@@ -8,6 +8,7 @@ var nextStep = function() {
 
 var Cheesecake = {
   name: 'Cheesecake Delight',
+  type: 'dessert',
   difficulty: 'easy',
   ingredients: ['1 cup graham crackers', '3 tbsp + 1 cup sugar', '1/3 cup butter', '32 oz cream cheese', '1 tbsp vanilla', '4 eggs'],
   description: 'Creamy and rich, this scrumptious dessert is a classic at the dinner table.',
@@ -23,7 +24,7 @@ var Cheesecake = {
         if (value >= 320 && value <= 330) {
           this.nextStep();
         } else {
-          // TODO: wrong value
+          this.failure(<p>Recipe failed, oven set to wrong temperature!</p>);
         }
       }
     },
@@ -49,8 +50,10 @@ var Cheesecake = {
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 30) {
           this.nextStep();
+        } else if (progress > 30) {
+          this.failure(<p>Recipe failed, too much sugar!</p>);
         } else {
-          // TODO: too much or too little?
+          this.failure(<p>Recipe failed, not enough sugar!</p>);
         }
       },
     },
@@ -80,7 +83,7 @@ var Cheesecake = {
         if (value >= 4 && value <= 7) {
           this.nextStep();
         } else {
-          // TODO: too high or too low?
+          this.failure(<p>Recipe failed, mixer on wrong setting!</p>);
         }
       },
     },
@@ -99,7 +102,7 @@ var Cheesecake = {
         if (value <= 3) {
           this.nextStep();
         } else {
-          // TODO: not turned off!
+          this.failure(<p>Recipe failed-- did not turn off mixer!</p>);
         }
       },
     },
@@ -125,7 +128,7 @@ var Cheesecake = {
         if (value >= 12) {
           this.nextStep();
         } else {
-          // TODO: not in oven!
+          this.failure(<p>Recipe failed. Failed to put pan in oven.</p>);
         }
       },
     },
@@ -156,7 +159,7 @@ var Cheesecake = {
         if (value >= 395 && value <= 405) {
           this.nextStep();
         } else {
-          // TODO: wrong value
+          this.failure(<p>Recipe failed, oven set to wrong temperature.</p>);
         }
       }
     },
@@ -170,7 +173,7 @@ var Cheesecake = {
         if (value >= 995) {
           this.nextStep();
         } else {
-          // TODO: wrong value
+          this.failure(<p>Recipe failed, oven set to wrong temperature.</p>);
         }
       }
     },
@@ -191,7 +194,7 @@ var Cheesecake = {
         if (value <= 8) {
           this.nextStep();
         } else {
-          // TODO: not in oven!
+          this.failure(<p>Recipe failed, failed to remove pan from oven.</p>);
         }
       },
     },
