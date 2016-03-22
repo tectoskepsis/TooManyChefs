@@ -8,6 +8,7 @@ var Inst = require('./Instruction.react.js');
 /* Recipes */
 var friedRice = require('./recipes/FriedRice.js');
 var cheesecake = require('./recipes/Cheesecake.js');
+var crabCakes = require('./recipes/CrabCakes.js');
 
 var Game = React.createClass({
   mixins: [TimerMixin],
@@ -28,10 +29,12 @@ var Game = React.createClass({
     var chefs = new Array(numPlayers);
     for (var i = 0; i < numPlayers; i++) {
       // TODO: give each chef a distinct random recipe
-      if (i % 2 === 0) {
+      if (i % 3 === 0) {
         chefs[i] = friedRice;
-      } else {
+      } else if (i % 3 === 1) {
         chefs[i] = cheesecake;
+      } else {
+        chefs[i] = crabCakes;
       }
     }
 
