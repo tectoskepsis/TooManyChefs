@@ -1,5 +1,6 @@
 var React = require('react');
 
+var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -67,8 +68,12 @@ var CrabCakes = {
       type: 'textinput',
       timer: 8,
       onTimeout: function(name) {
-        recipeData.crabName = name;
-        this.nextStep();
+        if (!name) {
+          this.failure(<p>Recipe failed. Failed to name crab.</p>);
+        } else {
+          recipeData.crabName = name;
+          this.nextStep();
+        }
       },
     },
     {
@@ -85,7 +90,8 @@ var CrabCakes = {
     },
     {
       pretext: <span>Continue stirring the mixture with the arrow keys.<br/></span>,
-      instruction: '^ > v < ^ > v <', // TODO: arrow keys
+      instruction: 'uldruldr',
+      type: 'arrows',
       timer: 10,
     },
     {
@@ -135,14 +141,11 @@ var CrabCakes = {
     {
       pretext: 'Cook the patty and',
       instruction: 'flip',
-      posttext: <span>it when golden brown.<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'{PATTY}'}<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-skillet-</span>,
+      posttext: <span>it when golden brown.<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ColorChange>{'{PATTY}'}</ColorChange><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-skillet-</span>,
       timer: 30,
-      onStart: function() {
-        // TODO: transition color of patty over 10 seconds
-      },
-      onComplete: function() {
-        // TODO: only proceed if color is golden brown
-        if (true) {
+      onComplete: function(progress, time) {
+        // Only proceed if color is golden brown
+        if (time <= 20) {
           this.nextStep();
         } else {
           this.failure(<p>Recipe failed. Patty not cooked to golden brown.</p>);
@@ -154,7 +157,13 @@ var CrabCakes = {
       instruction: 'A: ',
       type: 'textinput',
       timer: 8,
-      onTimeout: nextStep,
+      onTimeout: function(joke) {
+        if (!joke) {
+          this.failure(<p>Recipe failed. Failed to tell joke!</p>);
+        } else {
+          this.nextStep();
+        }
+      },
     },
     {
       pretext: <span>Poke {recipeData.crabName} with the arrow keys so he laughs at your joke.<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'{PATTY}'}</span>,

@@ -4,7 +4,10 @@ require('./helper.js');
 
 var Dial = React.createClass({
   propTypes: {
-    children: React.PropTypes.string,
+    children: React.PropTypes.oneOfType([
+                React.PropTypes.string,
+                React.PropTypes.element,
+              ]),
     startValue: React.PropTypes.number,
     maxValue: React.PropTypes.number,
     onComplete: React.PropTypes.func.isRequired,

@@ -78,8 +78,12 @@ var FriedRice = {
       type: 'textinput',
       timer: 10,
       onTimeout: function(name) {
-        recipeData.chickenName = name;
-        this.nextStep();
+        if (!name) {
+          this.failure(<p>Recipe failed. Failed to name chicken.</p>);
+        } else {
+          recipeData.chickenName = name;
+          this.nextStep();
+        }
       },
     },
     {

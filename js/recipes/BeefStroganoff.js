@@ -1,5 +1,6 @@
 var React = require('react');
 
+var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -66,15 +67,12 @@ var BeefStroganoff = {
     },
     {
       pretext: <span>Add the beef and cook until brown; then push it to one side with the arrow keys.<br/>|</span>,
-      instruction: 'BEEF<=finger=',
+      instruction: <span><ColorChange duration={5000} toColor="#a94442">BEEF</ColorChange>{'<=finger='}</span>,
       posttext: <span><br/>----------------------------</span>,
       type: 'dial',
       maxValue: 10,
       startValue: 10,
       timer: 10,
-      onStart: function() {
-        // TODO: turn beef brown
-      },
       onTimeout: function(value) {
         if (value <= 2) {
           this.nextStep();
@@ -119,7 +117,8 @@ var BeefStroganoff = {
     },
     {
       pretext: <span>Stir the contents with the arrow keys.<br/></span>,
-      instruction: '^ > v < ^ > v <', // TODO: arrow keys
+      instruction: 'urdlurdl',
+      type: 'arrows',
       timer: 10,
     },
     {
@@ -162,8 +161,12 @@ var BeefStroganoff = {
       type: 'textinput',
       timer: 8,
       onTimeout: function(name) {
-        recipeData.cowName = name;
-        this.nextStep();
+        if (!name) {
+          this.failure(<p>Recipe failed. Failed to name cow.</p>);
+        } else {
+          recipeData.cowName = name;
+          this.nextStep();
+        }
       },
     },
     {

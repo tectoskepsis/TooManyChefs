@@ -82,7 +82,7 @@ var ChefBox = React.createClass({
         stepProps.onComplete = this.nextStep;
       } else {
         stepProps.onComplete = stepProps.onComplete.bind(
-          this, this.state.progress);
+          this, this.state.progress, this.state.timer);
       }
 
       // Clear content of recipe step first

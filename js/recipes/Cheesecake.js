@@ -231,8 +231,12 @@ var Cheesecake = {
       type: 'textinput',
       timer: 8,
       onTimeout: function(name) {
-        Cheesecake.name = Cheesecake.name.concat(' (' + name + ')');
-        this.nextStep();
+        if (!name) {
+          this.failure(<p>Recipe failed. Failed to name cheesecake.</p>);
+        } else {
+          Cheesecake.name = Cheesecake.name.concat(' (' + name + ')');
+          this.nextStep();
+        }
       },
     },
   ],

@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Arrows = require('./Arrows.react.js');
 var Counter = require('./Counter.react.js');
 var Dial = require('./Dial.react.js');
 var Inst = require('./Instruction.react.js');
@@ -22,9 +23,10 @@ var RecipeStep = React.createClass({
                    React.PropTypes.string,
                    React.PropTypes.number,
                    React.PropTypes.func,
+                   React.PropTypes.element,
                  ]),
     type: React.PropTypes.oneOf(
-      ['word', 'textinput', 'counter', 'dial', 'mash']
+      ['word', 'textinput', 'counter', 'dial', 'mash', 'arrows']
     ),
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func.isRequired,
@@ -48,14 +50,10 @@ var RecipeStep = React.createClass({
 
     if (instruction) {
       var instText = unravel(instruction);
-      var Elem = Inst;
+      var Elem;
       switch (type) {
-        case 'word':
-          Elem = Inst;
-          break;
-
-        case 'textinput':
-          Elem = TextInput;
+        case 'arrows':
+          Elem = Arrows;
           break;
 
         case 'counter':
@@ -68,6 +66,14 @@ var RecipeStep = React.createClass({
 
         case 'mash':
           Elem = Mash;
+          break;
+
+        case 'textinput':
+          Elem = TextInput;
+          break;
+
+        default: // 'word'
+          Elem = Inst;
           break;
       }
       instruction = <Elem {...props}>{instText}</Elem>;
