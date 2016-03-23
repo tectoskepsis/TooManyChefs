@@ -28,7 +28,9 @@ var ChefBox = React.createClass({
       decrement: true,
       onTimeout: this.nextStep,
       progress: 0,
+      strikes: 3,
       content: null,
+      backgroundClass: '',
     };
   },
 
@@ -72,6 +74,7 @@ var ChefBox = React.createClass({
 
       // Wait 250ms before updating for fade effect
       this.setTimeout(() => this.setState({
+        backgroundClass: 'success',
         content: this.renderRecipeDone(),
         step: newStep,
       }), 250);
@@ -109,16 +112,25 @@ var ChefBox = React.createClass({
   },
 
   failure: function(text) {
+    var strikesLeft = this.state.strikes - 1;
     this.setState({
       content: null,
+      strikes: strikesLeft,
     });
 
     // Wait 250ms before updating for fade effect
     this.setTimeout(() => {
-      this.setState({content: this.renderFailure(text)});
+      if (strikesLeft === 0) {
+        // TODO: propagate failure to other chefs
+        this.setState({
+          content: this.renderFailure(text),
+          backgroundClass: 'failure',
+        });
+      } else {
+        this.nextStep();
+      }
     }, 250);
 
-    // TODO: propagate failure to other chefs
   },
 
   onProgress: function(progress) {
@@ -135,13 +147,18 @@ var ChefBox = React.createClass({
     }
     var min = Math.floor(this.state.timer / 60);
     var sec = this.state.timer % 60;
-    return padZero(min) + ':' + padZero(sec);
+    return (
+      <span className="padLeft">
+        <span className="glyphicon glyphicon-hourglass" />
+        [{padZero(min)}:{padZero(sec)}]
+      </span>
+    );
   },
 
   renderRecipeStart: function() {
     return (
       <div>
-        <b>{this.props.recipe.name}</b> ({this.props.recipe.difficulty})
+        <b>{this.props.recipe.name}</b> - {this.props.recipe.type} ({this.props.recipe.difficulty})
         <h5>Ingredients</h5>
         <ul className="ingredients">
           {this.props.recipe.ingredients.map((ing, i) =>
@@ -153,10 +170,11 @@ var ChefBox = React.createClass({
   },
 
   renderFailure: function(text) {
-    text = text || <p>Recipe failed, out of time!</p>;
+    text = text || <p>Out of time!</p>;
     return (
       <div>
-        <h4>FAILURE</h4>
+        <h4>GAME OVER - RECIPE FAILED</h4>
+        <p>Steps completed: {this.state.step}/{this.props.recipe.steps.length}</p>
         {text}
       </div>
     );
@@ -169,20 +187,36 @@ var ChefBox = React.createClass({
     );
   },
 
+  renderStrikes: function() {
+    var heartFull = <span className="glyphicon glyphicon-heart" />;
+    var heartEmpty = <span className="glyphicon glyphicon-heart-empty" />;
+
+    return (
+      <span className="padLeft fireRed">
+        {this.state.strikes >= 1 ? heartFull : heartEmpty}
+        {this.state.strikes >= 2 ? heartFull : heartEmpty}
+        {this.state.strikes >= 3 ? heartFull : heartEmpty}
+      </span>
+    );
+  },
+
   render: function() {
-    var classes = cx('chefBox', 'col-xs-12', 'col-sm-6',
+    var classes = cx('col-xs-12', 'col-sm-6',
       {[`col-md-${this.props.widthClass}`]: true}
     );
 
     return (
       <div className={classes}>
-        <h5>Chef {this.props.chefId + 1}</h5>
-        <h5 className="pull-right">{this.renderTime()}</h5>
-        <TransitionGroup enterTimeout={250}
-                         leaveTimeout={250}
-                         transitionName="fade">
-          {this.state.content}
-        </TransitionGroup>
+        <div className={cx('chefBox', this.state.backgroundClass)}>
+          <h4>Chef {this.props.chefId + 1} {this.renderStrikes()} {this.renderTime()}</h4>
+          <div className="padTop">
+            <TransitionGroup enterTimeout={250}
+                             leaveTimeout={250}
+                             transitionName="fade">
+              {this.state.content}
+            </TransitionGroup>
+          </div>
+        </div>
       </div>
     );
   },

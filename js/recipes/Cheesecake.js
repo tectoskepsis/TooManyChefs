@@ -19,7 +19,7 @@ var Cheesecake = {
       pretext: <span>Using the arrow keys, preheat the oven to 325°F.<br/></span>,
       instruction: 300,
       type: 'counter',
-      timer: 10,
+      timer: 8,
       onTimeout: function(value) {
         if (value >= 320 && value <= 330) {
           this.nextStep();
@@ -32,20 +32,20 @@ var Cheesecake = {
       pretext: 'Break the graham crackers into little',
       instruction: 'c r u m b s',
       posttext: '.',
-      timer: 15,
+      timer: 10,
     },
     {
       pretext: <span>Smush together the graham crackers and butter by mashing 'm'.<br/></span>,
       instruction: 'm',
       type: 'mash',
       mashCount: 10,
-      timer: 15,
+      timer: 10,
     },
     {
       pretext: <span>Pour in 3 tbsp sugar by holding 's'.<br/></span>,
       instruction: 'sssssssssssssssssssssssssssssssssssssssssssssugar',
       posttext: <span><br/>TBSP:&nbsp;&nbsp;&nbsp;&nbsp;^ 1&nbsp;&nbsp;&nbsp;&nbsp;^ 2&nbsp;&nbsp;&nbsp;&nbsp;^ 3&nbsp;&nbsp;&nbsp;&nbsp;^ ALL THE SUGAR</span>,
-      timer: 15,
+      timer: 10,
       onComplete: () => {},
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 30) {
@@ -61,7 +61,7 @@ var Cheesecake = {
       pretext: 'Layer the',
       instruction: 'bottom',
       posttext: 'of a 9-inch pan with the sugary mixture.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Toss cream cheese, 1 cup sugar, and vanilla into a large bowl by tapping 't'.<br/></span>,
@@ -92,7 +92,7 @@ var Cheesecake = {
     {
       pretext: <span>Crack in the eggs, but not too fast.<br/></span>,
       instruction: 'egg egg egg egg',
-      timer: 20,
+      timer: 15,
     },
     {
       pretext: <span>Turn the mixer off and set it aside.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
@@ -112,12 +112,12 @@ var Cheesecake = {
       pretext: 'Taking the bowl,',
       instruction: 'pour',
       posttext: 'the mixture over the crust in the pan.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Pat yourself on the back while the oven finishes heating.<br/></span>,
       instruction: 'patpatpat',
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: <span>Put the pan in the oven with the arrow keys.<br/></span>,
@@ -125,7 +125,7 @@ var Cheesecake = {
       type: 'dial',
       maxValue: 15,
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-oven-</span>,
-      timer: 10,
+      timer: 9,
       onTimeout: function(value) {
         if (value >= 12) {
           this.nextStep();
@@ -184,7 +184,7 @@ var Cheesecake = {
     {
       pretext: <span>There! Now it should only take-- oh god did something catch on <span className="fireRed">fire</span>!<br/></span>,
       instruction: 'yes',
-      timer: 10,
+      timer: 6,
     },
     {
       pretext: <span>Take it out you fool!<br/></span>,
@@ -212,7 +212,7 @@ var Cheesecake = {
       pretext: <span>Mash 'w' to put out the fire.<br/></span>,
       instruction: 'w',
       type: 'mash',
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: 'Turn',
@@ -229,7 +229,7 @@ var Cheesecake = {
       pretext: <span>Give your beautiful mess a name.<br/></span>,
       instruction: 'We\'ll call it: ',
       type: 'textinput',
-      timer: 8,
+      timer: 6,
       onTimeout: function(name) {
         if (!name) {
           this.failure(<p>Recipe failed. Failed to name cheesecake.</p>);

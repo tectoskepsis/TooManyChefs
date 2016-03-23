@@ -23,27 +23,27 @@ var FriedRice = {
       pretext: 'Grab a',
       instruction: 'cutting board',
       posttext: 'from the kitchen cabinet.',
-      timer: 15,
+      timer: 9,
     },
     {
       pretext: 'Equip a',
       instruction: 'knife',
       posttext: 'for +3 ATK vs vegetables.',
-      timer: 15,
+      timer: 8,
     },
     {
       pretext: <span>Dice up the carrots into little cubes by mashing 'd'.<br/></span>,
       instruction: 'd',
       type: 'mash',
       mashCount: 10,
-      timer: 15,
+      timer: 10,
     },
     {
       pretext: <span>Next, cut up the onions like they threatened your family.<br/></span>,
       instruction: 'c',
       type: 'mash',
       mashCount: 10,
-      timer: 15,
+      timer: 9,
     },
     {
       pretext: 'Take a few seconds to mourn the onions for their beautiful sacrifice.',
@@ -53,19 +53,19 @@ var FriedRice = {
     {
       pretext: <span>Wipe away a single tear.<br/></span>,
       instruction: ':\'(',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: 'Excellent work! Onto the meat. Hmm... you forgot to defrost it, didn\'t you. Nuke the sucker in the microwave for',
       instruction: '60',
       posttext: 'seconds.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: 'Wait, why did you do that? You can just press the',
       instruction: 'defrost',
       posttext: 'button.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: 'Reflect on your sins while the chicken spins.',
@@ -76,7 +76,7 @@ var FriedRice = {
       pretext: <span>Take the chicken out and give it a name.<br/></span>,
       instruction: 'Name: ',
       type: 'textinput',
-      timer: 10,
+      timer: 6,
       onTimeout: function(name) {
         if (!name) {
           this.failure(<p>Recipe failed. Failed to name chicken.</p>);
@@ -131,7 +131,7 @@ var FriedRice = {
       pretext: 'Toss in the onions to',
       instruction: 'soak up',
       posttext: 'the oily goodness.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Crack some eggs into a bowl using your friend's thick skull.<br/></span>,
@@ -156,13 +156,13 @@ var FriedRice = {
           this.failure(<p>Recipe failed. Failed to pour eggs in wok.</p>);
         }
       },
-      timer: 10,
+      timer: 9,
     },
     {
       pretext: 'Add in the carrots, and your best friend',
       instruction: () => recipeData.chickenName,
       posttext: '(the chicken).',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Stir everything around until it's all mixed up.<br/></span>,

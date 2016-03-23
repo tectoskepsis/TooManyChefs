@@ -70,8 +70,8 @@ var Game = React.createClass({
         <p>Number of chefs:</p>
         <ul className="list-inline">
           <li><Inst onComplete={this.onStartGame.bind(this, 4)}>four</Inst></li>
-          <li><Inst onComplete={this.onStartGame.bind(this, 5)}>five</Inst></li>
-          <li><Inst onComplete={this.onStartGame.bind(this, 6)}>six</Inst></li>
+          {/*<li><Inst onComplete={this.onStartGame.bind(this, 5)}>five</Inst></li>
+          <li><Inst onComplete={this.onStartGame.bind(this, 6)}>six</Inst></li>*/}
         </ul>
       </div>
     );

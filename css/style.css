@@ -35,9 +35,10 @@ code > .input {
 
 .chefBox {
   min-height: 250px;
-  margin: 20px 0;
-  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
   padding: 10px 20px;
+  transition: background-color 0.25s ease;
 }
 
 .fade-enter {
@@ -54,4 +55,23 @@ code > .input {
 }
 .fade-leave.fade-leave-active {
   opacity: 0;
+}
+
+.padLeft {
+  padding-left: 20px;
+}
+.padTop {
+  padding-top: 10px;
+}
+
+.fireRed {
+  color: #ff0500;
+}
+
+.failure {
+  background-color: #ffbaba;
+}
+
+.success {
+  background-color: #c1f5b1;
 }

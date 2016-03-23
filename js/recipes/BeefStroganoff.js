@@ -24,27 +24,27 @@ var BeefStroganoff = {
       pretext: 'Grab a hunk of chuck',
       instruction: 'roast',
       posttext: ', cutting board, and knife.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: 'Equip the',
       instruction: 'blade',
       posttext: 'for +2 STR.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Cut the roast into strips by tapping 'k'.<br/></span>,
       instruction: 'k',
       type: 'mash',
       mashCount: 10,
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Season with a little bit of salt and pepper.<br/></span>,
       instruction: 's',
       type: 'mash',
       mashCount: 4,
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: <span>Use the arrow keys to turn the dial on the stove to MED.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
@@ -63,7 +63,7 @@ var BeefStroganoff = {
       pretext: 'Melt the',
       instruction: 'butter',
       posttext: 'with a large skillet over the heat.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Add the beef and cook until brown; then push it to one side with the arrow keys.<br/>|</span>,
@@ -72,7 +72,7 @@ var BeefStroganoff = {
       type: 'dial',
       maxValue: 10,
       startValue: 10,
-      timer: 10,
+      timer: 15,
       onTimeout: function(value) {
         if (value <= 2) {
           this.nextStep();
@@ -141,7 +141,7 @@ var BeefStroganoff = {
       type: 'dial',
       maxValue: 20,
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-POT-</span>,
-      timer: 10,
+      timer: 9,
       onTimeout: function(value) {
         if (value >= 7 && value <= 11) {
           this.nextStep();
@@ -159,7 +159,7 @@ var BeefStroganoff = {
       pretext: <span>Think about what you would call your very own cow.<br/></span>,
       instruction: 'Name: ',
       type: 'textinput',
-      timer: 8,
+      timer: 6,
       onTimeout: function(name) {
         if (!name) {
           this.failure(<p>Recipe failed. Failed to name cow.</p>);
@@ -225,7 +225,7 @@ var BeefStroganoff = {
       pretext: 'Toss in some',
       instruction: 'mushrooms',
       posttext: 'into the beef stew.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Pour in 1/3 cup of white wine.<br/></span>,

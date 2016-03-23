@@ -22,22 +22,22 @@ var CrabCakes = {
   steps: [
     {
       pretext: 'Crack an egg into a bowl by tapping ',
-      instruction: 'c',
+      instruction: 'e',
       posttext: '.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Drip in 4 tsp lemon juice with 'd'.<br/></span>,
       instruction: 'd',
       type: 'mash',
       mashCount: 4,
-      timer: 15,
+      timer: 10,
     },
     {
       pretext: <span>Scoop in 3 tbsp mayonnaise by holding 'm'. (Don't overdose!)<br/></span>,
       instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm-mayo!',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 1 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 3 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 1 HEART ATTACK</span>,
-      timer: 15,
+      timer: 10,
       onComplete: () => {},
       onTimeout: function(progress) {
         if (progress >= 27 && progress <= 31) {
@@ -53,7 +53,7 @@ var CrabCakes = {
       pretext: 'Equip a',
       instruction: 'whisk',
       posttext: 'for +2 bonus to stirring.',
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: <span>Mash 'w' to mix together the creamy concoction.<br/></span>,
@@ -66,7 +66,7 @@ var CrabCakes = {
       pretext: <span>Name your friendly crab as you prepare him for devouring.<br/></span>,
       instruction: 'Name: ',
       type: 'textinput',
-      timer: 8,
+      timer: 6,
       onTimeout: function(name) {
         if (!name) {
           this.failure(<p>Recipe failed. Failed to name crab.</p>);
@@ -86,13 +86,13 @@ var CrabCakes = {
       pretext: 'Crush the crackers into little',
       instruction: 'c r u m b s',
       posttext: 'and drop them into the bowl.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Continue stirring the mixture with the arrow keys.<br/></span>,
       instruction: 'uldruldr',
       type: 'arrows',
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: () => <span>Take a short break and chat with {recipeData.crabName} about the finer things in life.</span>,
@@ -116,12 +116,12 @@ var CrabCakes = {
       pretext: 'Melt the',
       instruction: 'butter',
       posttext: 'on a skillet over the heat.',
-      timer: 10,
+      timer: 8,
     },
     {
       instruction: 'SMUSH',
       posttext: () => <span>{recipeData.crabName} into 4 different {recipeData.crabName} patties.</span>,
-      timer: 10,
+      timer: 9,
     },
     {
       pretext: <span>Place the patties on the skillet using the arrow keys.<br/></span>,
