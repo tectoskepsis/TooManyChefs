@@ -1,3 +1,4 @@
+var Progress = require('rc-progress').Line;
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('timeout-transition-group');
@@ -155,6 +156,18 @@ var ChefBox = React.createClass({
     );
   },
 
+  renderTimer: function() {
+    if (this.state.timer === 0) {
+      return null;
+    }
+
+    var time = Math.min(100, (this.state.timer - 1) * 10);
+    var color = '#659cf3'; // TODO: turn redder as time gets shorter
+    return (
+      <Progress percent={time} strokeWidth="2" strokeColor={color} />
+    );
+  },
+
   renderRecipeStart: function() {
     return (
       <div>
@@ -209,6 +222,7 @@ var ChefBox = React.createClass({
       <div className={classes}>
         <div className={cx('chefBox', this.state.backgroundClass)}>
           <h4>Chef {this.props.chefId + 1} {this.renderStrikes()} {this.renderTime()}</h4>
+          {this.renderTimer()}
           <div className="padTop">
             <TransitionGroup enterTimeout={250}
                              leaveTimeout={250}

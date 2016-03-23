@@ -7,7 +7,8 @@
     "bootstrap": "~3.3.6",
     "jquery": "~2.1.4",
     "react-timer-mixin": "~0.13.2",
-    "timeout-transition-group": "~1.0.3"
+    "timeout-transition-group": "~1.0.3",
+    "rc-progress": "~1.0.4"
   },
   "devDependencies": {
     "babelify": "^6.0.2",
