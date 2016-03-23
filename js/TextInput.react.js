@@ -50,7 +50,10 @@ var TextInput = React.createClass({
       <span>
         {this.props.children}
         <code>
-          <span className="input">{this.state.value}</span>
+          <span className="input">
+            {this.state.value}
+            <u>&nbsp;</u>
+          </span>
         </code>
       </span>
     );

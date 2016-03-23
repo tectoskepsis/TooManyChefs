@@ -61,7 +61,7 @@ var Cheesecake = {
       pretext: 'Layer the',
       instruction: 'bottom',
       posttext: 'of a 9-inch pan with the sugary mixture.',
-      timer: 8,
+      timer: 10,
     },
     {
       pretext: <span>Toss cream cheese, 1 cup sugar, and vanilla into a large bowl by tapping 't'.<br/></span>,
@@ -112,12 +112,12 @@ var Cheesecake = {
       pretext: 'Taking the bowl,',
       instruction: 'pour',
       posttext: 'the mixture over the crust in the pan.',
-      timer: 8,
+      timer: 9,
     },
     {
       pretext: <span>Pat yourself on the back while the oven finishes heating.<br/></span>,
       instruction: 'patpatpat',
-      timer: 7,
+      timer: 9,
     },
     {
       pretext: <span>Put the pan in the oven with the arrow keys.<br/></span>,
@@ -125,7 +125,7 @@ var Cheesecake = {
       type: 'dial',
       maxValue: 15,
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-oven-</span>,
-      timer: 9,
+      timer: 10,
       onTimeout: function(value) {
         if (value >= 12) {
           this.nextStep();
@@ -212,7 +212,7 @@ var Cheesecake = {
       pretext: <span>Mash 'w' to put out the fire.<br/></span>,
       instruction: 'w',
       type: 'mash',
-      timer: 7,
+      timer: 8,
     },
     {
       pretext: 'Turn',

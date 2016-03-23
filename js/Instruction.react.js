@@ -57,7 +57,8 @@ var Instruction = React.createClass({
     return (
       <code>
         <span className="input">{prefix}</span>
-        <span>{suffix}</span>
+        <u>{suffix.substring(0, 1)}</u>
+        <span>{suffix.substring(1)}</span>
       </code>
     );
   },

@@ -53,7 +53,7 @@ var CrabCakes = {
       pretext: 'Equip a',
       instruction: 'whisk',
       posttext: 'for +2 bonus to stirring.',
-      timer: 7,
+      timer: 10,
     },
     {
       pretext: <span>Mash 'w' to mix together the creamy concoction.<br/></span>,
@@ -92,7 +92,7 @@ var CrabCakes = {
       pretext: <span>Continue stirring the mixture with the arrow keys.<br/></span>,
       instruction: 'uldruldr',
       type: 'arrows',
-      timer: 7,
+      timer: 8,
     },
     {
       pretext: () => <span>Take a short break and chat with {recipeData.crabName} about the finer things in life.</span>,
@@ -121,7 +121,7 @@ var CrabCakes = {
     {
       instruction: 'SMUSH',
       posttext: () => <span>{recipeData.crabName} into 4 different {recipeData.crabName} patties.</span>,
-      timer: 9,
+      timer: 10,
     },
     {
       pretext: <span>Place the patties on the skillet using the arrow keys.<br/></span>,

@@ -24,13 +24,13 @@ var BeefStroganoff = {
       pretext: 'Grab a hunk of chuck',
       instruction: 'roast',
       posttext: ', cutting board, and knife.',
-      timer: 8,
+      timer: 12,
     },
     {
       pretext: 'Equip the',
       instruction: 'blade',
       posttext: 'for +2 STR.',
-      timer: 8,
+      timer: 10,
     },
     {
       pretext: <span>Cut the roast into strips by tapping 'k'.<br/></span>,
@@ -63,7 +63,7 @@ var BeefStroganoff = {
       pretext: 'Melt the',
       instruction: 'butter',
       posttext: 'with a large skillet over the heat.',
-      timer: 8,
+      timer: 10,
     },
     {
       pretext: <span>Add the beef and cook until brown; then push it to one side with the arrow keys.<br/>|</span>,
@@ -202,7 +202,7 @@ var BeefStroganoff = {
       pretext: 'Add',
       instruction: 'noodles',
       posttext: 'to the pot.',
-      timer: 8,
+      timer: 10,
     },
     {
       pretext: <span>Pour out the water with the arrow keys, but keep the noodles!<br/></span>,
@@ -225,7 +225,7 @@ var BeefStroganoff = {
       pretext: 'Toss in some',
       instruction: 'mushrooms',
       posttext: 'into the beef stew.',
-      timer: 8,
+      timer: 9,
     },
     {
       pretext: <span>Pour in 1/3 cup of white wine.<br/></span>,

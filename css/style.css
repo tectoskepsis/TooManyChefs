@@ -3,13 +3,14 @@ h1 {
 }
 
 body {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: 15px;
   background-color: #edf4ff;
 }
 
 code {
-  color: #90959a;
+  color: #659cf3;
+  font-size: 15px;
   padding: 0;
   background-color: inherit;
   border-radius: 0;
@@ -17,7 +18,7 @@ code {
 
 code > .input {
   color: #0056a0;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .center {
@@ -33,8 +34,14 @@ code > .input {
   padding-right: 10px;
 }
 
+ul.ingredients {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
 .chefBox {
-  min-height: 250px;
+  height: 300px;
   width: 100%;
   margin-top: 20px;
   padding: 10px 20px;

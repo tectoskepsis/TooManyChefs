@@ -23,13 +23,13 @@ var FriedRice = {
       pretext: 'Grab a',
       instruction: 'cutting board',
       posttext: 'from the kitchen cabinet.',
-      timer: 9,
+      timer: 12,
     },
     {
       pretext: 'Equip a',
       instruction: 'knife',
       posttext: 'for +3 ATK vs vegetables.',
-      timer: 8,
+      timer: 12,
     },
     {
       pretext: <span>Dice up the carrots into little cubes by mashing 'd'.<br/></span>,
@@ -43,7 +43,7 @@ var FriedRice = {
       instruction: 'c',
       type: 'mash',
       mashCount: 10,
-      timer: 9,
+      timer: 10,
     },
     {
       pretext: 'Take a few seconds to mourn the onions for their beautiful sacrifice.',
@@ -65,7 +65,7 @@ var FriedRice = {
       pretext: 'Wait, why did you do that? You can just press the',
       instruction: 'defrost',
       posttext: 'button.',
-      timer: 8,
+      timer: 10,
     },
     {
       pretext: 'Reflect on your sins while the chicken spins.',
@@ -131,7 +131,7 @@ var FriedRice = {
       pretext: 'Toss in the onions to',
       instruction: 'soak up',
       posttext: 'the oily goodness.',
-      timer: 8,
+      timer: 10,
     },
     {
       pretext: <span>Crack some eggs into a bowl using your friend's thick skull.<br/></span>,
@@ -162,12 +162,13 @@ var FriedRice = {
       pretext: 'Add in the carrots, and your best friend',
       instruction: () => recipeData.chickenName,
       posttext: '(the chicken).',
-      timer: 8,
+      timer: 10,
     },
     {
-      pretext: <span>Stir everything around until it's all mixed up.<br/></span>,
-      instruction: 'carrotchickeneggchickcareggenrot',
-      timer: 15,
+      pretext: <span>Stir everything around with the arrow keys until it's all mixed up.<br/></span>,
+      instruction: 'urdlurdl',
+      type: 'arrows',
+      timer: 12,
     },
     {
       pretext: 'Dump in all the',
@@ -201,7 +202,7 @@ var FriedRice = {
       pretext: 'Stir it up one more time with',
       instruction: 's',
       posttext: '.',
-      timer: 5,
+      timer: 7,
     },
     {
       pretext: <span>Use the arrow keys to turn off the stove.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
