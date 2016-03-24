@@ -31,7 +31,7 @@ var Cheesecake = {
     {
       pretext: 'Break the graham crackers into little',
       instruction: 'c r u m b s',
-      posttext: '.',
+      posttext: 'by typing the letters.',
       timer: 10,
     },
     {

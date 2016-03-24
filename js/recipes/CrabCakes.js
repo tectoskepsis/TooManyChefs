@@ -50,9 +50,9 @@ var CrabCakes = {
       },
     },
     {
-      pretext: 'Equip a',
+      pretext: 'Type',
       instruction: 'whisk',
-      posttext: 'for +2 bonus to stirring.',
+      posttext: 'to equip the tool for +2 bonus to stirring.',
       timer: 10,
     },
     {

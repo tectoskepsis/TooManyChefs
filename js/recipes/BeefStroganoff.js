@@ -21,14 +21,14 @@ var BeefStroganoff = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: 'Grab a hunk of chuck',
-      instruction: 'roast',
-      posttext: ', cutting board, and knife.',
-      timer: 12,
+      pretext: 'Type',
+      instruction: 'take',
+      posttext: 'to grab a hunk of chuck roast, cutting board, and knife.',
+      timer: 10,
     },
     {
-      pretext: 'Equip the',
-      instruction: 'blade',
+      pretext: 'Equip the blade with',
+      instruction: 'e',
       posttext: 'for +2 STR.',
       timer: 10,
     },

@@ -26,7 +26,6 @@ var ChefBox = React.createClass({
     return {
       step: -1,
       timer: 10,
-      decrement: true,
       onTimeout: this.nextStep,
       progress: 0,
       strikes: 3,
@@ -37,14 +36,12 @@ var ChefBox = React.createClass({
 
   componentDidMount: function() {
     this.timerInterval = this.setInterval(this.updateTimer, 1000);
-    this.setState({
-      content: this.renderRecipeStart(),
-    });
+    this.setState({content: this.renderRecipeStart()});
   },
 
   updateTimer: function() {
     if (this.state.timer > 0) {
-      var newTime = this.state.timer + (this.state.decrement ? -1 : 1);
+      var newTime = this.state.timer - 1;
       this.setState({timer: newTime});
 
       if (newTime === 0) {
@@ -81,7 +78,7 @@ var ChefBox = React.createClass({
       }), 250);
 
     } else {
-      var {timer, increment, onStart, onTimeout, ...stepProps} = this.props.recipe.steps[newStep];
+      var {timer, onStart, onTimeout, ...stepProps} = this.props.recipe.steps[newStep];
       if (!stepProps.onComplete) {
         stepProps.onComplete = this.nextStep;
       } else {
@@ -93,7 +90,6 @@ var ChefBox = React.createClass({
       this.setState({
         content: null,
         timer: timer,
-        decrement: !increment,
         onTimeout: onTimeout ? onTimeout.bind(this) : null,
       });
 
