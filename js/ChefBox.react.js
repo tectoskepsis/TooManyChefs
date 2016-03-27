@@ -11,7 +11,7 @@ var ChefBox = React.createClass({
   mixins: [TimerMixin],
 
   propTypes: {
-    chefId: React.PropTypes.number.isRequired,
+    chefName: React.PropTypes.string.isRequired,
     recipe: React.PropTypes.object.isRequired,
     widthClass: React.PropTypes.number,
   },
@@ -217,7 +217,7 @@ var ChefBox = React.createClass({
     return (
       <div className={classes}>
         <div className={cx('chefBox', this.state.backgroundClass)}>
-          <h4>Chef {this.props.chefId + 1} {this.renderStrikes()} {this.renderTime()}</h4>
+          <h4>{this.props.chefName} {this.renderStrikes()} {this.renderTime()}</h4>
           {this.renderTimer()}
           <div className="padTop">
             <TransitionGroup enterTimeout={250}

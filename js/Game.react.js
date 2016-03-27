@@ -1,17 +1,12 @@
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('timeout-transition-group');
+var _ = require('lodash');
 
 var ChefBox = require('./ChefBox.react.js');
 var Inst = require('./Instruction.react.js');
 
-/* Recipes */
-var recipes = [
-  require('./recipes/FriedRice.js'),
-  require('./recipes/Cheesecake.js'),
-  require('./recipes/CrabCakes.js'),
-  require('./recipes/BeefStroganoff.js'),
-];
+var Recipes = require('./recipes/Recipes.js');
 
 var Game = React.createClass({
   mixins: [TimerMixin],
@@ -29,11 +24,24 @@ var Game = React.createClass({
   },
 
   onStartGame: function(numPlayers) {
+    // Assign recipes randomly from entrees, appetizers, and desserts
     var chefs = new Array(numPlayers);
-    for (var i = 0; i < numPlayers; i++) {
-      // TODO: give each chef a distinct random recipe
-      chefs[i] = recipes[i % 4];
+    var entrees = _.sampleSize(Recipes.Entrees, numPlayers > 4 ? 3 : 2);
+    var chefNames = ['Chef de cuisine', 'Sous-chef', 'Assistant chef'];
+    for (var i = 0; i < entrees.length; i++) {
+      chefs[i] = entrees[i];
+      chefs[i].chefName = chefNames[i];
     }
+
+    var appetizers = _.sampleSize(Recipes.Appetizers, numPlayers > 5 ? 2 : 1);
+    chefNames = ['Saucier', 'Tournant'];
+    for (var i = 0; i < appetizers.length; i++) {
+      chefs[entrees.length + i] = appetizers[i];
+      chefs[entrees.length + i].chefName = chefNames[i];
+    }
+
+    chefs[numPlayers - 1] = _.sample(Recipes.Desserts);
+    chefs[numPlayers - 1].chefName = 'Pâtissier';
 
     this.setState({gameState: ''});
     this.setTimeout(() => {
@@ -57,7 +65,7 @@ var Game = React.createClass({
       return (
         <div>
           {this.state.chefs.map((recipe, i) =>
-            <ChefBox key={i} chefId={i}
+            <ChefBox key={i} chefName={recipe.chefName}
                      recipe={recipe}
                      widthClass={widthClass}
             />)}
