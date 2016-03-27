@@ -16,6 +16,7 @@ var Game = React.createClass({
       gameState: 'title',  // title | menu | started | loading
       numPlayers: 0,
       chefs: [],
+      rating: 5, // health
     };
   },
 
@@ -58,15 +59,40 @@ var Game = React.createClass({
     }, 3000);
   },
 
+  onFailure: function(onLose, onContinue) {
+    var rating = this.state.rating - 1;
+    this.setState({rating: rating});
+
+    if (rating === 0) {
+      // TODO: make everyone lose simultaneously
+      onLose();
+    } else {
+      onContinue();
+    }
+  },
+
+  renderRating: function() {
+    var starFull = <span className="glyphicon glyphicon-star" />;
+    var starEmpty = <span className="glyphicon glyphicon-star-empty" />;
+
+    return (
+      <h4 id="rating" className="center fireRed">
+        {_.range(5).map(i => this.state.rating > i ? starFull : starEmpty)}
+      </h4>
+    );
+  },
+
   render: function() {
     if (this.state.gameState === 'started') {
       var widthClass = this.state.numPlayers > 4 ? 4 : 6;
+      // TODO: render rating
 
       return (
         <div>
+          {this.renderRating()}
           {this.state.chefs.map((recipe, i) =>
             <ChefBox key={i} chefName={recipe.chefName}
-                     recipe={recipe}
+                     recipe={recipe} onFailure={this.onFailure}
                      widthClass={widthClass}
             />)}
         </div>

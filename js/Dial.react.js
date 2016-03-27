@@ -1,6 +1,5 @@
 var React = require('react');
-
-require('./helper.js');
+var _ = require('lodash');
 
 var Dial = React.createClass({
   propTypes: {
@@ -55,7 +54,7 @@ var Dial = React.createClass({
   render: function() {
     return (
       <code>
-        {'\xa0'.repeat(this.state.value) /* non-breakable space */}
+        {_.repeat('\xa0', this.state.value) /* non-breakable space */}
         <span className="input">{this.props.children}</span>
       </code>
     );

@@ -43,7 +43,7 @@ ul.ingredients {
 .chefBox {
   height: 300px;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px 20px;
   transition: background-color 0.25s ease;
 }
@@ -81,4 +81,8 @@ ul.ingredients {
 
 .success {
   background-color: #c1f5b1;
+}
+
+#rating {
+  margin-top: 10px;
 }

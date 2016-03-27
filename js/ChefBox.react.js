@@ -13,6 +13,7 @@ var ChefBox = React.createClass({
   propTypes: {
     chefName: React.PropTypes.string.isRequired,
     recipe: React.PropTypes.object.isRequired,
+    onFailure: React.PropTypes.func.isRequired,
     widthClass: React.PropTypes.number,
   },
 
@@ -28,7 +29,6 @@ var ChefBox = React.createClass({
       timer: 10,
       onTimeout: this.nextStep,
       progress: 0,
-      strikes: 3,
       content: null,
       backgroundClass: '',
     };
@@ -67,6 +67,7 @@ var ChefBox = React.createClass({
     if (newStep === this.props.recipe.steps.length) {
       this.setState({
         content: null,
+        backgroundClass: '',
         timer: 0,
       });
 
@@ -89,6 +90,7 @@ var ChefBox = React.createClass({
       // Clear content of recipe step first
       this.setState({
         content: null,
+        backgroundClass: '',
         timer: timer,
         onTimeout: onTimeout ? onTimeout.bind(this) : null,
       });
@@ -109,25 +111,19 @@ var ChefBox = React.createClass({
   },
 
   failure: function(text) {
-    var strikesLeft = this.state.strikes - 1;
     this.setState({
       content: null,
-      strikes: strikesLeft,
+      backgroundClass: 'failure',
     });
 
     // Wait 250ms before updating for fade effect
     this.setTimeout(() => {
-      if (strikesLeft === 0) {
-        // TODO: propagate failure to other chefs
+      this.props.onFailure(() => {
         this.setState({
           content: this.renderFailure(text),
-          backgroundClass: 'failure',
         });
-      } else {
-        this.nextStep();
-      }
+      }, this.nextStep);
     }, 250);
-
   },
 
   onProgress: function(progress) {
@@ -196,19 +192,6 @@ var ChefBox = React.createClass({
     );
   },
 
-  renderStrikes: function() {
-    var heartFull = <span className="glyphicon glyphicon-heart" />;
-    var heartEmpty = <span className="glyphicon glyphicon-heart-empty" />;
-
-    return (
-      <span className="padLeft fireRed">
-        {this.state.strikes >= 1 ? heartFull : heartEmpty}
-        {this.state.strikes >= 2 ? heartFull : heartEmpty}
-        {this.state.strikes >= 3 ? heartFull : heartEmpty}
-      </span>
-    );
-  },
-
   render: function() {
     var classes = cx('col-xs-12', 'col-sm-6',
       {[`col-md-${this.props.widthClass}`]: true}
@@ -217,7 +200,7 @@ var ChefBox = React.createClass({
     return (
       <div className={classes}>
         <div className={cx('chefBox', this.state.backgroundClass)}>
-          <h4>{this.props.chefName} {this.renderStrikes()} {this.renderTime()}</h4>
+          <h4>{this.props.chefName} {this.renderTime()}</h4>
           {this.renderTimer()}
           <div className="padTop">
             <TransitionGroup enterTimeout={250}

@@ -1,7 +1,5 @@
 var React = require('react');
 
-require('./helper.js');
-
 var Counter = React.createClass({
   propTypes: {
     children: React.PropTypes.number,
