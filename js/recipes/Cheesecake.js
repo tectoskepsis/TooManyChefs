@@ -19,6 +19,7 @@ var Cheesecake = {
       pretext: <span>Using the arrow keys, preheat the oven to 325°F.<br/></span>,
       instruction: 300,
       type: 'counter',
+      goalValue: 325,
       timer: 8,
       onTimeout: function(value) {
         if (value >= 320 && value <= 330) {
@@ -158,6 +159,7 @@ var Cheesecake = {
       pretext: <span>54 minutes to go... maybe we should turn up the temperature to 400°F to speed things up.<br/></span>,
       instruction: 325,
       type: 'counter',
+      goalValue: 400,
       timer: 10,
       onTimeout: function(value) {
         if (value >= 395 && value <= 405) {
@@ -172,6 +174,7 @@ var Cheesecake = {
       instruction: 400,
       type: 'counter',
       stepValue: 50,
+      goalValue: 1000,
       timer: 10,
       onTimeout: function(value) {
         if (value >= 995) {

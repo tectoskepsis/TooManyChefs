@@ -16,8 +16,17 @@ code {
   border-radius: 0;
 }
 
+code > span {
+  transition: color 250ms ease;
+}
+
 code > .input {
   color: #0056a0;
+  font-weight: 800;
+}
+
+code > .correct {
+  color: #228822;
   font-weight: 800;
 }
 
@@ -41,11 +50,10 @@ ul.ingredients {
 }
 
 .chefBox {
-  height: 300px;
+  min-height: 200px;
   width: 100%;
-  margin-top: 10px;
   padding: 10px 20px;
-  transition: background-color 0.25s ease;
+  transition: background-color 250ms ease;
 }
 
 .fade-enter {
@@ -75,6 +83,14 @@ ul.ingredients {
   color: #ff0500;
 }
 
+.darkBlue {
+  color: #0056a0;
+}
+
+.lightBlue {
+  color: #659cf3;
+}
+
 .failure {
   background-color: #ffbaba;
 }
@@ -84,5 +100,5 @@ ul.ingredients {
 }
 
 #rating {
-  margin-top: 10px;
+  margin: 5px auto;
 }

@@ -59,9 +59,12 @@ var ChefBox = React.createClass({
     }
   },
 
-  nextStep: function() {
+  nextStep: function(postFail) {
     var newStep = this.state.step + 1;
     this.clearInterval(this.timerInterval);
+    if (!postFail) {
+      this.setState({backgroundClass: 'success'});
+    }
 
     // Completed recipe
     if (newStep === this.props.recipe.steps.length) {
@@ -90,7 +93,6 @@ var ChefBox = React.createClass({
       // Clear content of recipe step first
       this.setState({
         content: null,
-        backgroundClass: '',
         timer: timer,
         onTimeout: onTimeout ? onTimeout.bind(this) : null,
       });
@@ -99,6 +101,7 @@ var ChefBox = React.createClass({
       this.setTimeout(() => {
         this.timerInterval = this.setInterval(this.updateTimer, 1000);
         this.setState({
+          backgroundClass: '',
           content: <RecipeStep onProgress={this.onProgress} {...stepProps} />,
           step: newStep,
         });
@@ -122,7 +125,7 @@ var ChefBox = React.createClass({
         this.setState({
           content: this.renderFailure(text),
         });
-      }, this.nextStep);
+      }, this.nextStep.bind(this, true));
     }, 250);
   },
 
@@ -196,10 +199,11 @@ var ChefBox = React.createClass({
     var classes = cx('col-xs-12', 'col-sm-6',
       {[`col-md-${this.props.widthClass}`]: true}
     );
+    var style = {height: window.innerHeight / 2 - 20};
 
     return (
       <div className={classes}>
-        <div className={cx('chefBox', this.state.backgroundClass)}>
+        <div className={cx('chefBox', this.state.backgroundClass)} style={style}>
           <h4>{this.props.chefName} {this.renderTime()}</h4>
           {this.renderTimer()}
           <div className="padTop">

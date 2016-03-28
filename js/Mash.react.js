@@ -52,9 +52,12 @@ var Mash = React.createClass({
 
   render: function() {
     return (
-      <code>
-        <span className="input">{this.props.children}</span> × {this.state.value}
-      </code>
+      <span className="center">
+        <br/>
+        <code>
+          <span className="input">{this.props.children}</span> × {this.state.value}
+        </code>
+      </span>
     );
   },
 });
