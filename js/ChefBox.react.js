@@ -3,6 +3,7 @@ var React = require('react');
 var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('timeout-transition-group');
 
+var chroma = require('chroma-js');
 var cx = require('classnames');
 
 var RecipeStep = require('./RecipeStep.react.js');
@@ -26,11 +27,13 @@ var ChefBox = React.createClass({
   getInitialState: function() {
     return {
       step: -1,
+      startTime: 10,
       timer: 10,
       onTimeout: this.nextStep,
       progress: 0,
       content: null,
       backgroundClass: '',
+      lives: 3,
     };
   },
 
@@ -93,6 +96,7 @@ var ChefBox = React.createClass({
       // Clear content of recipe step first
       this.setState({
         content: null,
+        startTime: timer,
         timer: timer,
         onTimeout: onTimeout ? onTimeout.bind(this) : null,
       });
@@ -114,18 +118,23 @@ var ChefBox = React.createClass({
   },
 
   failure: function(text) {
+    var livesLeft = this.state.lives - 1;
     this.setState({
       content: null,
       backgroundClass: 'failure',
+      lives: livesLeft,
     });
 
     // Wait 250ms before updating for fade effect
     this.setTimeout(() => {
-      this.props.onFailure(() => {
+      if (livesLeft === 0) {
         this.setState({
           content: this.renderFailure(text),
         });
-      }, this.nextStep.bind(this, true));
+        this.props.onFailure();
+      } else {
+        this.nextStep(true);
+      }
     }, 250);
   },
 
@@ -156,10 +165,16 @@ var ChefBox = React.createClass({
       return null;
     }
 
-    var time = Math.min(100, (this.state.timer - 1) * 10);
-    var color = '#659cf3'; // TODO: turn redder as time gets shorter
+    var progress = this.state.timer === this.state.startTime
+      ? 1
+      : (this.state.timer - 1.4) / (this.state.startTime - 1);
+
+    // Scale color from red to blue based on time
+    var scale = chroma.scale(['#ff0500', '#ffd320', '#659cf3']);
+    var color = scale(progress).hex();
+
     return (
-      <Progress percent={time} strokeWidth="2" strokeColor={color} />
+      <Progress className="timer" percent={progress * 100} strokeWidth="2" strokeColor={color} />
     );
   },
 
@@ -195,6 +210,17 @@ var ChefBox = React.createClass({
     );
   },
 
+  renderLives: function() {
+    var heartFull = (i) => <span key={i} className="fireRed glyphicon glyphicon-heart" />;
+    var heartEmpty = (i) => <span key={i} className="lightRed glyphicon glyphicon-heart-empty" />;
+
+    return (
+      <span className="padLeft">
+        {_.range(3).map(i => this.state.lives > i ? heartFull(i) : heartEmpty(i))}
+      </span>
+    );
+  },
+
   render: function() {
     var classes = cx('col-xs-12', 'col-sm-6',
       {[`col-md-${this.props.widthClass}`]: true}
@@ -204,7 +230,7 @@ var ChefBox = React.createClass({
     return (
       <div className={classes}>
         <div className={cx('chefBox', this.state.backgroundClass)} style={style}>
-          <h4>{this.props.chefName} {this.renderTime()}</h4>
+          <h4>{this.props.chefName} {this.renderLives()} {this.renderTime()}</h4>
           {this.renderTimer()}
           <div className="padTop">
             <TransitionGroup enterTimeout={250}

@@ -50,6 +50,7 @@ ul.ingredients {
 }
 
 .chefBox {
+  margin: 10px auto;
   min-height: 200px;
   width: 100%;
   padding: 10px 20px;
@@ -83,6 +84,10 @@ ul.ingredients {
   color: #ff0500;
 }
 
+.lightRed {
+  color: #da8280;
+}
+
 .darkBlue {
   color: #0056a0;
 }
@@ -99,6 +104,8 @@ ul.ingredients {
   background-color: #c1f5b1;
 }
 
-#rating {
-  margin: 5px auto;
+/* Decrease timer bar animation speed */
+.rc-progress-line-path {
+  transition: stroke-dashoffset 2s ease,
+              stroke 2s ease !important;
 }

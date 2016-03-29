@@ -16,7 +16,6 @@ var Game = React.createClass({
       gameState: 'title',  // title | menu | started | loading
       numPlayers: 0,
       chefs: [],
-      rating: 5, // health
     };
   },
 
@@ -59,46 +58,21 @@ var Game = React.createClass({
     }, 3000);
   },
 
-  onFailure: function(onLose, onContinue) {
-    var rating = this.state.rating - 1;
-    this.setState({rating: rating});
-
-    if (rating <= 0) {
-      // TODO: make everyone lose simultaneously
-      onLose();
-    } else {
-      onContinue();
-    }
-  },
-
-  renderRating: function() {
-    var starFull = (i) => <span key={i} className="darkBlue glyphicon glyphicon-star" />;
-    var starEmpty = (i) => <span key={i} className="lightBlue glyphicon glyphicon-star-empty" />;
-
-    return (
-      <h4 id="rating" className="center">
-        {_.range(5).map(i => this.state.rating > i ? starFull(i) : starEmpty(i))}
-      </h4>
-    );
-  },
-
-  renderChefBox: function(recipe, i) {
-    var widthClass = this.state.numPlayers > 4 ? 4 : 6;
-    return <ChefBox key={i} chefName={recipe.chefName}
-                    recipe={recipe} onFailure={this.onFailure}
-                    widthClass={widthClass}
-           />;
+  onFailure: function() {
+    // TODO: propagate failure to everyone
   },
 
   render: function() {
     if (this.state.gameState === 'started') {
-      var halfChefs = this.state.numPlayers / 2;
+      var widthClass = this.state.numPlayers > 4 ? 4 : 6;
 
       return (
         <div>
-          {_.take(this.state.chefs, halfChefs).map(this.renderChefBox)}
-          {this.renderRating()}
-          {_.takeRight(this.state.chefs, this.state.numPlayers - halfChefs).map(this.renderChefBox)}
+          {this.state.chefs.map((recipe, i) =>
+            <ChefBox key={i} chefName={recipe.chefName}
+                    recipe={recipe} onFailure={this.onFailure}
+                    widthClass={widthClass}
+            />)}
         </div>
       );
     }
