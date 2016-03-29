@@ -34,6 +34,7 @@ var ChefBox = React.createClass({
       content: null,
       backgroundClass: '',
       lives: 3,
+      gameOver: false, // true if lost or won
     };
   },
 
@@ -62,6 +63,25 @@ var ChefBox = React.createClass({
     }
   },
 
+  gameOver: function(text) {
+    if (this.state.gameOver) {
+      return;
+    }
+
+    this.clearInterval(this.timerInterval);
+    this.setState({
+      content: null,
+      backgroundClass: 'failure',
+      timer: 0,
+      gameOver: true,
+    });
+
+    // Wait 250ms before updating for fade effect
+    this.setTimeout(() => {
+      this.setState({content: this.renderFailure(text)});
+    }, 250);
+  },
+
   nextStep: function(postFail) {
     var newStep = this.state.step + 1;
     this.clearInterval(this.timerInterval);
@@ -75,6 +95,7 @@ var ChefBox = React.createClass({
         content: null,
         backgroundClass: '',
         timer: 0,
+        gameOver: true,
       });
 
       // Wait 250ms before updating for fade effect
@@ -118,6 +139,10 @@ var ChefBox = React.createClass({
   },
 
   failure: function(text) {
+    if (this.state.lives === 0) {
+      return;
+    }
+
     var livesLeft = this.state.lives - 1;
     this.setState({
       content: null,
@@ -128,9 +153,7 @@ var ChefBox = React.createClass({
     // Wait 250ms before updating for fade effect
     this.setTimeout(() => {
       if (livesLeft === 0) {
-        this.setState({
-          content: this.renderFailure(text),
-        });
+        this.setState({content: this.renderFailure(text)});
         this.props.onFailure();
       } else {
         this.nextStep(true);

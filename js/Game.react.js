@@ -58,8 +58,17 @@ var Game = React.createClass({
     }, 3000);
   },
 
-  onFailure: function() {
-    // TODO: propagate failure to everyone
+  onFailure: function(loser) {
+    // Propagate failure to everyone
+    for (var i = 0; i < this.state.numPlayers; i++) {
+      if (i === loser) {
+        continue;
+      }
+
+      this.refs['chef' + i].gameOver(
+        <p>{this.state.chefs[loser].chefName} dropped the ball!</p>
+      );
+    }
   },
 
   render: function() {
@@ -69,9 +78,11 @@ var Game = React.createClass({
       return (
         <div>
           {this.state.chefs.map((recipe, i) =>
-            <ChefBox key={i} chefName={recipe.chefName}
-                    recipe={recipe} onFailure={this.onFailure}
-                    widthClass={widthClass}
+            <ChefBox key={i} ref={'chef' + i}
+                     chefName={recipe.chefName}
+                     recipe={recipe}
+                     onFailure={this.onFailure.bind(this, i)}
+                     widthClass={widthClass}
             />)}
         </div>
       );
