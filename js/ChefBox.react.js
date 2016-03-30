@@ -6,15 +6,18 @@ var TransitionGroup = require('timeout-transition-group');
 var chroma = require('chroma-js');
 var cx = require('classnames');
 
+var Instruction = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
 var ChefBox = React.createClass({
   mixins: [TimerMixin],
 
   propTypes: {
+    chefId: React.PropTypes.number.isRequired,
     chefName: React.PropTypes.string.isRequired,
     recipe: React.PropTypes.object.isRequired,
     onFailure: React.PropTypes.func.isRequired,
+    stillAlive: React.PropTypes.number.isRequired,
     widthClass: React.PropTypes.number,
   },
 
@@ -31,9 +34,11 @@ var ChefBox = React.createClass({
       timer: 10,
       onTimeout: this.nextStep,
       progress: 0,
-      content: null,
       backgroundClass: '',
+      content: null,
+      popups: [],
       lives: 3,
+      rescue: 0, // how many times been rescued
       gameOver: false, // true if lost or won
     };
   },
@@ -71,6 +76,7 @@ var ChefBox = React.createClass({
     this.clearInterval(this.timerInterval);
     this.setState({
       content: null,
+      popups: [],
       backgroundClass: 'failure',
       timer: 0,
       gameOver: true,
@@ -146,6 +152,7 @@ var ChefBox = React.createClass({
     var livesLeft = this.state.lives - 1;
     this.setState({
       content: null,
+      popups: [],
       backgroundClass: 'failure',
       lives: livesLeft,
     });
@@ -153,16 +160,76 @@ var ChefBox = React.createClass({
     // Wait 250ms before updating for fade effect
     this.setTimeout(() => {
       if (livesLeft === 0) {
-        this.setState({content: this.renderFailure(text)});
-        this.props.onFailure();
+        this.timerInterval = this.setInterval(this.updateTimer, 1000);
+        this.setState({
+          startTime: 10,
+          timer: 10,
+          onTimeout: this.onRescueTimeout,
+          content: this.renderRescue(),
+          rescue: 0,
+        });
+        this.props.onFailure(true);
       } else {
         this.nextStep(true);
       }
     }, 250);
   },
 
+  onRescueTimeout: function() {
+    this.clearInterval(this.timerInterval);
+    this.setState({content: null});
+
+    this.setTimeout(() => {
+      this.setState({content: this.renderFailure()});
+      this.props.onFailure(false);
+    });
+  },
+
   onProgress: function(progress) {
     this.setState({progress: progress});
+  },
+
+  showRescuePopup: function(chefName, onRescue) {
+    var popups = this.state.popups;
+    var item = popups.length;
+    popups.push(this.renderRescuePopup(chefName, onRescue, item));
+    this.setState({popups: popups});
+  },
+
+  hidePopup: function(i) {
+    var popups = this.state.popups;
+    _.pullAt(popups, i); // remove popup i
+    this.setState({popups: popups});
+  },
+
+  rescue: function(onRescued) {
+    var rescueCount = this.state.rescue + 1;
+
+    // No longer need rescuing
+    if (rescueCount >= this.props.stillAlive) {
+      this.setState({lives: 1});
+      this.nextStep(true);
+      onRescued();
+    } else {
+      this.setState({rescue: rescueCount});
+    }
+  },
+
+  renderRescuePopup: function(name, onRescue, i) {
+    var rescueText = ['save', 'rescue', 'help', 'assist', 'support', 'inspire'];
+    var callback = () => {
+      this.hidePopup(i);
+      onRescue();
+    };
+
+    return {
+      type: 'danger',
+      content: (
+        <span>
+          {name} is failing! Type <Instruction onComplete={callback}>{_.sample(rescueText)}</Instruction> to aid them.
+        </span>
+      ),
+    };
   },
 
   renderTime: function() {
@@ -226,6 +293,15 @@ var ChefBox = React.createClass({
     );
   },
 
+  renderRescue: function() {
+    return (
+      <div>
+        <h4>RECIPE FAILED</h4>
+        <p>Ask the other chefs to save you.</p>
+      </div>
+    );
+  },
+
   renderRecipeDone: function() {
     return (
       <div>Great work! You've completed the recipe for {this.props.recipe.name}.</div>
@@ -260,6 +336,10 @@ var ChefBox = React.createClass({
                              leaveTimeout={250}
                              transitionName="fade">
               {this.state.content}
+              {this.state.popups.map((popup, i) =>
+                <div key={i} className={cx('popup', 'alert', 'alert-' + popup.type)}>
+                  {popup.content}
+                </div>)}
             </TransitionGroup>
           </div>
         </div>

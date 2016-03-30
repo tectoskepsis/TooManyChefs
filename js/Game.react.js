@@ -16,6 +16,7 @@ var Game = React.createClass({
       gameState: 'title',  // title | menu | started | loading
       numPlayers: 0,
       chefs: [],
+      stillAlive: 0,
     };
   },
 
@@ -53,22 +54,55 @@ var Game = React.createClass({
       this.setState({
         gameState: 'started',
         numPlayers: numPlayers,
+        stillAlive: numPlayers,
         chefs: chefs,
       });
     }, 3000);
   },
 
-  onFailure: function(loser) {
+  onFailure: function(loser, canSave) {
+    var stillAlive = this.state.stillAlive - 1;
+    var chefs = this.state.chefs;
+    chefs[loser].dead = true;
+    this.setState({
+      stillAlive: stillAlive,
+      chefs: chefs,
+    });
+
     // Propagate failure to everyone
     for (var i = 0; i < this.state.numPlayers; i++) {
       if (i === loser) {
         continue;
       }
 
-      this.refs['chef' + i].gameOver(
-        <p>{this.state.chefs[loser].chefName} dropped the ball!</p>
-      );
+      var chef = this.refs['chef' + i];
+      var chefName = chefs[loser].chefName;
+
+      if (canSave && stillAlive > 0) {
+        if (!chefs[i].dead) {
+          // When rescued, unset dead and increment stillAlive
+          var onRescue = () => {
+            var chefs = this.state.chefs;
+            chefs[loser].dead = false;
+            this.setState({
+              chefs: chefs,
+              stillAlive: this.state.stillAlive + 1,
+            });
+          };
+
+          chef.showRescuePopup(chefName,
+            () => this.refs['chef' + loser].rescue(onRescue));
+        }
+      } else {
+        chef.gameOver(
+          <p>{chefName} failed to complete their recipe!</p>
+        );
+      }
     }
+  },
+
+  onRescued: function(loser) {
+    this.setState({stillAlive: this.state.stillAlive + 1});
   },
 
   render: function() {
@@ -78,10 +112,12 @@ var Game = React.createClass({
       return (
         <div>
           {this.state.chefs.map((recipe, i) =>
-            <ChefBox key={i} ref={'chef' + i}
+            <ChefBox key={i} ref={'chef' + i} chefId={i}
                      chefName={recipe.chefName}
                      recipe={recipe}
-                     onFailure={this.onFailure.bind(this, i)}
+                     onFailure={_.partial(this.onFailure, i)}
+                     onRescued={_.partial(this.onRescued, i)}
+                     stillAlive={this.state.stillAlive}
                      widthClass={widthClass}
             />)}
         </div>
