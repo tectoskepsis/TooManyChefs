@@ -17,6 +17,8 @@ var ChefBox = React.createClass({
     chefName: React.PropTypes.string.isRequired,
     recipe: React.PropTypes.object.isRequired,
     onFailure: React.PropTypes.func.isRequired,
+    onRescued: React.PropTypes.func.isRequired,
+    onComplete: React.PropTypes.func.isRequired,
     stillAlive: React.PropTypes.number.isRequired,
     widthClass: React.PropTypes.number,
   },
@@ -107,7 +109,7 @@ var ChefBox = React.createClass({
       // Wait 250ms before updating for fade effect
       this.setTimeout(() => this.setState({
         backgroundClass: 'success',
-        content: this.renderRecipeDone(),
+        content: <div>{this.renderRecipeDone()}{this.props.onComplete(this.props.chefId)}</div>,
         step: newStep,
       }), 250);
 
@@ -207,14 +209,14 @@ var ChefBox = React.createClass({
     this.setState({popups: popups});
   },
 
-  rescue: function(onRescued) {
+  rescue: function(loser) {
     var rescueCount = this.state.rescue + 1;
 
     // No longer need rescuing
     if (rescueCount >= this.props.stillAlive) {
       this.setState({lives: 1});
       this.nextStep(true);
-      onRescued();
+      this.props.onRescued(loser);
     } else {
       this.setState({rescue: rescueCount});
     }

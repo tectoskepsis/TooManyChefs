@@ -80,29 +80,40 @@ var Game = React.createClass({
 
       if (canSave && stillAlive > 0) {
         if (!chefs[i].dead) {
-          // When rescued, unset dead and increment stillAlive
-          var onRescue = () => {
-            var chefs = this.state.chefs;
-            chefs[loser].dead = false;
-            this.setState({
-              chefs: chefs,
-              stillAlive: this.state.stillAlive + 1,
-            });
-          };
-
           chef.showRescuePopup(chefName,
-            () => this.refs['chef' + loser].rescue(onRescue));
+            () => this.refs['chef' + loser].rescue(loser));
         }
       } else {
         chef.gameOver(
-          <p>{chefName} failed to complete their recipe!</p>
+          <div>
+            <p>{chefName} failed to complete their recipe!</p>
+            {stillAlive === 0 && 'Press Ctrl-R to start over.'}
+          </div>
         );
       }
     }
   },
 
+  // When rescued, unset dead and increment stillAlive
   onRescued: function(loser) {
-    this.setState({stillAlive: this.state.stillAlive + 1});
+    var chefs = this.state.chefs;
+    chefs[loser].dead = false;
+    this.setState({
+      chefs: chefs,
+      stillAlive: this.state.stillAlive + 1,
+    });
+  },
+
+  onComplete: function(winner) {
+    var chefs = this.state.chefs;
+    chefs[loser].dead = true; // mark "dead" so they can't get popups
+    var stillAlive = this.state.stillAlive - 1;
+    this.setState({
+      chefs: chefs,
+      stillAlive: stillAlive,
+    });
+
+    return stillAlive === 0 && 'Press Ctrl-R to play again.';
   },
 
   render: function() {
@@ -116,7 +127,8 @@ var Game = React.createClass({
                      chefName={recipe.chefName}
                      recipe={recipe}
                      onFailure={_.partial(this.onFailure, i)}
-                     onRescued={_.partial(this.onRescued, i)}
+                     onComplete={this.onComplete}
+                     onRescued={this.onRescued}
                      stillAlive={this.state.stillAlive}
                      widthClass={widthClass}
             />)}
