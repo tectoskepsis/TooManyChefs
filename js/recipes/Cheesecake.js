@@ -136,24 +136,31 @@ var Cheesecake = {
       },
     },
     {
+      pretext: 'Set the oven timer for',
+      instruction: '55',
+      posttext: 'minutes.',
+      timer: 10,
+    },
+    {
       pretext: 'Twiddle your thumbs for 55 minutes.',
       timer: 3300,
       onStart: function() {
         this.setTimeout(nextStep, 10000); // just wait 10 seconds
       },
-      onTimeout: nextStep,
     },
     {
-      pretext: <span>Maybe we should play a game to pass the time. Mash the caps-lock key to mess with the other chefs.<br/></span>,
+      pretext: <span>Has it been 55 minutes yet? Tap CAPS-LOCK to turn on the oven light and check on the cheesecake.<br/></span>,
       instruction: 'CAPSLOCK',
       type: 'mash',
-      mashCount: 6,
+      mashCount: 1,
       timer: 10,
     },
     {
-      pretext: 'Haha, aren\'t you the greatest troll. Chuckle to yourself for a few seconds.',
+      pretext: <span>Turn off the oven light and apologize profusely to the other chefs.<br/></span>,
+      instruction: 'CAPSLOCK',
+      type: 'mash',
+      mashCount: 1,
       timer: 10,
-      onTimeout: nextStep,
     },
     {
       pretext: <span>54 minutes to go... maybe we should turn up the temperature to 400°F to speed things up.<br/></span>,

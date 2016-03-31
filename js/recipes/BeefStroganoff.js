@@ -66,18 +66,16 @@ var BeefStroganoff = {
       timer: 10,
     },
     {
-      pretext: <span>Add the beef and cook until brown; then push it to one side with the arrow keys.<br/>|</span>,
-      instruction: <span><ColorChange duration={5000} toColor="#a94442">BEEF</ColorChange>{'<=finger='}</span>,
-      posttext: <span><br/>----------------------------</span>,
-      type: 'dial',
-      maxValue: 10,
-      startValue: 10,
-      timer: 15,
-      onTimeout: function(value) {
-        if (value <= 2) {
+      pretext: <span>Add the <ColorChange duration={5000} toColor="#a94442">BEEF</ColorChange> and cook until brown; then type</span>,
+      instruction: 'ready',
+      posttext: '.',
+      timer: 20,
+      onComplete: function(progress, time) {
+        // Only proceed if color is brown
+        if (time <= 10) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed, failed to push beef to left!</p>);
+          this.failure(<p>Recipe failed. Patty not cooked to brown.</p>);
         }
       },
     },

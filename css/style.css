@@ -104,6 +104,11 @@ ul.ingredients {
   background-color: #c1f5b1;
 }
 
+.popup {
+  position: relative;
+  bottom: 20%;
+}
+
 /* Decrease timer bar animation speed */
 .rc-progress-line-path {
   transition: stroke-dashoffset 2s ease,

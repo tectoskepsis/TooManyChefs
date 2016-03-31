@@ -191,14 +191,19 @@ var ChefBox = React.createClass({
 
   showRescuePopup: function(chefName, onRescue) {
     var popups = this.state.popups;
-    var item = popups.length;
-    popups.push(this.renderRescuePopup(chefName, onRescue, item));
+    popups.push(this.renderRescuePopup(chefName, onRescue));
     this.setState({popups: popups});
   },
 
-  hidePopup: function(i) {
+  showPopup: function(chefName, popup) {
     var popups = this.state.popups;
-    _.pullAt(popups, i); // remove popup i
+    popups.push(popup);
+    this.setState({popups: popups});
+  },
+
+  hidePopup: function(key) {
+    var popups = this.state.popups;
+    _.remove(popups, (p) => p.key === key);
     this.setState({popups: popups});
   },
 
@@ -215,14 +220,15 @@ var ChefBox = React.createClass({
     }
   },
 
-  renderRescuePopup: function(name, onRescue, i) {
+  renderRescuePopup: function(name, onRescue) {
     var rescueText = ['save', 'rescue', 'help', 'assist', 'support', 'inspire'];
     var callback = () => {
-      this.hidePopup(i);
+      this.hidePopup(name);
       onRescue();
     };
 
     return {
+      key: name,
       type: 'danger',
       content: (
         <span>
@@ -230,6 +236,18 @@ var ChefBox = React.createClass({
         </span>
       ),
     };
+  },
+
+  renderSteps: function() {
+    if (true/*this.state.step < 0*/) { // TODO: decide whether or not to render
+      return null;
+    }
+
+    return (
+      <span className="padLeft">
+        [{this.state.step}/{this.props.recipe.steps.length}]
+      </span>
+    );
   },
 
   renderTime: function() {
@@ -329,15 +347,15 @@ var ChefBox = React.createClass({
     return (
       <div className={classes}>
         <div className={cx('chefBox', this.state.backgroundClass)} style={style}>
-          <h4>{this.props.chefName} {this.renderLives()} {this.renderTime()}</h4>
+          <h4>{this.props.chefName} {this.renderLives()} {this.renderSteps()} {this.renderTime()}</h4>
           {this.renderTimer()}
           <div className="padTop">
             <TransitionGroup enterTimeout={250}
                              leaveTimeout={250}
                              transitionName="fade">
               {this.state.content}
-              {this.state.popups.map((popup, i) =>
-                <div key={i} className={cx('popup', 'alert', 'alert-' + popup.type)}>
+              {this.state.popups.map((popup) =>
+                <div key={popup.key} className={cx('popup', 'alert', 'alert-' + popup.type)}>
                   {popup.content}
                 </div>)}
             </TransitionGroup>
