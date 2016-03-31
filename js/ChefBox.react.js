@@ -6,6 +6,7 @@ var TransitionGroup = require('timeout-transition-group');
 var chroma = require('chroma-js');
 var cx = require('classnames');
 
+var CapsLock = require('./CapsLock.react.js');
 var Instruction = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
@@ -356,6 +357,7 @@ var ChefBox = React.createClass({
                              leaveTimeout={250}
                              transitionName="fade">
               {this.state.content}
+              <CapsLock />
               {this.state.popups.map((popup) =>
                 <div key={popup.key} className={cx('popup', 'alert', 'alert-' + popup.type)}>
                   {popup.content}

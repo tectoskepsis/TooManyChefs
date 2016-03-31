@@ -3,6 +3,7 @@ var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('timeout-transition-group');
 var _ = require('lodash');
 
+var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
 var Inst = require('./Instruction.react.js');
 
@@ -164,6 +165,7 @@ var Game = React.createClass({
                          transitionName="fade">
           {this.state.gameState === 'menu' ? playerMenu :
            this.state.gameState === 'loading' ? loading : null}
+          <CapsLock />
         </TransitionGroup>
       </div>
     );

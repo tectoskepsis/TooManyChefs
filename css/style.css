@@ -109,6 +109,11 @@ ul.ingredients {
   bottom: 20%;
 }
 
+.capslock {
+  width: 150px;
+  margin: 0 auto;
+}
+
 /* Decrease timer bar animation speed */
 .rc-progress-line-path {
   transition: stroke-dashoffset 2s ease,
