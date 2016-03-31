@@ -61,13 +61,13 @@ var Arrows = React.createClass({
       return s.split('').map((c, i) => {
         switch (c) {
           case 'u':
-            return <span key={i} className="glyphicon glyphicon-arrow-up" />;
+            return <span key={i} className="padLeft10 glyphicon glyphicon-arrow-up" />;
           case 'd':
-            return <span key={i} className="glyphicon glyphicon-arrow-down" />;
+            return <span key={i} className="padLeft10 glyphicon glyphicon-arrow-down" />;
           case 'l':
-            return <span key={i} className="glyphicon glyphicon-arrow-left" />;
+            return <span key={i} className="padLeft10 glyphicon glyphicon-arrow-left" />;
           case 'r':
-            return <span key={i} className="glyphicon glyphicon-arrow-right" />;
+            return <span key={i} className="padLeft10 glyphicon glyphicon-arrow-right" />;
         }
       });
     }
@@ -75,10 +75,13 @@ var Arrows = React.createClass({
     var prefix = this.props.children.substring(0, this.state.progress);
     var suffix = this.props.children.substring(this.state.progress);
     return (
-      <code>
-        <span className="input">{strToArrow(prefix)}</span>
-        <span>{strToArrow(suffix)}</span>
-      </code>
+      <span className="center">
+        <br/>
+        <code>
+          <span className="input">{strToArrow(prefix)}</span>
+          <span>{strToArrow(suffix)}</span>
+        </code>
+      </span>
     );
   },
 });
