@@ -13,6 +13,7 @@ var nextStep = function() {
 
 var CrabCakes = {
   name: 'Crab Cakes',
+  chefName: 'Saucier',
   type: 'appetizer',
   difficulty: 'easy',
   ingredients: ['1 egg', '8 oz crabmeat', '1/2 cup crackers', '3 tbsp mayonnaise', '4 tsp lemon juice', '1 tbsp butter', '1 tbsp green onion', 'Worcestershire sauce'],

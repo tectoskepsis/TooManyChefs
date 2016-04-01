@@ -36,6 +36,11 @@ code > .correct {
 
 .vcenter {
   margin-top: 20%;
+  margin-bottom: 20px;
+  transition: margin 250ms ease;
+}
+.vcenter.vtop {
+  margin-top: 5%;
 }
 
 .list-inline > li > code {
@@ -71,6 +76,17 @@ ul.ingredients {
 }
 .fade-leave.fade-leave-active {
   opacity: 0;
+}
+
+.fade {
+  opacity: 1;
+  transition: opacity 250ms ease-out;
+  height: auto;
+}
+.fade.fade-active {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
 }
 
 .padLeft {

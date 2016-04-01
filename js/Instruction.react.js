@@ -1,10 +1,14 @@
 var React = require('react');
+var TimerMixin = require('react-timer-mixin');
 
 var Instruction = React.createClass({
+  mixins: [TimerMixin],
+
   propTypes: {
     children: React.PropTypes.string.isRequired,
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func,
+    clear: React.PropTypes.bool,
   },
 
   getInitialState: function() {
@@ -47,6 +51,11 @@ var Instruction = React.createClass({
 
       if (complete && this.props.onComplete) {
         this.props.onComplete();
+        if (this.props.clear) {
+          this.setTimeout(() => {
+            this.setState({progress: 0, complete: false});
+          }, 500);
+        }
       }
     }
   },

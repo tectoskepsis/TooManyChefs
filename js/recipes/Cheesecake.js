@@ -8,6 +8,7 @@ var nextStep = function() {
 
 var Cheesecake = {
   name: 'Cheesecake Delight',
+  chefName: 'Pâtissier',
   type: 'dessert',
   difficulty: 'easy',
   ingredients: ['1 cup graham crackers', '3 tbsp + 1 cup sugar', '1/3 cup butter', '32 oz cream cheese', '1 tbsp vanilla', '4 eggs'],
