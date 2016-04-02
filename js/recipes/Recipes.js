@@ -1,18 +1,21 @@
-var appetizers = [
+var meal1 = [
+  require('./FriedRice.js'),
+  require('./BeefStroganoff.js'),
   require('./CrabCakes.js'),
-];
-
-var desserts = [
   require('./Cheesecake.js'),
 ];
 
-var entrees = [
-  require('./FriedRice.js'),
-  require('./BeefStroganoff.js'),
+module.exports = [
+  {
+    difficulty: 3,
+    recipes: meal1,
+  },
+  {
+    difficulty: 4,
+    recipes: meal1,
+  },
+  {
+    difficulty: 5,
+    recipes: meal1,
+  },
 ];
-
-module.exports = {
-  Appetizers: appetizers,
-  Desserts: desserts,
-  Entrees: entrees,
-};

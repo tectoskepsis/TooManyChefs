@@ -133,6 +133,19 @@ ul.ingredients {
   margin: 0 auto;
 }
 
+.dot {
+    display: inline-block;
+    background-color: #eee;
+    border: 1px solid #666;
+    border-radius: 5px;
+    height: 10px;
+    width: 10px;
+    margin: 0 2px;
+}
+.dot.active {
+    background-color: #0056a0;
+}
+
 /* Decrease timer bar animation speed */
 .rc-progress-line-path {
   transition: stroke-dashoffset 2s ease,

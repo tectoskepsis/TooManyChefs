@@ -7,6 +7,7 @@ var cx = require('classnames');
 
 var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
+var DifficultySelect = require('./DifficultySelect.react.js');
 var Inst = require('./Instruction.react.js');
 var Recipes = require('./recipes/Recipes.js');
 
@@ -18,6 +19,7 @@ var Game = React.createClass({
       gameState: 'title',  // title | help | menu | started | loading
       chefs: [],
       stillAlive: 0,
+      meal: 0,
     };
   },
 
@@ -27,19 +29,11 @@ var Game = React.createClass({
     this.setTimeout(() => this.setState({gameState: state}), delay);
   },
 
-  onStartGame: function(difficulty) {
-    // Assign recipes randomly from entrees, appetizers, and desserts
-    // TODO: instead of random recipes, choose from a difficulty range
-    var chefs = new Array(4);
-    var entrees = _.sampleSize(Recipes.Entrees, 2);
-    var chefNames = ['Chef de cuisine', 'Sous-chef'];
-    for (var i = 0; i < entrees.length; i++) {
-      chefs[i] = entrees[i];
-      chefs[i].chefName = chefNames[i];
-    }
-
-    chefs[2] = _.sample(Recipes.Appetizers);
-    chefs[3] = _.sample(Recipes.Desserts);
+  onStartGame: function() {
+    // Assign recipes based on selected meal (updating chef names)
+    var chefs = Recipes[this.state.meal].recipes;
+    chefs[0].chefName = 'Chef de cuisine';
+    chefs[1].chefName = 'Sous-chef';
 
     this.setStateDelay('loading', 500);
 
@@ -118,16 +112,17 @@ var Game = React.createClass({
     );
   },
 
+  onDifficultyProgress: function(val) {
+    this.setState({meal: val});
+  },
+
   renderRecipeMenu: function(fade) {
     return (
       <div className={cx('fade', {'fade-active': !fade})}>
-        {/* TODO: render carousel of recipe choices */}
-        <p>Difficulty:</p>
-        <ul className="list-inline">
-          <li><Inst onComplete={_.partial(this.onStartGame, 'easy')}>easy</Inst></li>
-          <li><Inst onComplete={_.partial(this.onStartGame, 'medium')}>medium</Inst></li>
-          <li><Inst onComplete={_.partial(this.onStartGame, 'hard')}>hard</Inst></li>
-        </ul>
+        <DifficultySelect onProgress={this.onDifficultyProgress} />
+        <br/>
+        <p>Select a meal with the arrow keys.</p>
+        <Inst onComplete={this.onStartGame}>play</Inst>
       </div>
     );
   },
@@ -197,6 +192,7 @@ var Game = React.createClass({
     var showState = (state) => this.state.gameState === state;
     var headerClass = showState('title') ? '' : 'vtop';
 
+    // TODO: instead of hiding, put all rendered subclasses in a TransitionGroup and add/remove from array
     return (
       <div className="center">
         <div className={cx('vcenter', headerClass)}>
