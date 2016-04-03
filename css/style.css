@@ -126,6 +126,10 @@ ul.ingredients {
   margin: 0 auto;
 }
 
+.recipeName {
+  margin-top: -30px;
+}
+
 .dot {
     display: inline-block;
     background-color: #eee;

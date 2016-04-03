@@ -57,14 +57,14 @@ var Game = React.createClass({
     // Assign recipes based on selected meal
     this.setStateDelay('loading', 500);
 
-    // Wait a bit to fade out
+    // Wait a random amount of time before loading (3-5s)
     this.setTimeout(() => {
       this.setState({
         gameState: 'started',
         stillAlive: 0,
         chefs: Recipes[this.state.meal].recipes,
       });
-    }, 3000);
+    }, 500 + _.random(3000, 5000));
   },
 
   onReady: function(player) {
@@ -194,16 +194,20 @@ var Game = React.createClass({
 
   renderLoading: function() {
     var loadingText = [
-      'Compiling recipes...',
-      'Donning chef hats...',
-      'Sharpening knives...',
-      'Wiping counters...'
+      'Compiling recipes',
+      'Donning chef hats',
+      'Sharpening knives',
+      'Wiping counters',
+      'Scrubbing dishes',
+      'Gathering ingredients',
+      'Allocating cutlery',
     ];
     // TODO: add loading tips?
+    // TODO: animate ellipses
 
     return (
-      <div>
-        {_.sample(loadingText)}
+      <div className="padTop vcenter vtop">
+        {_.sample(loadingText)}...
       </div>
     );
   },

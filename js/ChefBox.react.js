@@ -6,6 +6,7 @@ var TransitionGroup = require('react-addons-css-transition-group');
 var chroma = require('chroma-js');
 var cx = require('classnames');
 
+var Chef = require('./Chef.js');
 var CapsLock = require('./CapsLock.react.js');
 var Inst = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
@@ -257,18 +258,6 @@ var ChefBox = React.createClass({
     };
   },
 
-  renderSteps: function() {
-    if (true/*this.state.step < 0*/) { // TODO: decide whether or not to render
-      return null;
-    }
-
-    return (
-      <span className="padLeft">
-        [{this.state.step}/{this.props.recipe.steps.length}]
-      </span>
-    );
-  },
-
   renderTime: function() {
     if (this.state.timer === 0) {
       return null;
@@ -302,14 +291,11 @@ var ChefBox = React.createClass({
   },
 
   renderChefSelect: function() {
-    var key = this.props.chefId === 0 ? 'q' :
-              this.props.chefId === 1 ? 'p' :
-              this.props.chefId === 2 ? 'z' :
-              'm';
+    var keys = ['q', 'p', 'z', 'm'];
     return (
       <div>
-        <b>{this.props.recipe.name}</b> - {this.props.recipe.type} ({this.props.recipe.difficulty})
-        <p>Type <Inst onComplete={this.onChefSelect}>{key}</Inst> to join the kitchen.</p>
+        <p>{Chef[this.props.recipe.chefName]}</p>
+        <p>Press <Inst onComplete={this.onChefSelect}>{keys[this.props.chefId]}</Inst> to join the kitchen.</p>
       </div>
     );
   },
@@ -317,7 +303,6 @@ var ChefBox = React.createClass({
   renderChefWaiting: function() {
     return (
       <div>
-        <b>{this.props.recipe.name}</b> - {this.props.recipe.type} ({this.props.recipe.difficulty})
         <p>Waiting for other chefs...</p>
       </div>
     );
@@ -384,7 +369,8 @@ var ChefBox = React.createClass({
     return (
       <div className={classes}>
         <div className={cx('chefBox', this.state.backgroundClass)} style={style}>
-          <h4>{this.props.chefName} {this.renderLives()} {this.renderSteps()} {this.renderTime()}</h4>
+          <h4>{this.props.chefName} {this.renderLives()} {this.renderTime()}</h4>
+          <b className="recipeName pull-right">{this.props.recipe.name}</b>
           {this.renderTimer()}
           <div className="padTop">
             <TransitionGroup transitionName="fade"
