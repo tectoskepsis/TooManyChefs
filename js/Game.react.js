@@ -61,10 +61,30 @@ var Game = React.createClass({
     this.setTimeout(() => {
       this.setState({
         gameState: 'started',
-        stillAlive: 4,
+        stillAlive: 0,
         chefs: Recipes[this.state.meal].recipes,
       });
     }, 3000);
+  },
+
+  onReady: function(player) {
+    var stillAlive = this.state.stillAlive + 1;
+    var chefs = this.state.chefs;
+    chefs[player].ready = true;
+    this.setState({
+      chefs: chefs,
+      stillAlive: stillAlive,
+    });
+
+    // Are all chefs ready to begin?
+    if (stillAlive === 4) {
+      for (var i = 0; i < 4; i++) {
+        var chef = this.refs['chef' + i];
+        chef.startGame();
+      }
+      return true;
+    }
+    return false;
   },
 
   onFailure: function(loser, canSave) {
@@ -195,6 +215,7 @@ var Game = React.createClass({
           <ChefBox key={i} ref={'chef' + i} chefId={i}
                    chefName={recipe.chefName}
                    recipe={recipe}
+                   onReady={_.partial(this.onReady, i)}
                    onFailure={_.partial(this.onFailure, i)}
                    onComplete={this.onComplete}
                    onRescued={this.onRescued}

@@ -7,7 +7,7 @@ var chroma = require('chroma-js');
 var cx = require('classnames');
 
 var CapsLock = require('./CapsLock.react.js');
-var Instruction = require('./Instruction.react.js');
+var Inst = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
 var ChefBox = React.createClass({
@@ -18,6 +18,7 @@ var ChefBox = React.createClass({
     chefName: React.PropTypes.string.isRequired,
     recipe: React.PropTypes.object.isRequired,
     onFailure: React.PropTypes.func.isRequired,
+    onReady: React.PropTypes.func.isRequired,
     onRescued: React.PropTypes.func.isRequired,
     onComplete: React.PropTypes.func.isRequired,
     stillAlive: React.PropTypes.number.isRequired,
@@ -34,7 +35,7 @@ var ChefBox = React.createClass({
     return {
       step: -1,
       startTime: 10,
-      timer: 10,
+      timer: 0,
       onTimeout: this.nextStep,
       progress: 0,
       backgroundClass: '',
@@ -47,8 +48,7 @@ var ChefBox = React.createClass({
   },
 
   componentDidMount: function() {
-    this.timerInterval = this.setInterval(this.updateTimer, 1000);
-    this.setState({content: this.renderRecipeStart()});
+    this.setState({content: this.renderChefSelect()});
   },
 
   updateTimer: function() {
@@ -223,6 +223,22 @@ var ChefBox = React.createClass({
     }
   },
 
+  startGame: function() {
+    this.timerInterval = this.setInterval(this.updateTimer, 1000);
+    this.setState({
+      content: null,
+      timer: 10,
+    });
+    this.setTimeout(() => this.setState({content: this.renderRecipeStart()}), 250);
+  },
+
+  onChefSelect: function() {
+    this.setState({content: null});
+    if (!this.props.onReady()) {
+      this.setTimeout(() => this.setState({content: this.renderChefWaiting()}), 250);
+    }
+  },
+
   renderRescuePopup: function(name, onRescue) {
     var rescueText = ['save', 'rescue', 'help', 'assist', 'support', 'inspire'];
     var callback = () => {
@@ -235,7 +251,7 @@ var ChefBox = React.createClass({
       type: 'danger',
       content: (
         <span>
-          {name} is failing! Type <Instruction onComplete={callback}>{_.sample(rescueText)}</Instruction> to aid them.
+          {name} is failing! Type <Inst onComplete={callback}>{_.sample(rescueText)}</Inst> to aid them.
         </span>
       ),
     };
@@ -272,13 +288,9 @@ var ChefBox = React.createClass({
   },
 
   renderTimer: function() {
-    if (this.state.timer === 0) {
-      return null;
-    }
-
-    var progress = this.state.timer === this.state.startTime
-      ? 1
-      : (this.state.timer - 1.4) / (this.state.startTime - 1);
+    var progress = this.state.timer === this.state.startTime ? 1 :
+                   this.state.timer === 0 ? 1 :
+                   (this.state.timer - 1.4) / (this.state.startTime - 1);
 
     // Scale color from red to blue based on time
     var scale = chroma.scale(['#ff0500', '#ffd320', '#659cf3']);
@@ -286,6 +298,28 @@ var ChefBox = React.createClass({
 
     return (
       <Progress className="timer" percent={progress * 100} strokeWidth="2" strokeColor={color} />
+    );
+  },
+
+  renderChefSelect: function() {
+    var key = this.props.chefId === 0 ? 'q' :
+              this.props.chefId === 1 ? 'p' :
+              this.props.chefId === 2 ? 'z' :
+              'm';
+    return (
+      <div>
+        <b>{this.props.recipe.name}</b> - {this.props.recipe.type} ({this.props.recipe.difficulty})
+        <p>Type <Inst onComplete={this.onChefSelect}>{key}</Inst> to join the kitchen.</p>
+      </div>
+    );
+  },
+
+  renderChefWaiting: function() {
+    return (
+      <div>
+        <b>{this.props.recipe.name}</b> - {this.props.recipe.type} ({this.props.recipe.difficulty})
+        <p>Waiting for other chefs...</p>
+      </div>
     );
   },
 
