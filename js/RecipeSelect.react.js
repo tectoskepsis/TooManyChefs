@@ -1,4 +1,6 @@
 var React = require('react');
+var TimerMixin = require('react-timer-mixin');
+var TransitionGroup = require('react-addons-css-transition-group');
 
 var _ = require('lodash');
 var cx = require('classnames');
@@ -6,6 +8,8 @@ var cx = require('classnames');
 var Recipes = require('./recipes/Recipes.js');
 
 var RecipeSelect = React.createClass({
+  mixins: [TimerMixin],
+
   propTypes: {
     onProgress: React.PropTypes.func.isRequired,
   },
@@ -13,6 +17,7 @@ var RecipeSelect = React.createClass({
   getInitialState: function() {
     return {
       value: 0,
+      content: this.renderRecipe(0),
     };
   },
 
@@ -27,6 +32,12 @@ var RecipeSelect = React.createClass({
   componentDidUpdate: function(prevProps, prevState) {
     if (this.state.value != prevState.value) {
       this.props.onProgress(this.state.value);
+
+      // Update content for transition
+      this.setState({content: null});
+      this.setTimeout(() => this.setState({
+        content: this.renderRecipe(this.state.value),
+      }), 250);
     }
   },
 
@@ -41,14 +52,13 @@ var RecipeSelect = React.createClass({
     }
   },
 
-  // TODO: render dots, arrows, each recipe
-  render: function() {
-    var meal = Recipes[this.state.value];
+  renderRecipe: function(i) {
+    var meal = Recipes[i];
     var emptyStar = (i) => <span key={i} className="lightBlue glyphicon glyphicon-star-empty" />;
     var fullStar = (i) => <span key={i} className="darkBlue glyphicon glyphicon-star" />;
 
     return (
-      <div>
+      <div className="padTop">
         <h4>{meal.name}</h4>
         <p>
           Difficulty: {_.range(5).map((i) => i < meal.rating ? fullStar(i) : emptyStar(i))}
@@ -60,7 +70,18 @@ var RecipeSelect = React.createClass({
         ))}
         <br/>
         <p>{meal.description}</p>
-        <br/>
+      </div>
+    );
+  },
+
+  render: function() {
+    return (
+      <div>
+        <TransitionGroup transitionName="fade"
+                         transitionEnterTimeout={250}
+                         transitionLeaveTimeout={250}>
+          {this.state.content}
+        </TransitionGroup>
 
         <div className="padTop">
           <span className="padRight10 glyphicon glyphicon-triangle-left" />

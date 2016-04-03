@@ -1,9 +1,10 @@
 var $ = require('jquery');
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 var Game = require('./Game.react.js');
 
-React.render(
+ReactDOM.render(
   <Game />,
   document.getElementById('content')
 );

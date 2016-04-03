@@ -31,7 +31,7 @@ var ColorChange = React.createClass({
       options.callback = this.props.onComplete;
     }
 
-    sweep(this.refs.elem.getDOMNode(), 'color', this.props.fromColor, this.props.toColor, options);
+    sweep(this.refs.elem, 'color', this.props.fromColor, this.props.toColor, options);
   },
 
   render: function() {

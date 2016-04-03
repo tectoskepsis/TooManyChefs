@@ -20,7 +20,7 @@ var CapsLockWarning = React.createClass({
     }
 
     return (
-      <div className="capslock alert alert-danger">
+      <div className="padTop capslock alert alert-danger">
         <span className="glyphicon glyphicon-alert" /> CAPS-LOCK
       </div>
     );

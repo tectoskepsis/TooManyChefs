@@ -62,6 +62,7 @@ ul.ingredients {
   transition: background-color 250ms ease;
 }
 
+/* Transitions */
 .fade-enter {
   opacity: 0.01;
   transition: opacity 250ms ease-in;
@@ -76,17 +77,6 @@ ul.ingredients {
 }
 .fade-leave.fade-leave-active {
   opacity: 0;
-}
-
-.fade {
-  opacity: 1;
-  transition: opacity 250ms ease-out;
-  height: auto;
-}
-.fade.fade-active {
-  opacity: 0;
-  height: 0;
-  overflow: hidden;
 }
 
 .padLeft {

@@ -1,7 +1,7 @@
 var Progress = require('rc-progress').Line;
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
-var TransitionGroup = require('timeout-transition-group');
+var TransitionGroup = require('react-addons-css-transition-group');
 
 var chroma = require('chroma-js');
 var cx = require('classnames');
@@ -353,9 +353,9 @@ var ChefBox = React.createClass({
           <h4>{this.props.chefName} {this.renderLives()} {this.renderSteps()} {this.renderTime()}</h4>
           {this.renderTimer()}
           <div className="padTop">
-            <TransitionGroup enterTimeout={250}
-                             leaveTimeout={250}
-                             transitionName="fade">
+            <TransitionGroup transitionName="fade"
+                             transitionEnterTimeout={250}
+                             transitionLeaveTimeout={250}>
               {this.state.content}
               <CapsLock />
               {this.state.popups.map((popup) =>

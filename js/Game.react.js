@@ -1,6 +1,6 @@
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
-var TransitionGroup = require('timeout-transition-group');
+var TransitionGroup = require('react-addons-css-transition-group');
 
 var _ = require('lodash');
 var cx = require('classnames');
@@ -20,13 +20,37 @@ var Game = React.createClass({
       chefs: [],
       stillAlive: 0,
       meal: 0,
+      content: this.renderTitle(),
     };
   },
 
   setStateDelay: function(state, delay) {
     delay = delay || 500;
-    this.setState({gameState: ''});
-    this.setTimeout(() => this.setState({gameState: state}), delay);
+
+    var renderContent = _.noop;
+    switch (state) {
+      case 'title':
+        renderContent = this.renderTitle;
+        break;
+      case 'help':
+        renderContent = this.renderHelp;
+        break;
+      case 'menu':
+        renderContent = this.renderRecipeMenu;
+        break;
+      case 'loading':
+        renderContent = this.renderLoading;
+        break;
+    }
+
+    this.setState({
+      gameState: '',
+      content: null,
+    });
+    this.setTimeout(() => this.setState({
+      gameState: state,
+      content: renderContent(),
+    }), delay);
   },
 
   onStartGame: function() {
@@ -99,9 +123,9 @@ var Game = React.createClass({
     return stillAlive === 0 && 'Press Ctrl-R to play again.';
   },
 
-  renderTitle: function(fade) {
+  renderTitle: function() {
     return (
-      <div className={cx('padTop', 'fade', {'fade-active': !fade})}>
+      <div className="padTop">
         <p>Type <Inst clear onComplete={_.partial(this.setStateDelay, 'menu')}>start</Inst> to begin</p>
         <p>Type <Inst clear onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
       </div>
@@ -112,9 +136,9 @@ var Game = React.createClass({
     this.setState({meal: val});
   },
 
-  renderRecipeMenu: function(fade) {
+  renderRecipeMenu: function() {
     return (
-      <div className={cx('fade', {'fade-active': !fade})}>
+      <div>
         <RecipeSelect onProgress={this.onRecipeProgress} />
         <br/>
         <p>Select a meal with the arrow keys.</p>
@@ -123,13 +147,13 @@ var Game = React.createClass({
     );
   },
 
-  renderHelp: function(fade) {
+  renderHelp: function() {
     var heartFull = <span className="fireRed glyphicon glyphicon-heart" />;
     var heartEmpty = <span className="lightRed glyphicon glyphicon-heart-empty" />;
     var timer = <span className="glyphicon glyphicon-hourglass" />;
 
     return (
-      <div className={cx('fade', {'fade-active': !fade})}>
+      <div className="padTop">
         <h4>A Chef's Guide</h4>
         <p>Follow the instructions, step by step, to complete your recipe!</p>
         <br/>
@@ -148,7 +172,7 @@ var Game = React.createClass({
     );
   },
 
-  renderLoading: function(fade) {
+  renderLoading: function() {
     var loadingText = [
       'Compiling recipes...',
       'Donning chef hats...',
@@ -158,7 +182,7 @@ var Game = React.createClass({
     // TODO: add loading tips?
 
     return (
-      <div className={cx('fade', {'fade-active': !fade})}>
+      <div>
         {_.sample(loadingText)}
       </div>
     );
@@ -185,22 +209,19 @@ var Game = React.createClass({
       return this.renderChefBoxes();
     }
 
-    var showState = (state) => this.state.gameState === state;
-    var headerClass = showState('title') ? '' : 'vtop';
-
-    // TODO: instead of hiding, put all rendered subclasses in a TransitionGroup and add/remove from array
     return (
       <div className="center">
-        <div className={cx('vcenter', headerClass)}>
+        <div className={cx('vcenter', {vtop: this.state.gameState !== 'title'})}>
           <h1>Too Many Chefs</h1>
           <h4>A text-based cooperative cooking game</h4>
         </div>
 
-        {this.renderTitle(showState('title'))}
-        {this.renderRecipeMenu(showState('menu'))}
-        {this.renderHelp(showState('help'))}
-        {this.renderLoading(showState('loading'))}
-        <CapsLock />
+        <TransitionGroup transitionName="fade"
+                         transitionEnterTimeout={250}
+                         transitionLeaveTimeout={250}>
+          {this.state.content}
+          <CapsLock />
+        </TransitionGroup>
       </div>
     );
   },
