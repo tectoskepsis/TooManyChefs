@@ -10,11 +10,12 @@ var nextStep = function() {
   return this.nextStep();
 }
 
-var FriedRice = {
-  name: 'Chicken Fried Rice',
-  chefName: 'Friturier',
-  type: 'side',
-  difficulty: 'medium',
+var BelgianWaffle = {
+  name: 'Belgian Waffle',
+  chefName: 'Pâtissier',
+  type: 'dessert',
+  difficulty: 'easy',
+  // TODO: update below
   ingredients: ['1 onion', '2 cups steamed rice', '2 eggs', '2 tbsp vegetable oil', '8 oz chicken breast', '1/2 cup carrots', 'soy sauce to taste'],
   description: 'A tasty balanced meal, perfect for getting rid of leftover rice.',
 
@@ -217,4 +218,4 @@ var FriedRice = {
   ],
 };
 
-module.exports = FriedRice;
+module.exports = BelgianWaffle;

@@ -7,7 +7,7 @@ var cx = require('classnames');
 
 var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
-var DifficultySelect = require('./DifficultySelect.react.js');
+var RecipeSelect = require('./RecipeSelect.react.js');
 var Inst = require('./Instruction.react.js');
 var Recipes = require('./recipes/Recipes.js');
 
@@ -30,11 +30,7 @@ var Game = React.createClass({
   },
 
   onStartGame: function() {
-    // Assign recipes based on selected meal (updating chef names)
-    var chefs = Recipes[this.state.meal].recipes;
-    chefs[0].chefName = 'Chef de cuisine';
-    chefs[1].chefName = 'Sous-chef';
-
+    // Assign recipes based on selected meal
     this.setStateDelay('loading', 500);
 
     // Wait a bit to fade out
@@ -42,7 +38,7 @@ var Game = React.createClass({
       this.setState({
         gameState: 'started',
         stillAlive: 4,
-        chefs: chefs,
+        chefs: Recipes[this.state.meal].recipes,
       });
     }, 3000);
   },
@@ -112,14 +108,14 @@ var Game = React.createClass({
     );
   },
 
-  onDifficultyProgress: function(val) {
+  onRecipeProgress: function(val) {
     this.setState({meal: val});
   },
 
   renderRecipeMenu: function(fade) {
     return (
       <div className={cx('fade', {'fade-active': !fade})}>
-        <DifficultySelect onProgress={this.onDifficultyProgress} />
+        <RecipeSelect onProgress={this.onRecipeProgress} />
         <br/>
         <p>Select a meal with the arrow keys.</p>
         <Inst onComplete={this.onStartGame}>play</Inst>

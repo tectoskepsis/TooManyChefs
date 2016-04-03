@@ -10,11 +10,12 @@ var nextStep = function() {
   return this.nextStep();
 }
 
-var FriedRice = {
-  name: 'Chicken Fried Rice',
-  chefName: 'Friturier',
-  type: 'side',
+var FruitCeviche = {
+  name: 'Fruit Ceviche',
+  chefName: 'Garde Manger',
+  type: 'dessert',
   difficulty: 'medium',
+  // TODO: update below
   ingredients: ['1 onion', '2 cups steamed rice', '2 eggs', '2 tbsp vegetable oil', '8 oz chicken breast', '1/2 cup carrots', 'soy sauce to taste'],
   description: 'A tasty balanced meal, perfect for getting rid of leftover rice.',
 
@@ -217,4 +218,4 @@ var FriedRice = {
   ],
 };
 
-module.exports = FriedRice;
+module.exports = FruitCeviche;

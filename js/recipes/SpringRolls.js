@@ -11,11 +11,12 @@ var nextStep = function() {
   return this.nextStep();
 }
 
-var CrabCakes = {
-  name: 'Crab Cakes',
-  chefName: 'Poissonnier',
+var SpringRolls = {
+  name: 'Spring Rolls',
+  chefName: 'Entremetier',
   type: 'appetizer',
   difficulty: 'easy',
+  // TODO: update below
   ingredients: ['1 egg', '8 oz crabmeat', '1/2 cup crackers', '3 tbsp mayonnaise', '4 tsp lemon juice', '1 tbsp butter', '1 tbsp green onion', 'Worcestershire sauce'],
   description: 'This delightful appetizer starts the meal with a tender yet crunchy crunch.',
 
@@ -222,4 +223,4 @@ var CrabCakes = {
   ],
 };
 
-module.exports = CrabCakes;
+module.exports = SpringRolls;

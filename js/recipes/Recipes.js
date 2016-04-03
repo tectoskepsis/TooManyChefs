@@ -1,21 +1,46 @@
-var meal1 = [
-  require('./FriedRice.js'),
-  require('./BeefStroganoff.js'),
-  require('./CrabCakes.js'),
-  require('./Cheesecake.js'),
-];
-
 module.exports = [
   {
-    difficulty: 3,
-    recipes: meal1,
+    name: 'American Diner',
+    description: 'description blah blah American diner',
+    rating: 2,
+    recipes: [
+      require('./Cornbread.js'),
+      require('./BeefStroganoff.js'),
+      require('./GreenBeanCasserole.js'),
+      require('./ChocolateCupcakes.js'),
+    ],
   },
   {
-    difficulty: 4,
-    recipes: meal1,
+    name: 'Nice American Brunch',
+    description: 'description blah blah American brunch',
+    rating: 3,
+    recipes: [
+      require('./CrabCakes.js'),
+      require('./EggsBenedict.js'),
+      require('./FruitCeviche.js'),
+      require('./BelgianWaffle.js'),
+    ],
   },
   {
-    difficulty: 5,
-    recipes: meal1,
+    name: 'Pan-Asian Lunch',
+    description: 'blah blah Asian blend',
+    rating: 4,
+    recipes: [
+      require('./SpringRolls.js'),
+      require('./ChickenAdobo.js'),
+      require('./FriedRice.js'),
+      require('./Cheesecake.js'),
+    ],
+  },
+  {
+    name: 'French-Italian Bistro',
+    description: 'high class blah blah stuff description here',
+    rating: 5,
+    recipes: [
+      require('./Bruschetta.js'),
+      require('./ChickenMarsala.js'),
+      require('./FrenchOnionSoup.js'),
+      require('./CremeBrulee.js'),
+    ],
   },
 ];

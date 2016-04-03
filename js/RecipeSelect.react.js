@@ -5,7 +5,7 @@ var cx = require('classnames');
 
 var Recipes = require('./recipes/Recipes.js');
 
-var DifficultySelect = React.createClass({
+var RecipeSelect = React.createClass({
   propTypes: {
     onProgress: React.PropTypes.func.isRequired,
   },
@@ -44,29 +44,33 @@ var DifficultySelect = React.createClass({
   // TODO: render dots, arrows, each recipe
   render: function() {
     var meal = Recipes[this.state.value];
-    var emptyStar = (i) => <span key={i} className="glyphicon glyphicon-star-empty" />;
-    var fullStar = (i) => <span key={i} className="glyphicon glyphicon-star" />;
+    var emptyStar = (i) => <span key={i} className="lightBlue glyphicon glyphicon-star-empty" />;
+    var fullStar = (i) => <span key={i} className="darkBlue glyphicon glyphicon-star" />;
 
     return (
       <div>
+        <h4>{meal.name}</h4>
         <p>
-          Difficulty: {_.range(5).map((i) => i < meal.difficulty ? fullStar(i) : emptyStar(i))}
+          Difficulty: {_.range(5).map((i) => i < meal.rating ? fullStar(i) : emptyStar(i))}
         </p>
+        <br/>
 
         {meal.recipes.map((r, i) => (
           <div key={i}>{r.name} ({r.type})</div>
         ))}
         <br/>
+        <p>{meal.description}</p>
+        <br/>
 
         <div className="padTop">
-          <span className="glyphicon glyphicon-triangle-left" />
+          <span className="padRight10 glyphicon glyphicon-triangle-left" />
           {_.range(Recipes.length).map((i) =>
              <span key={i} className={cx('dot', {active: this.state.value === i})} />)}
-          <span className="glyphicon glyphicon-triangle-right" />
+          <span className="padLeft10 glyphicon glyphicon-triangle-right" />
         </div>
       </div>
     );
   },
 });
 
-module.exports = DifficultySelect;
+module.exports = RecipeSelect;

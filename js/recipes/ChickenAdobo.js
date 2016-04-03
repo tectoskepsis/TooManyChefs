@@ -11,11 +11,12 @@ var nextStep = function() {
   return this.nextStep();
 }
 
-var BeefStroganoff = {
-  name: 'Beef Stroganoff',
+var ChickenAdobo = {
+  name: 'Chicken Adobo',
   chefName: 'Saucier',
   type: 'entrée',
-  difficulty: 'medium',
+  difficulty: 'hard',
+  // TODO: below
   ingredients: ['2 lbs beef chuck roast', '1/2 tsp salt', '1/2 tsp ground black pepper', '4 oz butter', '4 green onions', '4 tbsp flour', '1 can condensed beef broth', '6 oz sliced mushrooms', '1/3 cup white wine'],
   description: 'A creamy roast served over noodles that melts on your tongue.',
 
@@ -257,4 +258,4 @@ var BeefStroganoff = {
   ],
 };
 
-module.exports = BeefStroganoff;
+module.exports = ChickenAdobo;
