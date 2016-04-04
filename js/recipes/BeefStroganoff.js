@@ -156,15 +156,10 @@ var BeefStroganoff = {
       },
     },
     {
-      pretext: 'Let it simmer for a time. Daydream about grazing cows.',
-      timer: 10,
-      onTimeout: nextStep,
-    },
-    {
-      pretext: <span>Think about what you would call your very own cow.<br/></span>,
+      pretext: <span>As it simmers, think about a nickname for your beef roast.<br/></span>,
       instruction: 'Name: ',
       type: 'textinput',
-      timer: 6,
+      timer: 7,
       onTimeout: function(name) {
         if (!name) {
           this.failure(<p>Recipe failed. Failed to name cow.</p>);
@@ -188,12 +183,6 @@ var BeefStroganoff = {
       timer: 10,
     },
     {
-      pretext: 'Add',
-      instruction: 'noodles',
-      posttext: 'to the pot.',
-      timer: 10,
-    },
-    {
       pretext: 'Toss in some mushroms into the beef stew with',
       instruction: 's',
       posttext: '.',
@@ -202,7 +191,7 @@ var BeefStroganoff = {
     {
       pretext: <span>Pour in <b className="green">1/3 cup</b> of white wine.<br/></span>,
       instruction: 'wiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiine',
-      posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6 &nbsp;&nbsp;&nbsp;&nbsp;^ 2/6 &nbsp;&nbsp;&nbsp;&nbsp;^ 3/6</span>,
+      posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6&nbsp;&nbsp;&nbsp;&nbsp;^ 2/6&nbsp;&nbsp;&nbsp;&nbsp;^ 3/6</span>,
       timer: 8,
       onComplete: () => {},
       onTimeout: function(progress) {

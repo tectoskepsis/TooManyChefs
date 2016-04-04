@@ -185,6 +185,17 @@ var FruitCeviche = {
       mashCount: 4,
       timer: 8,
     },
+    {
+      pretext: 'Grab a plate and',
+      instrution: 'decorate',
+      posttext: 'it with the avocados.',
+      timer: 10,
+    },
+    {
+      pretext: 'Sit back and admire your handiwork.',
+      timer: 8,
+      timer: nextStep,
+    },
   ],
 };
 

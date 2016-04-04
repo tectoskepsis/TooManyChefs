@@ -2,7 +2,10 @@ var React = require('react');
 
 var ColorChange = React.createClass({
   propTypes: {
-    children: React.PropTypes.string.isRequired,
+    children: React.PropTypes.oneOfType([
+                React.PropTypes.string,
+                React.PropTypes.element,
+              ]).isRequired,
     fromColor: React.PropTypes.string,
     toColor: React.PropTypes.string,
     duration: React.PropTypes.number,

@@ -108,7 +108,7 @@ var EggsBenedict = {
       timer: 10,
     },
     {
-      pretext: <span>Turn off the blender by pressing <b>down</b>to finish the hollandaise.<br/></span>,
+      pretext: <span>Turn off the blender by pressing <b>down</b>, finishing the hollandaise.<br/></span>,
       instruction: 'd',
       type: 'arrows',
       timer: 8,
@@ -130,7 +130,8 @@ var EggsBenedict = {
       pretext: <span>Onto the eggs. Crack 4 eggs by tapping 'c'.<br/></span>,
       instruction: 'c',
       type: 'mash',
-      timer: 4,
+      mashCount: 4,
+      timer: 10,
     },
     {
       pretext: 'Fill a pot with',
