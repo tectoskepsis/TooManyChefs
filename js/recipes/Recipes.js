@@ -13,9 +13,9 @@ module.exports = [
     name: 'Nice American Brunch',
     rating: 3,
     recipes: [
+      require('./FruitCeviche.js'),
       require('./CrabCakes.js'),
       require('./EggsBenedict.js'),
-      require('./FruitCeviche.js'),
       require('./BelgianWaffle.js'),
     ],
   },

@@ -3,7 +3,8 @@ var React = require('react');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
-  chickenName: 'alfred',
+  left: [],
+  right: [],
 };
 
 var nextStep = function() {
