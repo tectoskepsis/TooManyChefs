@@ -12,6 +12,8 @@ var CapsLock = require('./CapsLock.react.js');
 var Inst = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
+const RESCUE_TEXT = ['save', 'rescue', 'help', 'assist', 'support', 'inspire', 'bail', 'hug', 'heal', 'comfort'];
+
 var ChefBox = React.createClass({
   mixins: [PureRenderMixin, TimerMixin],
 
@@ -242,7 +244,6 @@ var ChefBox = React.createClass({
   },
 
   renderRescuePopup: function(name, onRescue) {
-    var rescueText = ['save', 'rescue', 'help', 'assist', 'support', 'inspire'];
     var callback = () => {
       this.hidePopup(name);
       onRescue();
@@ -253,7 +254,7 @@ var ChefBox = React.createClass({
       type: 'danger',
       content: (
         <span>
-          {name} is failing! Type <Inst onComplete={callback}>{_.sample(rescueText)}</Inst> to aid them.
+          {name} is failing! Type <Inst onComplete={callback}>{_.sample(RESCUE_TEXT)}</Inst> to aid them.
         </span>
       ),
     };

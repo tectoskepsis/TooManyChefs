@@ -181,7 +181,7 @@ var BelgianWaffle = {
     {
       pretext: 'Wait for the waffle iron light to turn green; then',
       instruction: 'flip',
-      posttext: <span>it over.<br/><ColorChange toColor="#5cb85c"><span className="dot" /></ColorChange> ready to flip</span>,
+      posttext: <span>it over.<br/><br/>&nbsp;&nbsp;&nbsp;<ColorChange toColor="#5cb85c">&#9679;</ColorChange> ready to flip</span>,
       timer: 30,
       onComplete: function(progress, time) {
         if (time <= 20) {

@@ -24,14 +24,15 @@ var BeefStroganoff = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: <span>Place a hunk of <b>chuck roast</b>, <b>cutting board</b>, and <b>knife</b> on the table.</span>,
+      pretext: <span>Equip a <b>carving knife</b> from the knife block.</span>,
       type: 'ingredients',
-      leftName: 'Items',
-      rightName: 'Table',
+      leftName: 'Hand',
+      rightName: 'Knife Block',
       ingredients: [
-        {name: 'chuck roast', key: 'c', left: true},
-        {name: 'cutting board', key: 'b', left: true},
-        {name: 'knife', key: 'k', left: true},
+        {name: 'carving knife', key: 'c', left: false},
+        {name: 'butcher knife', key: 'b', left: false},
+        {name: 'paring knife', key: 'p', left: false},
+        {name: 'fork', key: 'f', left: false},
       ],
       timer: 10,
       onProgress: function(left, right) {
@@ -39,18 +40,12 @@ var BeefStroganoff = {
         recipeData.right = right;
       },
       onTimeout: function() {
-        if (recipeData.right.length === 3) {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'carving knife') {
           this.nextStep();
         } else {
           this.failure();
         }
       },
-    },
-    {
-      pretext: 'Equip the blade with',
-      instruction: 'e',
-      posttext: 'for +2 STR.',
-      timer: 10,
     },
     {
       pretext: <span>Cut the roast into strips by tapping 'k'.<br/></span>,
@@ -80,9 +75,9 @@ var BeefStroganoff = {
       },
     },
     {
-      pretext: 'Melt the',
-      instruction: 'butter',
-      posttext: 'with a large skillet over the heat.',
+      pretext: 'Type',
+      instruction: 'melt',
+      posttext: 'to melt the butter on a large skillet over the heat.',
       timer: 10,
     },
     {
@@ -192,10 +187,11 @@ var BeefStroganoff = {
       pretext: <span>Pour in <b className="green">1/3 cup</b> of white wine.<br/></span>,
       instruction: 'wiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiine',
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6&nbsp;&nbsp;&nbsp;&nbsp;^ 2/6&nbsp;&nbsp;&nbsp;&nbsp;^ 3/6</span>,
-      timer: 8,
+      timer: 9,
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 17 && progress <= 22) {
+        console.log(progress);
+        if (progress >= 18 && progress <= 23) {
           this.nextStep();
         } else {
           this.failure();

@@ -27,6 +27,7 @@ var Cornbread = {
       pretext: <span>Press up and down to preheat the oven to <b className="fireRed">400°F</b>.<br/></span>,
       instruction: 300,
       type: 'counter',
+      stepValue: 10,
       goalValue: 400,
       timer: 10,
       onTimeout: function(value) {

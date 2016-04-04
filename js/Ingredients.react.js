@@ -35,8 +35,6 @@ var Ingredients = React.createClass({
     if (this.props.onProgress) {
       var left = this.state.ingredients.filter((i) => i.left);
       var right = this.state.ingredients.filter((i) => !i.left);
-      console.log(left);
-      console.log(right);
       this.props.onProgress(left, right);
     }
   },
