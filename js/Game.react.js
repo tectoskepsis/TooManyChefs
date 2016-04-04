@@ -1,4 +1,5 @@
 var React = require('react');
+var PureRenderMixin = require('react-addons-pure-render-mixin');
 var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('react-addons-css-transition-group');
 
@@ -11,8 +12,18 @@ var RecipeSelect = require('./RecipeSelect.react.js');
 var Inst = require('./Instruction.react.js');
 var Recipes = require('./recipes/Recipes.js');
 
+const LOADING_TEXT = [
+  'Compiling recipes',
+  'Donning chef hats',
+  'Sharpening knives',
+  'Wiping counters',
+  'Scrubbing dishes',
+  'Gathering ingredients',
+  'Allocating cutlery',
+];
+
 var Game = React.createClass({
-  mixins: [TimerMixin],
+  mixins: [PureRenderMixin, TimerMixin],
 
   getInitialState: function() {
     return {
@@ -193,21 +204,12 @@ var Game = React.createClass({
   },
 
   renderLoading: function() {
-    var loadingText = [
-      'Compiling recipes',
-      'Donning chef hats',
-      'Sharpening knives',
-      'Wiping counters',
-      'Scrubbing dishes',
-      'Gathering ingredients',
-      'Allocating cutlery',
-    ];
     // TODO: add loading tips?
     // TODO: animate ellipses
 
     return (
       <div className="padTop vcenter vtop">
-        {_.sample(loadingText)}...
+        {_.sample(LOADING_TEXT)}...
       </div>
     );
   },

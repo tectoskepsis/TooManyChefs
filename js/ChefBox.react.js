@@ -1,6 +1,7 @@
 var Progress = require('rc-progress').Line;
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
+var PureRenderMixin = require('react-addons-pure-render-mixin');
 var TransitionGroup = require('react-addons-css-transition-group');
 
 var chroma = require('chroma-js');
@@ -12,7 +13,7 @@ var Inst = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
 var ChefBox = React.createClass({
-  mixins: [TimerMixin],
+  mixins: [PureRenderMixin, TimerMixin],
 
   propTypes: {
     chefId: React.PropTypes.number.isRequired,

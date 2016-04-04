@@ -9,6 +9,7 @@
     "jquery": "~2.1.4",
     "react-timer-mixin": "~0.13.2",
     "react-addons-css-transition-group": "~0.14.8",
+    "react-addons-pure-render-mixin": "~0.14.8",
     "rc-progress": "~1.0.4",
     "lodash": "~4.6.1",
     "chroma-js": "~1.1.1"
@@ -16,7 +17,8 @@
   "devDependencies": {
     "babelify": "^6.0.2",
     "browserify": "^6.2.0",
-    "watchify": "^2.1.1"
+    "watchify": "^2.1.1",
+    "react-addons-perf": "~0.14.8"
   },
   "scripts": {
     "start": "watchify -o js/bundle.js -v -d js/main.js"
