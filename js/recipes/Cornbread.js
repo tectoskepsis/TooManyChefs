@@ -5,11 +5,13 @@ var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
   name: 'bready',
+  left: [],
+  right: [],
 };
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var Cornbread = {
   name: 'Cornbread',
@@ -81,10 +83,28 @@ var Cornbread = {
       timer: 10,
     },
     {
-      // TODO: ingredient select mechanic
       pretext: 'Add cornmeal, flour, sugar, and baking powder into the bowl.',
+      type: 'ingredients',
+      leftName: 'Ingredients',
+      rightName: 'Bowl',
+      ingredients: [
+        {name: 'cornmeal', key: 'c', left: true},
+        {name: 'flour', key: 'f', left: true},
+        {name: 'sugar', key: 's', left: true},
+        {name: 'baking powder', key: 'b', left: true},
+      ],
       timer: 10,
-      onTimeout: nextStep,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 4) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: <span>Stir up the mixture with the arrow keys.<br/></span>,
@@ -99,10 +119,25 @@ var Cornbread = {
       timer: 8,
     },
     {
-      // TODO: ingredient select mechanic
       pretext: 'Put the pan in the oven.',
+      type: 'ingredients',
+      leftName: 'Table',
+      rightName: 'Oven',
+      ingredients: [
+        {name: 'pan of batter', key: 'p', left: true},
+      ],
       timer: 8,
-      onTimeout: nextStep,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 1) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: 'Take a short break and tap your foot to the jazz.',

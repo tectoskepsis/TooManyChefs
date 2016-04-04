@@ -146,8 +146,8 @@ var Game = React.createClass({
   renderTitle: function() {
     return (
       <div className="padTop">
-        <p>Type <Inst clear onComplete={_.partial(this.setStateDelay, 'menu')}>start</Inst> to begin</p>
-        <p>Type <Inst clear onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>start</Inst> to begin</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
       </div>
     );
   },
@@ -187,7 +187,7 @@ var Game = React.createClass({
         <p>And last but not least... be mindful of the other chefs in the kitchen!<br/> You're all in this together.</p>
         <br/>
         <br/>
-        <p>Type <Inst clear onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>
       </div>
     );
   },

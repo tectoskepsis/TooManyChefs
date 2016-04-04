@@ -8,7 +8,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var FriedRice = {
   name: 'Chicken Fried Rice',

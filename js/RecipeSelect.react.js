@@ -69,7 +69,6 @@ var RecipeSelect = React.createClass({
           <div key={i}>{r.name} ({r.type})</div>
         ))}
         <br/>
-        <p>{meal.description}</p>
       </div>
     );
   },

@@ -2,16 +2,22 @@ var React = require('react');
 
 var RecipeStep = require('../RecipeStep.react.js');
 
+var recipeData = {
+  left: [],
+  right: [],
+  frosting: 'cream cheese',
+};
+
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var ChocolateCupcakes = {
   name: 'Chocolate Cupcakes',
   chefName: 'Pâtissier',
   type: 'dessert',
   difficulty: 'easy',
-  ingredients: ['1 1/3 cup all-purpose flour', '1/4 tsp baking soda', '2 tsp baking powder', '3/4 cup unsweetened cocoa powder', '1/8 tsp salt', '2 eggs', '3/4 tsp vanilla extract', '1 cup milk'],
+  ingredients: ['1 1/3 cup all-purpose flour', '1/4 tsp baking soda', '2 tsp baking powder', '3/4 cup cocoa powder', '1/8 tsp salt', '2 eggs', '3/4 tsp vanilla extract', '1 cup milk'],
   description: 'Delicious mini-cakes frosted with love.',
 
   /* A recipe is a list of json steps */
@@ -23,10 +29,28 @@ var ChocolateCupcakes = {
       timer: 10,
     },
     {
-      // TODO: ingredient select mechanic
       pretext: 'Grab a muffin pan from the pantry.',
+      type: 'ingredients',
+      leftName: 'Selection',
+      rightName: 'Pantry',
+      ingredients: [
+        {name: 'pot', key: 'p', left: false},
+        {name: 'wok', key: 'w', left: false},
+        {name: 'muffin pan', key: 'm', left: false},
+        {name: 'saucepan', key: 's', left: false},
+      ],
       timer: 10,
-      onTimeout: nextStep,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'muffin pan') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: <span>Hold 'f' to pour 1 1/3 cups of flour.<br/></span>,
@@ -86,10 +110,25 @@ var ChocolateCupcakes = {
       timer: 6,
     },
     {
-      // TODO: ingredient select mechanic
       pretext: 'Put the muffin pan in the oven.',
-      timer: 10,
-      onTimeout: nextStep,
+      type: 'ingredients',
+      leftName: 'Table',
+      rightName: 'Oven',
+      ingredients: [
+        {name: 'muffin pan', key: 'm', left: true},
+      ],
+      timer: 8,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 1) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: 'Lend a helping hand to the Saucier while your cupcakes bake.',
@@ -103,13 +142,32 @@ var ChocolateCupcakes = {
       timer: 7,
     },
     {
-      // TODO: ingredient select mechanic
-      pretext: 'Choose your favorite frosting.',
+      pretext: 'Choose your favorite frosting (but just one)!',
+      type: 'ingredients',
+      leftName: 'Selection',
+      rightName: 'Frosting',
+      ingredients: [
+        {name: 'cream cheese', key: 'c', left: false},
+        {name: 'buttercream', key: 'b', left: false},
+        {name: 'vanilla', key: 'v', left: false},
+        {name: 'whipped cream', key: 'w', left: false},
+      ],
       timer: 8,
-      onTimeout: nextStep,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1) {
+          recipeData.frosting = recipeData.left[0].name;
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
-      pretext: 'Frost the cupcakes by typing',
+      pretext: () => <span>Frost the cupcakes with {recipeData.frosting} by typing</span>,
       instruction: 'swirl',
       posttext: '.',
       timer: 10,

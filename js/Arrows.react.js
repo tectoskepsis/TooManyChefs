@@ -75,13 +75,12 @@ var Arrows = React.createClass({
     var prefix = this.props.children.substring(0, this.state.progress);
     var suffix = this.props.children.substring(this.state.progress);
     return (
-      <span className="center">
-        <br/>
+      <div className="padTop center">
         <code>
           <span className="input">{strToArrow(prefix)}</span>
           <span>{strToArrow(suffix)}</span>
         </code>
-      </span>
+      </div>
     );
   },
 });

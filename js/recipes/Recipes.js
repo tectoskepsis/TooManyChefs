@@ -1,7 +1,6 @@
 module.exports = [
   {
     name: 'American Diner',
-    description: 'description blah blah American diner',
     rating: 2,
     recipes: [
       require('./Cornbread.js'),
@@ -12,7 +11,6 @@ module.exports = [
   },
   {
     name: 'Nice American Brunch',
-    description: 'description blah blah American brunch',
     rating: 3,
     recipes: [
       require('./CrabCakes.js'),
@@ -23,7 +21,6 @@ module.exports = [
   },
   {
     name: 'Pan-Asian Lunch',
-    description: 'blah blah Asian blend',
     rating: 4,
     recipes: [
       require('./SpringRolls.js'),
@@ -34,7 +31,6 @@ module.exports = [
   },
   {
     name: 'French-Italian Bistro',
-    description: 'high class blah blah stuff description here',
     rating: 5,
     recipes: [
       require('./Bruschetta.js'),

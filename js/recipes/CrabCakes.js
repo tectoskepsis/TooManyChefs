@@ -9,7 +9,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var CrabCakes = {
   name: 'Crab Cakes',

@@ -2,9 +2,14 @@ var React = require('react');
 
 var RecipeStep = require('../RecipeStep.react.js');
 
+var recipeData = {
+  left: [],
+  right: [],
+};
+
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var GreenBeanCasserole = {
   name: 'Green Bean Casserole',
@@ -50,10 +55,27 @@ var GreenBeanCasserole = {
       }
     },
     {
-      // TODO: ingredient select mechanic
       pretext: 'Add the onions and mushrooms into a large skillet.',
+      type: 'ingredients',
+      leftName: 'Ingredients',
+      rightName: 'Skillet',
+      ingredients: [
+        {name: 'onions', key: 'o', left: true},
+        {name: 'mushrooms', key: 'm', left: true},
+        {name: 'green beans', key: 'g', left: true},
+      ],
       timer: 10,
-      onTimeout: nextStep,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'green beans') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: <span>Turn the stove to MED heat with the arrow keys.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
@@ -75,10 +97,27 @@ var GreenBeanCasserole = {
       timer: 10,
     },
     {
-      // TODO: ingredient select mechanic
       pretext: 'Add the green beans into the skillet.',
+      type: 'ingredients',
+      leftName: 'Ingredients',
+      rightName: 'Skillet',
+      ingredients: [
+        {name: 'onions', key: 'o', left: false},
+        {name: 'mushrooms', key: 'm', left: false},
+        {name: 'green beans', key: 'g', left: true},
+      ],
       timer: 10,
-      onTimeout: nextStep,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 3) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: <span>Pour in 10 oz of cream of mushroom soup by holding 's'.<br/></span>,
@@ -121,10 +160,25 @@ var GreenBeanCasserole = {
       timer: 8,
     },
     {
-      // TODO: ingredient select mechanic
       pretext: 'Put the casserole in the oven.',
-      timer: 10,
-      onTimeout: nextStep,
+      type: 'ingredients',
+      leftName: 'Table',
+      rightName: 'Oven',
+      ingredients: [
+        {name: 'casserole', key: 'c', left: true},
+      ],
+      timer: 8,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 1) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: 'Close your eyes and meditate as your beauty bakes.',

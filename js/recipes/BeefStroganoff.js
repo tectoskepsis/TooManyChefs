@@ -5,11 +5,13 @@ var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
   cowName: 'pat',
+  left: [],
+  right: [],
 };
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var BeefStroganoff = {
   name: 'Beef Stroganoff',
@@ -22,10 +24,27 @@ var BeefStroganoff = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      // TODO: ingredient select mechanic
       pretext: 'Place a hunk of chuck roast, cutting board, and knife on the table.',
+      type: 'ingredients',
+      leftName: 'Items',
+      rightName: 'Table',
+      ingredients: [
+        {name: 'chuck roast', key: 'c', left: true},
+        {name: 'cutting board', key: 'b', left: true},
+        {name: 'knife', key: 'k', left: true},
+      ],
       timer: 10,
-      onTimeout: nextStep,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 3) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: 'Equip the blade with',
@@ -122,7 +141,7 @@ var BeefStroganoff = {
       },
     },
     {
-      pretext: <span>Cover the pot with the lid.<br/></span>,
+      pretext: <span>Cover the pot with the lid using the arrow keys.<br/></span>,
       instruction: '/lid\\',
       type: 'dial',
       maxValue: 20,

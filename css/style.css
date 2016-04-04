@@ -54,6 +54,10 @@ ul.ingredients {
   -moz-columns: 2;
 }
 
+ul.ingredients-step > li {
+  list-style-type: none;
+}
+
 .chefBox {
   margin: 10px auto;
   min-height: 200px;
@@ -140,7 +144,7 @@ ul.ingredients {
     margin: 0 2px;
 }
 .dot.active {
-    background-color: #0056a0;
+  background-color: #0056a0;
 }
 
 /* Decrease timer bar animation speed */

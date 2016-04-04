@@ -63,13 +63,13 @@ var Counter = React.createClass({
 
   render: function() {
     return (
-      <span className="center">
+      <div className="padTop center">
         <br/>
         <code>
-          <span className={cx(this.state.colorClass)}>{this.state.value}</span>
+          [<span className={cx(this.state.colorClass)}>{this.state.value}</span>]
           <span className="glyphicon glyphicon-resize-vertical" />
         </code>
-      </span>
+      </div>
     );
   },
 });
