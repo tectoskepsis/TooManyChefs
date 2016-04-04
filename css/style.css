@@ -139,20 +139,48 @@ ul.ingredients-step > li {
 }
 
 .dot {
-    display: inline-block;
-    background-color: #eee;
-    border: 1px solid #666;
-    border-radius: 5px;
-    height: 10px;
-    width: 10px;
-    margin: 0 2px;
+  display: inline-block;
+  background-color: #eee;
+  border: 1px solid #666;
+  border-radius: 5px;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
 }
 .dot.active {
   background-color: #0056a0;
+}
+
+.chefHat {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: -40px;
+      -ms-transform: rotate(-15deg); /* IE-9 */
+  -webkit-transform: rotate(-15deg); /* Chrome, Safari, Opera */
+          transform: rotate(-15deg);
+  -webkit-animation: hatFadeIn 1s; /* Chrome, Safari, Opera */
+      -ms-animation: hatFadeIn 1s; /* Internet Explorer */
+          animation: hatFadeIn 1s;
 }
 
 /* Decrease timer bar animation speed */
 .rc-progress-line-path {
   transition: stroke-dashoffset 2s ease,
               stroke 2s ease !important;
+}
+
+/* chefHat animations */
+@keyframes hatFadeIn {
+  from { opacity: 0; margin-top: -80px; }
+  to   { opacity: 1; margin-top: -40px; }
+}
+@-webkit-keyframes hatFadeIn {
+  from { opacity: 0; margin-top: -80px; }
+  to   { opacity: 1; margin-top: -40px; }
+}
+@-ms-keyframes hatFadeIn {
+  from { opacity: 0; margin-top: -80px; }
+  to   { opacity: 1; margin-top: -40px; }
 }

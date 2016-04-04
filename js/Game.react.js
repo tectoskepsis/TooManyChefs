@@ -239,6 +239,7 @@ var Game = React.createClass({
     return (
       <div className="center">
         <div className={cx('vcenter', {vtop: this.state.gameState !== 'title'})}>
+          <img className="chefHat" src="images/chefhat.png" />
           <h1>Too Many Chefs</h1>
           <h4>A text-based cooperative cooking game</h4>
         </div>
