@@ -133,7 +133,7 @@ var Game = React.createClass({
 
   onComplete: function(winner) {
     var chefs = this.state.chefs;
-    chefs[loser].dead = true; // mark "dead" so they can't get popups
+    chefs[winner].dead = true; // mark "dead" so they can't get popups
     var stillAlive = this.state.stillAlive - 1;
     this.setState({
       chefs: chefs,

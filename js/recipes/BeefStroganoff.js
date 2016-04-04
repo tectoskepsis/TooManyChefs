@@ -22,10 +22,10 @@ var BeefStroganoff = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: 'Type',
-      instruction: 'take',
-      posttext: 'to grab a hunk of chuck roast, cutting board, and knife.',
+      // TODO: ingredient select mechanic
+      pretext: 'Place a hunk of chuck roast, cutting board, and knife on the table.',
       timer: 10,
+      onTimeout: nextStep,
     },
     {
       pretext: 'Equip the blade with',
@@ -87,11 +87,6 @@ var BeefStroganoff = {
       timer: 7,
     },
     {
-      pretext: 'Daydream about grazing cows while the onions sizzle.',
-      timer: 10,
-      onTimeout: nextStep,
-    },
-    {
       pretext: <span>Stir in the flour by tapping 'f'.<br/></span>,
       instruction: 'f',
       type: 'mash',
@@ -107,18 +102,10 @@ var BeefStroganoff = {
       onTimeout: function(progress) {
         if (progress >= 20 && progress <= 25) {
           this.nextStep();
-        } else if (progress > 25) {
-          this.failure(<p>Recipe failed, too much beef broth!</p>);
         } else {
-          this.failure(<p>Recipe failed, not enough beef broth!</p>);
+          this.failure();
         }
       },
-    },
-    {
-      pretext: <span>Stir the contents with the arrow keys.<br/></span>,
-      instruction: 'urdlurdl',
-      type: 'arrows',
-      timer: 10,
     },
     {
       pretext: <span>Lower the heat on the stove to LOW.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
@@ -150,7 +137,7 @@ var BeefStroganoff = {
       },
     },
     {
-      pretext: 'Let it simmer for a time. Daydream about cows again.',
+      pretext: 'Let it simmer for a time. Daydream about grazing cows.',
       timer: 10,
       onTimeout: nextStep,
     },
@@ -175,23 +162,7 @@ var BeefStroganoff = {
       timer: 8,
     },
     {
-      pretext: <span>Fill up a different pot with water.<br/></span>,
-      instruction: '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~water~',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ too little &nbsp;&nbsp;&nbsp;&nbsp;^ just right &nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
-      timer: 8,
-      onComplete: () => {},
-      onTimeout: function(progress) {
-        if (progress >= 20 && progress <= 25) {
-          this.nextStep();
-        } else if (progress > 25) {
-          this.failure(<p>Recipe failed, too much water!</p>);
-        } else {
-          this.failure(<p>Recipe failed, not enough water!</p>);
-        }
-      },
-    },
-    {
-      pretext: <span>Boil the water with some masterful firebending.<br/></span>,
+      pretext: <span>Boil some noodles in a pot with your masterful firebending.<br/></span>,
       instruction: 'f',
       type: 'mash',
       mashCount: 20,
@@ -204,26 +175,9 @@ var BeefStroganoff = {
       timer: 10,
     },
     {
-      pretext: <span>Pour out the water with the arrow keys, but keep the noodles!<br/></span>,
-      instruction: 'noodles  ~w~a~t~e~r~',
-      posttext: <span><br/>-------------------&nbsp;&nbsp;&nbsp;\_SINK_/</span>,
-      type: 'dial',
-      maxValue: 25,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 10 && value <= 14) {
-          this.nextStep();
-        } else if (value > 14) {
-          this.failure(<p>Recipe failed, poured out noodles!</p>);
-        } else {
-          this.failure(<p>Recipe failed, failed to pour out water.</p>);
-        }
-      },
-    },
-    {
-      pretext: 'Toss in some',
-      instruction: 'mushrooms',
-      posttext: 'into the beef stew.',
+      pretext: 'Toss in some mushroms into the beef stew with',
+      instruction: 's',
+      posttext: '.',
       timer: 9,
     },
     {
@@ -235,10 +189,8 @@ var BeefStroganoff = {
       onTimeout: function(progress) {
         if (progress >= 17 && progress <= 22) {
           this.nextStep();
-        } else if (progress > 22) {
-          this.failure(<p>Recipe failed, too much white wine!</p>);
         } else {
-          this.failure(<p>Recipe failed, not enough white wine!</p>);
+          this.failure();
         }
       },
     },
@@ -247,12 +199,6 @@ var BeefStroganoff = {
       instruction: 't',
       posttext: '.',
       timer: 6,
-    },
-    {
-      pretext: 'Wave goodbye to',
-      instruction: () => recipeData.cowName,
-      posttext: 'as you finish the meal.',
-      timer: 10,
     },
   ],
 };

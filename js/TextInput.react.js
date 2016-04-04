@@ -47,7 +47,7 @@ var TextInput = React.createClass({
 
   render: function() {
     return (
-      <span>
+      <span className="padTop">
         {this.props.children}
         <code>
           <span className="input">
