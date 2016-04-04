@@ -24,7 +24,7 @@ var BeefStroganoff = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: 'Place a hunk of chuck roast, cutting board, and knife on the table.',
+      pretext: <span>Place a hunk of <b>chuck roast</b>, <b>cutting board</b>, and <b>knife</b> on the table.</span>,
       type: 'ingredients',
       leftName: 'Items',
       rightName: 'Table',
@@ -67,7 +67,7 @@ var BeefStroganoff = {
       timer: 7,
     },
     {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to MED.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">MED</b>.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
@@ -200,7 +200,7 @@ var BeefStroganoff = {
       timer: 9,
     },
     {
-      pretext: <span>Pour in 1/3 cup of white wine.<br/></span>,
+      pretext: <span>Pour in <b className="green">1/3 cup</b> of white wine.<br/></span>,
       instruction: 'wiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiine',
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6 &nbsp;&nbsp;&nbsp;&nbsp;^ 2/6 &nbsp;&nbsp;&nbsp;&nbsp;^ 3/6</span>,
       timer: 8,

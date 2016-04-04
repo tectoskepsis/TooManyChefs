@@ -15,9 +15,8 @@ var EggsBenedict = {
   chefName: 'Entremetier',
   type: 'entree',
   difficulty: 'medium',
-  // TODO: update below
-  ingredients: ['1 onion', '2 cups steamed rice', '2 eggs', '2 tbsp vegetable oil', '8 oz chicken breast', '1/2 cup carrots', 'soy sauce to taste'],
-  description: 'A tasty balanced meal, perfect for getting rid of leftover rice.',
+  ingredients: ['2 egg yolks', '2 tsp lemon juice', '1/4 tsp salt', '1/2 cup unsalted butter', '2 English muffins', '4 eggs', '2/3 cup fresh arugula'],
+  description: 'Poached eggs and rich hollandaise blend into this fabulous brunch special.',
 
   /* A recipe is a list of json steps */
   steps: [

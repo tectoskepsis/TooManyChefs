@@ -17,7 +17,7 @@ var Cheesecake = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: <span>Using the arrow keys, preheat the oven to 325°F.<br/></span>,
+      pretext: <span>Using the arrow keys, preheat the oven to <b className="fireRed">325°F</b>.<br/></span>,
       instruction: 300,
       type: 'counter',
       goalValue: 325,
@@ -44,7 +44,7 @@ var Cheesecake = {
       timer: 10,
     },
     {
-      pretext: <span>Pour in 3 tbsp sugar by holding 's'.<br/></span>,
+      pretext: <span>Pour in <b className="green">3 tbsp</b> sugar by holding 's'.<br/><br/></span>,
       instruction: 'sssssssssssssssssssssssssssssssssssssssssssssugar',
       posttext: <span><br/>TBSP:&nbsp;&nbsp;&nbsp;&nbsp;^ 1&nbsp;&nbsp;&nbsp;&nbsp;^ 2&nbsp;&nbsp;&nbsp;&nbsp;^ 3&nbsp;&nbsp;&nbsp;&nbsp;^ ALL THE SUGAR</span>,
       timer: 10,
@@ -79,7 +79,7 @@ var Cheesecake = {
       timer: 10,
     },
     {
-      pretext: <span>Use the arrow keys to turn the mixer on LOW.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Use the arrow keys to turn the mixer on <b>LOW</b>.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
@@ -164,7 +164,7 @@ var Cheesecake = {
       timer: 10,
     },
     {
-      pretext: <span>54 minutes to go... maybe we should turn up the temperature to 400°F to speed things up.<br/></span>,
+      pretext: <span>54 minutes to go... maybe we should turn up the temperature to <b className="fireRed">400°F</b> to speed things up.<br/></span>,
       instruction: 325,
       type: 'counter',
       goalValue: 400,
@@ -178,7 +178,7 @@ var Cheesecake = {
       }
     },
     {
-      pretext: <span>What the hell, make that <span className="fireRed">1000°F</span><br/></span>,
+      pretext: <span>What the hell, make that <b className="fireRed">1000°F</b><br/></span>,
       instruction: 400,
       type: 'counter',
       stepValue: 50,

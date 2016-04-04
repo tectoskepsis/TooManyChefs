@@ -15,7 +15,7 @@ var CrabCakes = {
   name: 'Crab Cakes',
   chefName: 'Poissonnier',
   type: 'appetizer',
-  difficulty: 'easy',
+  difficulty: 'medium',
   ingredients: ['1 egg', '8 oz crabmeat', '1/2 cup crackers', '3 tbsp mayonnaise', '4 tsp lemon juice', '1 tbsp butter', '1 tbsp green onion', 'Worcestershire sauce'],
   description: 'This delightful appetizer starts the meal with a tender yet crunchy crunch.',
 
@@ -35,7 +35,7 @@ var CrabCakes = {
       timer: 10,
     },
     {
-      pretext: <span>Scoop in 3 tbsp mayonnaise by holding 'm'. (Don't overdose!)<br/></span>,
+      pretext: <span>Scoop in <b className="green">3 tbsp</b> mayonnaise by holding 'm'. (Don't overdose!)<br/><br/></span>,
       instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm-mayo!',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 1 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 3 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 1 HEART ATTACK</span>,
       timer: 10,
@@ -101,7 +101,7 @@ var CrabCakes = {
       onTimeout: nextStep,
     },
     {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to MED.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">MED</b>.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
@@ -197,7 +197,7 @@ var CrabCakes = {
       },
     },
     {
-      pretext: <span>Pour some of your favorite Worcestershire sauce, but not too much.<br/></span>,
+      pretext: <span>Pour some of your favorite Worcestershire sauce, but <b>not too much</b>.<br/></span>,
       instruction: 'wooooooooooooooooooooooooooooooooooorcestershire',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ too little &nbsp;&nbsp;&nbsp;&nbsp;^ just right &nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
       timer: 8,

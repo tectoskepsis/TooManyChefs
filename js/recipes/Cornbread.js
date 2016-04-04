@@ -24,7 +24,7 @@ var Cornbread = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: <span>Press up and down to preheat the oven to 400°F.<br/></span>,
+      pretext: <span>Press up and down to preheat the oven to <b className="fireRed">400°F</b>.<br/></span>,
       instruction: 300,
       type: 'counter',
       goalValue: 400,
@@ -56,7 +56,7 @@ var Cornbread = {
       timer: 8,
     },
     {
-      pretext: <span>Pour 1 cup of milk into a mixing bowl by holding 'm'.<br/></span>,
+      pretext: <span>Pour <b className="green">1 cup</b> of milk into a mixing bowl by holding 'm'.<br/><br/></span>,
       instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmilk',
       posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 2/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 3/2</span>,
       timer: 10,
@@ -83,7 +83,7 @@ var Cornbread = {
       timer: 10,
     },
     {
-      pretext: 'Add cornmeal, flour, sugar, and baking powder into the bowl.',
+      pretext: <span>Add <b>cornmeal</b>, <b>flour</b>, <b>sugar</b>, and <b>baking powder</b> into the bowl.</span>,
       type: 'ingredients',
       leftName: 'Ingredients',
       rightName: 'Bowl',
@@ -119,7 +119,7 @@ var Cornbread = {
       timer: 8,
     },
     {
-      pretext: 'Put the pan in the oven.',
+      pretext: <span>Put the <b>pan</b> in the oven.</span>,
       type: 'ingredients',
       leftName: 'Table',
       rightName: 'Oven',

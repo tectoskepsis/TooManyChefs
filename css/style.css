@@ -112,6 +112,10 @@ ul.ingredients-step > li {
   color: #659cf3;
 }
 
+.green {
+  color: #5cb85c;
+}
+
 .failure {
   background-color: #ffbaba;
 }

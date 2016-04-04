@@ -41,7 +41,7 @@ var GreenBeanCasserole = {
       timer: 10,
     },
     {
-      pretext: <span>Using the arrow keys, preheat the oven to 350°F.<br/></span>,
+      pretext: <span>Using the arrow keys, preheat the oven to <b className="fireRed">350°F</b>.<br/></span>,
       instruction: 300,
       type: 'counter',
       goalValue: 350,
@@ -55,7 +55,7 @@ var GreenBeanCasserole = {
       }
     },
     {
-      pretext: 'Add the onions and mushrooms into a large skillet.',
+      pretext: <span>Add the <b>onions</b> and <b>mushrooms</b> into a large skillet.</span>,
       type: 'ingredients',
       leftName: 'Ingredients',
       rightName: 'Skillet',
@@ -78,7 +78,7 @@ var GreenBeanCasserole = {
       },
     },
     {
-      pretext: <span>Turn the stove to MED heat with the arrow keys.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
+      pretext: <span>Turn the stove to <b className="fireRed">MED</b> heat with the arrow keys.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
@@ -97,7 +97,7 @@ var GreenBeanCasserole = {
       timer: 10,
     },
     {
-      pretext: 'Add the green beans into the skillet.',
+      pretext: <span>Add the <b>green beans</b> into the skillet.</span>,
       type: 'ingredients',
       leftName: 'Ingredients',
       rightName: 'Skillet',
@@ -120,7 +120,7 @@ var GreenBeanCasserole = {
       },
     },
     {
-      pretext: <span>Pour in 10 oz of cream of mushroom soup by holding 's'.<br/></span>,
+      pretext: <span>Pour in <b className="green">10 oz</b> of cream of mushroom soup by holding 's'.<br/><br/></span>,
       instruction: 'ssssssssssssssssssssssssssssssssssssssoup',
       posttext: <span><br/>oz:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 15</span>,
       timer: 10,
@@ -160,7 +160,7 @@ var GreenBeanCasserole = {
       timer: 8,
     },
     {
-      pretext: 'Put the casserole in the oven.',
+      pretext: <span>Put the <b>casserole</b> in the oven.</span>,
       type: 'ingredients',
       leftName: 'Table',
       rightName: 'Oven',

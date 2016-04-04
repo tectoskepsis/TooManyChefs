@@ -88,7 +88,7 @@ var FriedRice = {
       timer: 10,
     },
     {
-      pretext: <span>All done! It's time to start cooking. Pour some oil, but not too much, into a wok.<br/></span>,
+      pretext: <span>All done! It's time to start cooking. Pour some oil, but <b>not too much</b>, into a wok.<br/></span>,
       instruction: 'ooooooooooooooooooooooooooooooooooooooooooooooooil',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too little&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
       timer: 10,
@@ -104,7 +104,7 @@ var FriedRice = {
       },
     },
     {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to HIGH.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">HIGH</b>.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,

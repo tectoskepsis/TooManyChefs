@@ -29,7 +29,7 @@ var ChocolateCupcakes = {
       timer: 10,
     },
     {
-      pretext: 'Grab a muffin pan from the pantry.',
+      pretext: <span>Grab a <b>muffin pan</b> from the pantry.</span>,
       type: 'ingredients',
       leftName: 'Selection',
       rightName: 'Pantry',
@@ -53,13 +53,13 @@ var ChocolateCupcakes = {
       },
     },
     {
-      pretext: <span>Hold 'f' to pour 1 1/3 cups of flour.<br/></span>,
+      pretext: <span>Hold 'f' to pour <b className="green">1 1/3 cups</b> of flour.<br/><br/></span>,
       instruction: 'ffffffffffffffffffffffffffffffffffflour',
       posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 2/3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 3/3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 4/3</span>,
       timer: 10,
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 21 && progress <= 25) {
+        if (progress >= 30 && progress <= 34) {
           this.nextStep();
         } else {
           this.failure();
@@ -110,7 +110,7 @@ var ChocolateCupcakes = {
       timer: 6,
     },
     {
-      pretext: 'Put the muffin pan in the oven.',
+      pretext: <span>Put the <b>muffin pan</b> in the oven.</span>,
       type: 'ingredients',
       leftName: 'Table',
       rightName: 'Oven',
@@ -142,7 +142,7 @@ var ChocolateCupcakes = {
       timer: 7,
     },
     {
-      pretext: 'Choose your favorite frosting (but just one)!',
+      pretext: <span>Choose your <b>favorite</b> frosting (but <b>just one</b>)!</span>,
       type: 'ingredients',
       leftName: 'Selection',
       rightName: 'Frosting',
