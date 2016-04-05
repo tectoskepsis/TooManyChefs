@@ -1,7 +1,9 @@
 var React = require('react');
 
+var SoundEffects = require('./SoundEffects.js');
+
 // Arrow keycodes
-var KEYCODES = {
+const KEYCODES = {
   l: 37,
   u: 38,
   r: 39,
@@ -43,6 +45,8 @@ var Arrows = React.createClass({
 
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === KEYCODES[this.props.children.charAt(this.state.progress)]) {
+      SoundEffects.playRandomClick();
+
       var newProgress = this.state.progress + 1;
       var complete = newProgress === this.props.children.length;
       this.setState({

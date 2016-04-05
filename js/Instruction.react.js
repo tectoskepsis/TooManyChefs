@@ -1,6 +1,9 @@
+var AudioPlayer = require('web-audio-player');
 var React = require('react');
 
 var cx = require('classnames');
+
+var SoundEffects = require('./SoundEffects.js');
 
 var Instruction = React.createClass({
   propTypes: {
@@ -38,6 +41,8 @@ var Instruction = React.createClass({
 
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === this.props.children.charCodeAt(this.state.progress)) {
+      SoundEffects.playRandomClick();
+
       var newProgress = this.state.progress + 1;
       while (newProgress < this.props.children.length && this.props.children.charAt(newProgress) === ' ') {
         newProgress++; // skip spaces

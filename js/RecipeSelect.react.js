@@ -7,6 +7,7 @@ var cx = require('classnames');
 
 var Inst = require('./Instruction.react.js');
 var Recipes = require('./recipes/Recipes.js');
+var SoundEffects = require('./SoundEffects.js');
 
 var RecipeSelect = React.createClass({
   mixins: [TimerMixin],
@@ -47,9 +48,11 @@ var RecipeSelect = React.createClass({
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === 37 && this.state.value > 0) {
       // left arrow pressed
+      SoundEffects.playRandomClick();
       this.setState({value: this.state.value - 1});
     } else if (keyCode === 39 && this.state.value < Recipes.length - 1) {
       // right arrow pressed
+      SoundEffects.playRandomClick();
       this.setState({value: this.state.value + 1});
     }
   },

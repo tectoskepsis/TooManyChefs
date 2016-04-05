@@ -1,6 +1,8 @@
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
 
+var SoundEffects = require('./SoundEffects.js');
+
 var Ingredients = React.createClass({
   mixins: [TimerMixin],
 
@@ -45,6 +47,8 @@ var Ingredients = React.createClass({
 
     for (var i = 0; i < ingredients.length; i++) {
       if (keyCode === ingredients[i].key.charCodeAt(0)) {
+        SoundEffects.playRandomClick();
+
         ingredients[i].left = !ingredients[i].left;
         this.setState({ingredients: ingredients});
         break;

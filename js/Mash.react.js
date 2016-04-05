@@ -1,5 +1,7 @@
 var React = require('react');
 
+var SoundEffects = require('./SoundEffects.js');
+
 var Mash = React.createClass({
   propTypes: {
     children: React.PropTypes.string,
@@ -41,6 +43,8 @@ var Mash = React.createClass({
 
     var keyCode = e.which || e.keyCode || 0;
     if (String.fromCharCode(keyCode).toLowerCase() === this.props.children || (this.props.children === 'CAPSLOCK' && keyCode === 20)) {
+      SoundEffects.playRandomClick();
+
       var newValue = this.state.value - 1;
       this.setState({value: newValue});
 

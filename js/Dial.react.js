@@ -1,6 +1,8 @@
 var React = require('react');
 var _ = require('lodash');
 
+var SoundEffects = require('./SoundEffects.js');
+
 var Dial = React.createClass({
   propTypes: {
     children: React.PropTypes.oneOfType([
@@ -44,9 +46,11 @@ var Dial = React.createClass({
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === 37 && this.state.value > 0) {
       // left arrow pressed
+      SoundEffects.playRandomClick();
       this.setState({value: this.state.value - 1});
     } else if (keyCode === 39 && this.state.value < this.props.maxValue) {
       // right arrow pressed
+      SoundEffects.playRandomClick();
       this.setState({value: this.state.value + 1});
     }
   },
