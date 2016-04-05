@@ -24,7 +24,7 @@ var BelgianWaffle = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: <span>Pour 1/4 cup warm water into a small bowl by holding 'm'.<br/></span>,
+      pretext: <span>Pour <b className="green">1/4</b> cup warm water into a small bowl by holding 'm'.<br/></span>,
       instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmilk',
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4&nbsp;&nbsp;&nbsp;&nbsp;^4/4</span>,
       timer: 10,

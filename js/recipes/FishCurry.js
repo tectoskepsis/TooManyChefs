@@ -174,7 +174,7 @@ var FishCurry = {
       timer: 8,
     },
     {
-      pretext: <span>Pour <b>3 cups</b> of water into the wok.<br/></span>,
+      pretext: <span>Pour <b className="green">3 cups</b> of water into the wok.<br/></span>,
       instruction: 'waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaater',
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1&nbsp;&nbsp;&nbsp;&nbsp;^ 2&nbsp;&nbsp;&nbsp;&nbsp;^ 3&nbsp;&nbsp;&nbsp;&nbsp;^ 4</span>,
       timer: 10,
