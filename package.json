@@ -22,7 +22,8 @@
     "react-addons-perf": "~0.14.8"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js -v -d js/main.js"
+    "start": "watchify -o js/bundle.js -v -d js/main.js",
+    "build": "NODE_ENV=production browserify js/main.js | uglifyjs -mc warnings=false > js/bundle.js"
   },
   "browserify": {
     "transform": [
