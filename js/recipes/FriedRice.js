@@ -4,6 +4,8 @@ var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
   chickenName: 'alfred',
+  left: [],
+  right: [],
 };
 
 var nextStep = function() {
@@ -27,10 +29,27 @@ var FriedRice = {
       timer: 10,
     },
     {
-      pretext: 'Equip a',
-      instruction: 'knife',
-      posttext: 'for +3 ATK vs vegetables.',
-      timer: 12,
+      pretext: <span>Equip a <b>paring knife</b> for +3 attack vs. vegetables.</span>,
+      type: 'ingredients',
+      leftName: 'Hand',
+      rightName: 'Knife Block',
+      ingredients: [
+        {name: 'paring knife', key: 'p', left: false},
+        {name: 'butcher knife', key: 'b', left: false},
+        {name: 'spork', key: 's', left: false},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'paring knife') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
       pretext: <span>Dice up the carrots into little cubes by mashing 'd'.<br/></span>,

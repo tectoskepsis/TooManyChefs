@@ -169,12 +169,8 @@ var Game = React.createClass({
 
   renderRecipeMenu: function() {
     return (
-      <div>
-        <RecipeSelect onProgress={this.onRecipeProgress} />
-        <br/>
-        <p>Select a meal with the arrow keys.</p>
-        <Inst onComplete={this.onStartGame}>play</Inst>
-      </div>
+      <RecipeSelect onProgress={this.onRecipeProgress}
+                    onSelect={this.onStartGame} />
     );
   },
 

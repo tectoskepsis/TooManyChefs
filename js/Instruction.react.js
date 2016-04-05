@@ -1,10 +1,13 @@
 var React = require('react');
 
+var cx = require('classnames');
+
 var Instruction = React.createClass({
   propTypes: {
     children: React.PropTypes.string.isRequired,
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func,
+    disabled: React.PropTypes.bool,
   },
 
   getInitialState: function() {
@@ -29,7 +32,7 @@ var Instruction = React.createClass({
   },
 
   onKeyPress: function(e) {
-    if (this.state.complete) {
+    if (this.state.complete || this.props.disabled) {
       return;
     }
 
@@ -55,7 +58,7 @@ var Instruction = React.createClass({
     var prefix = this.props.children.substring(0, this.state.progress);
     var suffix = this.props.children.substring(this.state.progress);
     return (
-      <code>
+      <code className={cx({locked: this.props.disabled})}>
         <span className="input">{prefix}</span>
         <u>{suffix.substring(0, 1)}</u>
         <span>{suffix.substring(1)}</span>

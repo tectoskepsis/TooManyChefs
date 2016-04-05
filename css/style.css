@@ -151,6 +151,10 @@ ul.ingredients-step > li {
   background-color: #0056a0;
 }
 
+.locked {
+  color: gray;
+}
+
 .chefHat {
   position: absolute;
   width: 50px;

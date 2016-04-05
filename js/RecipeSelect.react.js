@@ -5,6 +5,7 @@ var TransitionGroup = require('react-addons-css-transition-group');
 var _ = require('lodash');
 var cx = require('classnames');
 
+var Inst = require('./Instruction.react.js');
 var Recipes = require('./recipes/Recipes.js');
 
 var RecipeSelect = React.createClass({
@@ -12,6 +13,7 @@ var RecipeSelect = React.createClass({
 
   propTypes: {
     onProgress: React.PropTypes.func.isRequired,
+    onSelect: React.PropTypes.func.isRequired,
   },
 
   getInitialState: function() {
@@ -58,22 +60,25 @@ var RecipeSelect = React.createClass({
     var fullStar = (i) => <span key={i} className="darkBlue glyphicon glyphicon-star" />;
 
     return (
-      <div className="padTop">
+      <div className={cx('padTop', {locked: meal.locked})}>
         <h4>{meal.name}</h4>
         <p>
           Difficulty: {_.range(5).map((i) => i < meal.rating ? fullStar(i) : emptyStar(i))}
         </p>
-        <br/>
+        {meal.locked ? <h4 className="fireRed">LOCKED</h4> : <br/>}
 
         {meal.recipes.map((r, i) => (
-          <div key={i}>{r.name} ({r.type})</div>
+          <div key={i}>{meal.locked ? '??????' : r.name} ({r.type})</div>
         ))}
+
         <br/>
       </div>
     );
   },
 
   render: function() {
+    var locked = Recipes[this.state.value].locked;
+
     return (
       <div>
         <TransitionGroup transitionName="fade"
@@ -88,6 +93,9 @@ var RecipeSelect = React.createClass({
              <span key={i} className={cx('dot', {active: this.state.value === i})} />)}
           <span className="padLeft10 glyphicon glyphicon-triangle-right" />
         </div>
+        <br/>
+        <p>Select a meal with the arrow keys.</p>
+        <Inst onComplete={this.onSelect} disabled={locked}>play</Inst>
       </div>
     );
   },

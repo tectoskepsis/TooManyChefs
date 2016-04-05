@@ -30,7 +30,6 @@ var BeefStroganoff = {
       rightName: 'Knife Block',
       ingredients: [
         {name: 'carving knife', key: 'c', left: false},
-        {name: 'butcher knife', key: 'b', left: false},
         {name: 'paring knife', key: 'p', left: false},
         {name: 'fork', key: 'f', left: false},
       ],

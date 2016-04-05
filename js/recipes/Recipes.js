@@ -31,6 +31,7 @@ module.exports = [
   },
   {
     name: 'French-Italian Bistro',
+    locked: true,
     rating: 5,
     recipes: [
       require('./Bruschetta.js'),
