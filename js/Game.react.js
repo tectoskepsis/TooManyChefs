@@ -49,6 +49,9 @@ var Game = React.createClass({
       case 'menu':
         renderContent = this.renderRecipeMenu;
         break;
+      case 'credits':
+        renderContent = this.renderCredits;
+        break;
       case 'loading':
         renderContent = this.renderLoading;
         break;
@@ -159,6 +162,7 @@ var Game = React.createClass({
       <div className="padTop">
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>start</Inst> to begin</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>credits</Inst> for culinary staff</p>
       </div>
     );
   },
@@ -206,6 +210,23 @@ var Game = React.createClass({
     return (
       <div className="padTop vcenter vtop">
         {_.sample(LOADING_TEXT)}...
+      </div>
+    );
+  },
+
+  renderCredits: function() {
+    return (
+      <div className="padTop">
+        <br/><br/>
+        <h4>Credits</h4>
+        <p>
+          <b>Chef de cuisine</b> (designer): Ivan Wang<br/>
+          <b>Sous-chef</b> (programmer): Ivan Wang<br/>
+          <b>Culinary consultant</b>: Anshu Bansal<br/>
+          <b>Cafe jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena
+        </p>
+        <br/><br/>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>
       </div>
     );
   },

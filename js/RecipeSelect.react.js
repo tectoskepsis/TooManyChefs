@@ -68,7 +68,7 @@ var RecipeSelect = React.createClass({
         <p>
           Difficulty: {_.range(5).map((i) => i < meal.rating ? fullStar(i) : emptyStar(i))}
         </p>
-        {meal.locked ? <h4 className="fireRed">LOCKED</h4> : <br/>}
+        {meal.locked ? <h4 className="fireRed">Coming Soon</h4> : <br/>}
 
         {meal.recipes.map((r, i) => (
           <div key={i}>{meal.locked ? '??????' : r.name} ({r.type})</div>
