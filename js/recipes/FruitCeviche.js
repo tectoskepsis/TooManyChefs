@@ -187,7 +187,7 @@ var FruitCeviche = {
     },
     {
       pretext: 'Grab a plate and',
-      instrution: 'decorate',
+      instruction: 'decorate',
       posttext: 'it with the avocados.',
       timer: 10,
     },

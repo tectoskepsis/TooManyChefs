@@ -24,7 +24,7 @@ module.exports = [
     rating: 4,
     recipes: [
       require('./SpringRolls.js'),
-      require('./ChickenAdobo.js'),
+      require('./FishCurry.js'),
       require('./FriedRice.js'),
       require('./Cheesecake.js'),
     ],

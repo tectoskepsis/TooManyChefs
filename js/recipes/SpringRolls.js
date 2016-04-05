@@ -1,10 +1,11 @@
 var React = require('react');
 
-var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
-  crabName: 'charlie',
+  shrimpName: 'shrimpy',
+  left: [],
+  right: [],
 };
 
 var nextStep = function() {
@@ -15,210 +16,249 @@ var SpringRolls = {
   name: 'Spring Rolls',
   chefName: 'Entremetier',
   type: 'appetizer',
-  difficulty: 'easy',
-  // TODO: update below
-  ingredients: ['1 egg', '8 oz crabmeat', '1/2 cup crackers', '3 tbsp mayonnaise', '4 tsp lemon juice', '1 tbsp butter', '1 tbsp green onion', 'Worcestershire sauce'],
-  description: 'This delightful appetizer starts the meal with a tender yet crunchy crunch.',
+  difficulty: 'medium',
+  ingredients: ['2 oz rice vermicelli', '8 rice wrappers', '8 large cooked shrimp', '3 tbsp cilantro', '2 lettuce leaves', '4 tsp fish sauce', '2 tbsp lime juice', '3 tbsp hoisin sauce', '1 tsp peanuts'],
+  description: 'A refreshing summertime appetizer, delicious with sauce.',
 
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: 'Crack an egg into a bowl by tapping ',
-      instruction: 'e',
-      posttext: '.',
-      timer: 8,
-    },
-    {
-      pretext: <span>Drip in 4 tsp lemon juice with 'd'.<br/></span>,
-      instruction: 'd',
-      type: 'mash',
-      mashCount: 4,
+      pretext: 'Type to',
+      instruction: 'place',
+      posttext: 'a medium saucepan filled with water on the stove.',
       timer: 10,
     },
     {
-      pretext: <span>Scoop in 3 tbsp mayonnaise by holding 'm'. (Don't overdose!)<br/></span>,
-      instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm-mayo!',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 1 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 3 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 1 HEART ATTACK</span>,
+      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">HIGH</b>.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
+      instruction: '^',
+      type: 'dial',
       timer: 10,
-      onComplete: () => {},
-      onTimeout: function(progress) {
-        if (progress >= 27 && progress <= 31) {
+      onTimeout: function(value) {
+        if (value >= 19 && value <= 24) {
           this.nextStep();
-        } else if (progress > 32) {
-          this.failure(<p>Recipe failed, too much mayo!</p>);
         } else {
-          this.failure(<p>Recipe failed, not enough mayo!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Type',
-      instruction: 'whisk',
-      posttext: 'to equip the tool for +2 bonus to stirring.',
+      pretext: <span>Drop the <b>rice vermicelli</b> into the boiling water.</span>,
+      type: 'ingredients',
+      leftName: 'Ingredients',
+      rightName: 'Pan',
+      ingredients: [
+        {name: 'rice vermicelli', key: 'r', left: true},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 1) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: 'Grab another bowl and',
+      instruction: 'fill',
+      posttext: 'it with water.',
       timer: 10,
     },
     {
-      pretext: <span>Mash 'w' to mix together the creamy concoction.<br/></span>,
-      instruction: 'w',
-      type: 'mash',
-      mashCount: 15,
+      pretext: <span><b>Dip</b> a rice wrapper into the water for a few seconds, then <b>take it out</b>.</span>,
+      type: 'ingredients',
+      leftName: 'Table',
+      rightName: 'Bowl of Water',
+      ingredients: [
+        {name: 'wrapper', key: 'w', left: true},
+      ],
       timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
-      pretext: <span>Name your friendly crab as you prepare him for devouring.<br/></span>,
+      pretext: 'Lay the wrapper',
+      instruction: 'flat',
+      posttext: 'on the table.',
+      timer: 8,
+    },
+    {
+      pretext: 'Take a shrimp and',
+      instruction: 'peel',
+      posttext: 'off its shell.',
+      timer: 8,
+    },
+    {
+      pretext: <span>Give a name to the shrimp you just undressed.<br/></span>,
       instruction: 'Name: ',
       type: 'textinput',
       timer: 6,
       onTimeout: function(name) {
         if (!name) {
-          this.failure(<p>Recipe failed. Failed to name crab.</p>);
+          this.failure();
         } else {
-          recipeData.crabName = name;
+          recipeData.shrimpName = name;
           this.nextStep();
         }
       },
     },
     {
-      pretext: 'Gently toss',
-      instruction: () => recipeData.crabName,
-      posttext: 'into the bowl while continuing to stir.',
+      pretext: () => <span>Using the arrow keys, position {recipeData.shrimpName} in the <b>center</b> of the wrap.<br/></span>,
+      instruction: () => recipeData.shrimpName.substring(0, 4),
+      type: 'dial',
+      maxValue: 20,
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=====WRAP=====</span>,
+      timer: 10,
+      onTimeout: function(value) {
+        if (value >= 10 && value <= 14) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Scatter the vegetables onto the wrap by tapping 's'.<br/></span>,
+      instruction: 's',
+      type: 'mash',
+      mashCount: 5,
+      timer: 8,
+    },
+    {
+      pretext: 'Take the rice vermicelli and',
+      instruction: 'sprinkle',
+      posttext: 'it onto the wrapper.',
+      timer: 9,
+    },
+    {
+      pretext: <span>Fold the sides of the wrap with the arrow keys.<br/></span>,
+      instruction: 'lrrrlllr',
+      type: 'arrows',
       timer: 10,
     },
     {
-      pretext: 'Crush the crackers into little',
-      instruction: 'c r u m b s',
-      posttext: 'and drop them into the bowl.',
+      pretext: 'Tightly',
+      instruction: 'roll',
+      posttext: 'the wrapper into a cylindrical shape.',
       timer: 8,
     },
     {
-      pretext: <span>Continue stirring the mixture with the arrow keys.<br/></span>,
-      instruction: 'uldruldr',
-      type: 'arrows',
-      timer: 8,
+      pretext: <span>Karate chop the wrap into two smaller ones by mashing 'k'.<br/></span>,
+      instruction: 'k',
+      type: 'mash',
+      mashCount: 10,
+      timer: 10,
     },
     {
-      pretext: () => <span>Take a short break and chat with {recipeData.crabName} about the finer things in life.</span>,
+      pretext: 'Do a few push-ups while your heart is pumping.',
       timer: 10,
       onTimeout: nextStep,
     },
     {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to MED.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
-      instruction: '^',
-      type: 'dial',
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 11 && value <= 15) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed-- did not turn on stove to MED!</p>);
-        }
-      },
-    },
-    {
-      pretext: 'Melt the',
-      instruction: 'butter',
-      posttext: 'on a skillet over the heat.',
+      pretext: 'Now you\'re getting warmed up! Grab a bowl and',
+      instruction: 'throw',
+      posttext: 'in the fish sauce.',
       timer: 8,
     },
     {
-      instruction: 'SMUSH',
-      posttext: () => <span>{recipeData.crabName} into 4 different {recipeData.crabName} patties.</span>,
+      pretext: <span>Pour <b>2 tbsp</b> of lime juice into the bowl by holding 'l'.<br/></span>,
+      instruction: 'llllllllllllllllllllllllllllllllllllllllime',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 1.5 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2.5</span>,
       timer: 10,
-    },
-    {
-      pretext: <span>Place the patties on the skillet using the arrow keys.<br/></span>,
-      instruction: '{PATTY}',
-      type: 'dial',
-      maxValue: 16,
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-skillet-</span>,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 12) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed. Failed to put patty on skillet.</p>);
-        }
-      },
-    },
-    {
-      pretext: 'Cook the patty and',
-      instruction: 'flip',
-      posttext: <span>it when golden brown.<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ColorChange>{'{PATTY}'}</ColorChange><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-skillet-</span>,
-      timer: 30,
-      onComplete: function(progress, time) {
-        // Only proceed if color is golden brown
-        if (time <= 20) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed. Patty not cooked to golden brown.</p>);
-        }
-      },
-    },
-    {
-      pretext: () => <span>Tell {recipeData.crabName} a joke while he lies there to ease his suffering.<br/>Q: Why did the crab cross the road?<br/></span>,
-      instruction: 'A: ',
-      type: 'textinput',
-      timer: 8,
-      onTimeout: function(joke) {
-        if (!joke) {
-          this.failure(<p>Recipe failed. Failed to tell joke!</p>);
-        } else {
-          this.nextStep();
-        }
-      },
-    },
-    {
-      pretext: <span>Poke {recipeData.crabName} with the arrow keys so he laughs at your joke.<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'{PATTY}'}</span>,
-      type: 'dial',
-      maxValue: 10,
-      startValue: 10,
-      instruction: '<=finger=',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-skillet-</span>,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value <= 2) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed, failed to poke patty!</p>);
-        }
-      },
-    },
-    {
-      pretext: <span>Remove the patties and turn off the heat.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
-      instruction: '^',
-      type: 'dial',
-      startValue: 13,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value <= 2) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed-- did not turn off stove.</p>);
-        }
-      },
-    },
-    {
-      pretext: <span>Pour some of your favorite Worcestershire sauce, but not too much.<br/></span>,
-      instruction: 'wooooooooooooooooooooooooooooooooooorcestershire',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ too little &nbsp;&nbsp;&nbsp;&nbsp;^ just right &nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
-      timer: 8,
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 20 && progress <= 25) {
+        if (progress >= 16 && progress <= 22) {
           this.nextStep();
-        } else if (progress > 25) {
-          this.failure(<p>Recipe failed, too much Worcestershire sauce!</p>);
         } else {
-          this.failure(<p>Recipe failed, not enough Worcestershire sauce!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: <span>Finally, garnish with some leaves you found outside in your front yard.<br/></span>,
-      instruction: 'g',
+      pretext: <span>Add <b>garlic</b>, <b>sugar</b>, and <b>chili sauce</b> into the mix.</span>,
+      type: 'ingredients',
+      leftName: 'Ingredients',
+      rightName: 'Bowl',
+      ingredients: [
+        {name: 'garlic', key: 'g', left: true},
+        {name: 'sugar', key: 's', left: true},
+        {name: 'chili sauce', key: 'c', left: true},
+        {name: 'fish sauce', key: 'f', left: false},
+        {name: 'lime juice', key: 'l', left: false},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 5) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Mix everything together by mashing 'm'.<br/></span>,
+      instruction: 'm',
       type: 'mash',
-      mashCount: 5,
+      mashCount: 15,
+      timer: 10,
+    },
+    {
+      pretext: 'In another bowl,',
+      instruction: 'g r i n d',
+      posttext: 'up some peanuts.',
       timer: 7,
+    },
+    {
+      pretext: 'Type',
+      instruction: 'h',
+      posttext: 'to add hoisin sauce to the bowl of peanuts.',
+      timer: 7,
+    },
+    {
+      pretext: <span>Move the <b>spring rolls</b> and <b>sauces</b> onto a plate.</span>,
+      type: 'ingredients',
+      leftName: 'Items',
+      rightName: 'Plate',
+      ingredients: [
+        {name: 'spring rolls', key: 's', left: true},
+        {name: 'peanut sauce', key: 'p', left: true},
+        {name: 'fish sauce', key: 'f', left: true},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 3) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: 'Finally,',
+      instruction: 'deliver',
+      posttext: 'the spring rolls to your drooling customers.',
+      timer: 10,
     },
   ],
 };

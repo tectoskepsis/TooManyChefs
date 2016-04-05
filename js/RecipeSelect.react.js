@@ -95,7 +95,7 @@ var RecipeSelect = React.createClass({
         </div>
         <br/>
         <p>Select a meal with the arrow keys.</p>
-        <Inst onComplete={this.onSelect} disabled={locked}>play</Inst>
+        <Inst onComplete={this.props.onSelect} disabled={locked}>play</Inst>
       </div>
     );
   },
