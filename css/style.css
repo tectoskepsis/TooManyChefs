@@ -1,0 +1,190 @@
+h1 {
+  font-family: 'Cabin', sans-serif;
+}
+
+body {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+  background-color: #edf4ff;
+}
+
+code {
+  color: #659cf3;
+  font-size: 15px;
+  padding: 0;
+  background-color: inherit;
+  border-radius: 0;
+}
+
+code > span {
+  transition: color 250ms ease;
+}
+
+code > .input {
+  color: #0056a0;
+  font-weight: 800;
+}
+
+code > .correct {
+  color: #228822;
+  font-weight: 800;
+}
+
+.center {
+  text-align: center;
+}
+
+.vcenter {
+  margin-top: 20%;
+  margin-bottom: 20px;
+  transition: margin 250ms ease;
+}
+.vcenter.vtop {
+  margin-top: 5%;
+}
+
+.list-inline > li > code {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+ul.ingredients {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+ul.ingredients-step > li {
+  list-style-type: none;
+}
+
+.chefBox {
+  margin: 10px auto;
+  min-height: 200px;
+  width: 100%;
+  padding: 10px 20px;
+  transition: background-color 250ms ease;
+}
+
+/* Transitions */
+.fade-enter {
+  opacity: 0.01;
+  transition: opacity 250ms ease-in;
+}
+.fade-enter.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-leave {
+  opacity: 1;
+  transition: opacity 250ms ease-out;
+}
+.fade-leave.fade-leave-active {
+  opacity: 0;
+}
+
+.padLeft {
+  padding-left: 20px;
+}
+.padLeft10 {
+  padding-left: 10px;
+}
+.padRight10 {
+  padding-right: 10px;
+}
+.padTop {
+  padding-top: 10px;
+}
+
+.fireRed {
+  color: #ff0500;
+}
+
+.lightRed {
+  color: #da8280;
+}
+
+.darkBlue {
+  color: #0056a0;
+}
+
+.lightBlue {
+  color: #659cf3;
+}
+
+.green {
+  color: #5cb85c;
+}
+
+.failure {
+  background-color: #ffbaba;
+}
+
+.success {
+  background-color: #c1f5b1;
+}
+
+.popup {
+  position: relative;
+  bottom: 20%;
+}
+
+.capslock {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.recipeName {
+  margin-top: -30px;
+}
+
+.dot {
+  display: inline-block;
+  background-color: #eee;
+  border: 1px solid #666;
+  border-radius: 5px;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
+}
+.dot.active {
+  background-color: #0056a0;
+}
+
+.locked {
+  color: gray;
+}
+
+.chefHat {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: -40px;
+      -ms-transform: rotate(-15deg); /* IE-9 */
+  -webkit-transform: rotate(-15deg); /* Chrome, Safari, Opera */
+          transform: rotate(-15deg);
+  -webkit-animation: hatFadeIn 1s; /* Chrome, Safari, Opera */
+      -ms-animation: hatFadeIn 1s; /* Internet Explorer */
+          animation: hatFadeIn 1s;
+}
+
+/* Decrease timer bar animation speed */
+.rc-progress-line-path {
+  transition: stroke-dashoffset 2s ease,
+              stroke 2s ease !important;
+}
+
+/* chefHat animations */
+@keyframes hatFadeIn {
+  from { opacity: 0; margin-top: -80px; }
+  to   { opacity: 1; margin-top: -40px; }
+}
+@-webkit-keyframes hatFadeIn {
+  from { opacity: 0; margin-top: -80px; }
+  to   { opacity: 1; margin-top: -40px; }
+}
+@-ms-keyframes hatFadeIn {
+  from { opacity: 0; margin-top: -80px; }
+  to   { opacity: 1; margin-top: -40px; }
+}
