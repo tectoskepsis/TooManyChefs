@@ -6,20 +6,6 @@ var TimerMixin = require('react-timer-mixin');
 
 var Keyboard = require('./threex.keyboardstate.js');
 
-/**
- * Table of codes because javascript is trash
- * keyCode | charCode | character
- * ------------------------------
- *  20     |  N/A     |  caps-lock
- *  37     |  N/A     |  left
- *  38     |  N/A     |  up
- *  39     |  N/A     |  right
- *  40     |  N/A     |  down
- *  48-57  |  ??????  | '0'-'9'
- *         |  65-90   | 'A'-'Z'
- *  65-90  |  97-122  | 'a'-'z'
- */
-
 /* Prevent backspace from navigating back in browser, or Ctrl-T/Ctrl-S in Firefox.
  * Note: this breaks inputs. See
  * http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back

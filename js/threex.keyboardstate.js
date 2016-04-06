@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 // THREEx.KeyboardState.js keep the current state of the keyboard.
 // It is possible to query it at any time. No need of an event.
 // This is particularly convenient in loop driven case, like in
@@ -26,7 +28,22 @@
 //
 
 /** @namespace */
-var THREEx  = THREEx || {};
+var THREEx = THREEx || {};
+
+/**
+ * Table of codes because javascript is trash
+ * keyCode | charCode | character
+ * ------------------------------
+ *  20     |  N/A     |  caps-lock
+ *  37     |  N/A     |  left
+ *  38     |  N/A     |  up
+ *  39     |  N/A     |  right
+ *  40     |  N/A     |  down
+ *  48-57  |  ??????  | '0'-'9'
+ *  96-105 |  ??????  | '0'-'9' (numpad)
+ *         |  65-90   | 'A'-'Z'
+ *  65-90  |  97-122  | 'a'-'z'
+ */
 
 /**
  * - NOTE: it would be quite easy to push event-driven too
@@ -34,26 +51,24 @@ var THREEx  = THREEx || {};
  *   - in this._onkeyChange, generate a string from the DOM event
  *   - use this as event name
 */
-THREEx.KeyboardState = function(domElement)
-{
+THREEx.KeyboardState = function(domElement) {
   this.domElement = domElement || document;
   // to store the current state
   this.keyCodes = {};
   this.modifiers = {};
 
   // create callback to bind/unbind keyboard events
-  var _this = this;
-  this._onKeyDown = function(event){ _this._onKeyChange(event); }
-  this._onKeyUp = function(event){ _this._onKeyChange(event); }
+  this._onKeyDown = this._onKeyChange.bind(this);
+  this._onKeyUp = this._onKeyChange.bind(this);
 
   // bind keyEvents
   this.domElement.addEventListener("keydown", this._onKeyDown, false);
   this.domElement.addEventListener("keyup", this._onKeyUp, false);
 
   // create callback to bind/unbind window blur event
-  this._onBlur = function(){
-    for(var prop in _this.keyCodes)  _this.keyCodes[prop] = false;
-    for(var prop in _this.modifiers)  _this.modifiers[prop] = false;
+  this._onBlur = () => {
+    _.forEach(this.keyCodes, (val, key) => this.keyCodes[key] = false);
+    _.forEach(this.modifiers, (val, key) => this.modifiers[key] = false);
   }
 
   // bind window blur
@@ -63,8 +78,7 @@ THREEx.KeyboardState = function(domElement)
 /**
  * To stop listening of the keyboard events
 */
-THREEx.KeyboardState.prototype.destroy = function()
-{
+THREEx.KeyboardState.prototype.destroy = function() {
   // unbind keyEvents
   this.domElement.removeEventListener("keydown", this._onKeyDown, false);
   this.domElement.removeEventListener("keyup", this._onKeyUp, false);
@@ -83,25 +97,64 @@ THREEx.KeyboardState.ALIAS = {
   'pageup'   : 33,
   'pagedown' : 34,
   'tab'      : 9,
-  'escape'   : 27
+  'escape'   : 27,
+  ';'        : 186,
+  '='        : 187,
+  ','        : 188,
+  '-'        : 189,
+  '.'        : 190,
+  '/'        : 191,
+  '['        : 219,
+  '\\'       : 220,
+  ']'        : 221,
+  '\''       : 222,
+};
+THREEx.KeyboardState.NUMPAD = {
+  '0' : 96,
+  '1' : 97,
+  '2' : 98,
+  '3' : 99,
+  '4' : 100,
+  '5' : 101,
+  '6' : 102,
+  '7' : 103,
+  '8' : 104,
+  '9' : 105,
+};
+THREEx.KeyboardState.KEYMAP = {
+  ':' : 'shift+;',
+  '"' : 'shift+\'',
+  '!' : 'shift+1',
+  '@' : 'shift+2',
+  '#' : 'shift+3',
+  '$' : 'shift+4',
+  '%' : 'shift+5',
+  '^' : 'shift+6',
+  '&' : 'shift+7',
+  '*' : 'shift+8',
+  '(' : 'shift+9',
+  ')' : 'shift+0',
+  '<' : 'shift+,',
+  '>' : 'shift+.',
+  '?' : 'shift+/',
+  '{' : 'shift+[',
+  '}' : 'shift+]',
+  '|' : 'shift+\\',
 };
 
 /**
  * to process the keyboard dom event
 */
-THREEx.KeyboardState.prototype._onKeyChange = function(event) {
-  // log to debug
-  //console.log("onKeyChange", event, event.keyCode, event.shiftKey, event.ctrlKey, event.altKey, event.metaKey)
-
-  // update this.keyCodes
-  var keyCode = event.keyCode;
-  var pressed = event.type === 'keydown' ? true : false;
-  this.keyCodes[keyCode]  = pressed;
-  // update this.modifiers
-  this.modifiers['shift'] = event.shiftKey;
-  this.modifiers['ctrl']  = event.ctrlKey;
-  this.modifiers['alt'] = event.altKey;
-  this.modifiers['meta']  = event.metaKey;
+THREEx.KeyboardState.prototype._onKeyChange = function(e) {
+  // update keyCodes
+  var keyCode = e.keyCode || e.which || 0;
+  var pressed = e.type === 'keydown';
+  this.keyCodes[keyCode] = pressed;
+  // update modifiers
+  this.modifiers['shift'] = e.shiftKey;
+  this.modifiers['ctrl']  = e.ctrlKey;
+  this.modifiers['alt'] = e.altKey;
+  this.modifiers['meta']  = e.metaKey;
 }
 
 /**
@@ -111,52 +164,53 @@ THREEx.KeyboardState.prototype._onKeyChange = function(event) {
  * @returns {Boolean} true if the key is pressed, false otherwise
 */
 THREEx.KeyboardState.prototype.pressed = function(keyDesc) {
-  var keys = keyDesc.split("+");
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    var pressed = false;
-    if (THREEx.KeyboardState.MODIFIERS.indexOf(key) !== -1) {
-      pressed = this.modifiers[key];
-    } else if (Object.keys(THREEx.KeyboardState.ALIAS).indexOf(key) != -1) {
-      pressed = this.keyCodes[THREEx.KeyboardState.ALIAS[key]];
-    } else {
-      pressed = this.keyCodes[key.toUpperCase().charCodeAt()];
+  keyDesc = _.get(THREEx.KeyboardState.KEYMAP, keyDesc, keyDesc);
+
+  var keys = keyDesc.split('+');
+  return _.every(keys, (key, i) => {
+    if (_.includes(THREEx.KeyboardState.MODIFIERS, key)) {
+      return this.modifiers[key];
     }
-    if (!pressed) return false;
-  }
-  return true;
-}
+    if (_.has(THREEx.KeyboardState.ALIAS, key)) {
+      return this.keyCodes[THREEx.KeyboardState.ALIAS[key]];
+    }
+
+    return this.keyCodes[key.toUpperCase().charCodeAt()] ||
+           (_.has(THREEx.KeyboardState.NUMPAD, key) &&
+            this.keyCodes[THREEx.KeyboardState.NUMPAD[key]]);
+  });
+};
 
 /**
  * return true if an event match a keyDesc
  * @param  {KeyboardEvent} event   keyboard event
- * @param  {String} keyDesc string description of the key
- * @return {Boolean}         true if the event match keyDesc, false otherwise
+ * @param  {String} keyDesc   description of the key
+ * @return {Boolean} true if the event match keyDesc, false otherwise
  */
-THREEx.KeyboardState.prototype.eventMatches = function(event, keyDesc) {
-  var aliases = THREEx.KeyboardState.ALIAS;
-  var aliasKeys = Object.keys(aliases);
-  var keys = keyDesc.split("+");
+THREEx.KeyboardState.prototype.eventMatches = function(e, keyDesc) {
+  var keyCode = e.keyCode || e.which || 0;
+  const aliases = THREEx.KeyboardState.ALIAS;
+  var keys = keyDesc.split('+');
 
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
+  return _.every(keys, (key) => {
     var pressed = false;
-    if (key === 'shift') {
-      pressed = !!event.shiftKey;
-    } else if (key === 'ctrl') {
-      pressed = !!event.ctrlKey;
-    } else if (key === 'alt') {
-      pressed = !!event.altKey;
-    } else if (key === 'meta') {
-      pressed = !!event.metaKey;
-    } else if (aliasKeys.indexOf(key) !== -1) {
-      pressed = event.keyCode === aliases[key];
-    } else if (event.keyCode === key.toUpperCase().charCodeAt(0)) {
-      pressed = true;
+    switch (key) {
+      case 'shift':
+        return e.shiftKey;
+      case 'ctrl':
+        return e.ctrlKey;
+      case 'alt':
+        return e.altKey;
+      case 'meta':
+        return e.metaKey;
+
+      default:
+        if (_.has(aliases, key)) {
+          return keyCode === aliases[key];
+        }
+        return keyCode === key.toUpperCase().charCodeAt(0);
     }
-    if (!pressed) return false;
-  }
-  return true;
-}
+  });
+};
 
 module.exports = new THREEx.KeyboardState();
