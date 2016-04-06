@@ -2,9 +2,12 @@ var React = require('react');
 
 var cx = require('classnames');
 
+var KeyboardMixin = require('./KeyboardMixin.react.js');
 var SoundEffects = require('./SoundEffects.js');
 
 var Counter = React.createClass({
+  mixins: [KeyboardMixin],
+
   propTypes: {
     children: React.PropTypes.number,
     stepValue: React.PropTypes.number,
@@ -24,14 +27,6 @@ var Counter = React.createClass({
       colorClass: 'input',
       value: this.props.children,
     };
-  },
-
-  componentDidMount: function() {
-    window.addEventListener('keydown', this.onKeyDown);
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('keydown', this.onKeyDown);
   },
 
   componentDidUpdate: function(prevProps, prevState) {

@@ -1,11 +1,15 @@
 var AudioPlayer = require('web-audio-player');
 var React = require('react');
 
+var _ = require('lodash');
 var cx = require('classnames');
 
+var KeyboardMixin = require('./KeyboardMixin.react.js');
 var SoundEffects = require('./SoundEffects.js');
 
 var Instruction = React.createClass({
+  mixins: [KeyboardMixin],
+
   propTypes: {
     children: React.PropTypes.string.isRequired,
     onComplete: React.PropTypes.func.isRequired,
@@ -20,27 +24,18 @@ var Instruction = React.createClass({
     };
   },
 
-  componentDidMount: function() {
-    window.addEventListener('keypress', this.onKeyPress);
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('keypress', this.onKeyPress);
-  },
-
   componentDidUpdate: function(prevProps, prevState) {
     if (this.props.onProgress && this.state.progress != prevState.progress) {
       this.props.onProgress(this.state.progress);
     }
   },
 
-  onKeyPress: function(e) {
+  checkHeldKey: function() {
     if (this.state.complete || this.props.disabled) {
       return;
     }
 
-    var keyCode = e.which || e.keyCode || 0;
-    if (keyCode === this.props.children.charCodeAt(this.state.progress)) {
+    if (this.isKeyPressed(this.props.children.charAt(this.state.progress))) {
       SoundEffects.playRandomClick();
 
       var newProgress = this.state.progress + 1;

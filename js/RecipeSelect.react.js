@@ -1,16 +1,16 @@
 var React = require('react');
-var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('react-addons-css-transition-group');
 
 var _ = require('lodash');
 var cx = require('classnames');
 
 var Inst = require('./Instruction.react.js');
+var KeyboardMixin = require('./KeyboardMixin.react.js');
 var Recipes = require('./recipes/Recipes.js');
 var SoundEffects = require('./SoundEffects.js');
 
 var RecipeSelect = React.createClass({
-  mixins: [TimerMixin],
+  mixins: [KeyboardMixin],
 
   propTypes: {
     onProgress: React.PropTypes.func.isRequired,
@@ -22,14 +22,6 @@ var RecipeSelect = React.createClass({
       value: 0,
       content: this.renderRecipe(0),
     };
-  },
-
-  componentDidMount: function() {
-    window.addEventListener('keydown', this.onKeyDown);
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('keydown', this.onKeyDown);
   },
 
   componentDidUpdate: function(prevProps, prevState) {
@@ -44,7 +36,7 @@ var RecipeSelect = React.createClass({
     }
   },
 
-  onKeyDown: function(e) {
+  onKeyUp: function(e) {
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === 37 && this.state.value > 0) {
       // left arrow pressed

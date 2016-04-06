@@ -1,8 +1,11 @@
 var React = require('react');
 
+var KeyboardMixin = require('./KeyboardMixin.react.js');
 var SoundEffects = require('./SoundEffects.js');
 
 var Mash = React.createClass({
+  mixins: [KeyboardMixin],
+
   propTypes: {
     children: React.PropTypes.string,
     mashCount: React.PropTypes.number,
@@ -20,14 +23,6 @@ var Mash = React.createClass({
     return {
       value: this.props.mashCount,
     };
-  },
-
-  componentDidMount: function() {
-    window.addEventListener('keyup', this.onKeyUp);
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('keyup', this.onKeyUp);
   },
 
   componentDidUpdate: function(prevProps, prevState) {

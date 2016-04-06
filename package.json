@@ -2,11 +2,11 @@
   "name": "TooManyChefs",
   "main": "js/main.js",
   "dependencies": {
-    "react": "~0.14.8",
-    "react-dom": "~0.14.8",
     "classnames": "^2.1.3",
     "bootstrap": "~3.3.6",
     "jquery": "~2.1.4",
+    "react": "~0.14.8",
+    "react-dom": "~0.14.8",
     "react-timer-mixin": "~0.13.2",
     "react-addons-css-transition-group": "~0.14.8",
     "react-addons-pure-render-mixin": "~0.14.8",

@@ -1,10 +1,10 @@
 var React = require('react');
-var TimerMixin = require('react-timer-mixin');
 
+var KeyboardMixin = require('./KeyboardMixin.react.js');
 var SoundEffects = require('./SoundEffects.js');
 
 var Ingredients = React.createClass({
-  mixins: [TimerMixin],
+  mixins: [KeyboardMixin],
 
   propTypes: {
     //children: React.PropTypes.string.isRequired,
@@ -23,14 +23,6 @@ var Ingredients = React.createClass({
     return {
       ingredients: this.props.ingredients,
     };
-  },
-
-  componentDidMount: function() {
-    window.addEventListener('keypress', this.onKeyPress);
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('keypress', this.onKeyPress);
   },
 
   componentDidUpdate: function(prevProps, prevState) {

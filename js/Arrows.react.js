@@ -1,5 +1,6 @@
 var React = require('react');
 
+var KeyboardMixin = require('./KeyboardMixin.react.js');
 var SoundEffects = require('./SoundEffects.js');
 
 // Arrow keycodes
@@ -11,6 +12,7 @@ const KEYCODES = {
 };
 
 var Arrows = React.createClass({
+  mixins: [KeyboardMixin],
   propTypes: {
     children: React.PropTypes.string.isRequired,
     onComplete: React.PropTypes.func.isRequired,
@@ -22,14 +24,6 @@ var Arrows = React.createClass({
       complete: false,
       progress: 0,
     };
-  },
-
-  componentDidMount: function() {
-    window.addEventListener('keydown', this.onKeyDown);
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('keydown', this.onKeyDown);
   },
 
   componentDidUpdate: function(prevProps, prevState) {

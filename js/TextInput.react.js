@@ -1,6 +1,11 @@
 var React = require('react');
 
+var KeyboardMixin = require('./KeyboardMixin.react.js');
+var SoundEffects = require('./SoundEffects.js');
+
 var TextInput = React.createClass({
+  mixins: [KeyboardMixin],
+
   propTypes: {
     children: React.PropTypes.string,
     onComplete: React.PropTypes.func.isRequired,
@@ -13,14 +18,6 @@ var TextInput = React.createClass({
     };
   },
 
-  componentDidMount: function() {
-    window.addEventListener('keypress', this.onKeyPress);
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('keypress', this.onKeyPress);
-  },
-
   componentDidUpdate: function(prevProps, prevState) {
     if (this.state.value != prevState.value) {
       this.props.onProgress(this.state.value);
@@ -29,17 +26,11 @@ var TextInput = React.createClass({
 
   onKeyPress: function(e) {
     var keyCode = e.which || e.keyCode || 0;
-    if (keyCode === 13) { // enter pressed
-      // TODO: decide if we should use enter?
-      /*if (this.state.value && this.props.onComplete) {
-        this.props.onComplete(this.state.value);
-      }*/
-      return;
-    }
 
     // normal key (only accept alphanumeric values)
     var key = String.fromCharCode(keyCode);
     if (/[a-zA-Z0-9-_ ]/.test(key)) {
+      SoundEffects.playRandomClick();
       var newValue = this.state.value.concat(key);
       this.setState({value: newValue});
     }
