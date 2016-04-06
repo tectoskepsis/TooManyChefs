@@ -71,6 +71,9 @@ var Game = React.createClass({
     // Assign recipes based on selected meal
     this.setStateDelay('loading', 500);
 
+    // Send Google Analytics event
+    ga('send', 'event', 'Game', 'play', Recipes[this.state.meal].name);
+
     // Wait a random amount of time before loading (3-5s)
     this.setTimeout(() => {
       this.setState({
@@ -131,6 +134,11 @@ var Game = React.createClass({
             {stillAlive === 0 && 'Press Ctrl-R to start over.'}
           </div>
         );
+
+        // Send Google Analytics event
+        if (stillAlive === 0) {
+          ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
+        }
       }
     }
   },
@@ -154,7 +162,12 @@ var Game = React.createClass({
       stillAlive: stillAlive,
     });
 
-    return stillAlive === 0 && 'Press Ctrl-R to play again.';
+    if (stillAlive === 0) {
+      // Send Google Analytics event
+      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name);
+      return 'Press Ctrl-R to play again.';
+    }
+    return null;
   },
 
   renderTitle: function() {
