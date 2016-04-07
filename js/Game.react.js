@@ -20,6 +20,7 @@ const LOADING_TEXT = [
   'Scrubbing dishes',
   'Gathering ingredients',
   'Allocating cutlery',
+  'Tying aprons',
 ];
 
 var Game = React.createClass({
@@ -32,6 +33,7 @@ var Game = React.createClass({
       stillAlive: 0,
       meal: 0,
       content: this.renderTitle(),
+      startTime: 0,
     };
   },
 
@@ -80,6 +82,7 @@ var Game = React.createClass({
         gameState: 'started',
         stillAlive: 0,
         chefs: Recipes[this.state.meal].recipes,
+        startTime: new Date().getTime(),
       });
     }, 500 + _.random(3000, 5000));
   },
@@ -256,6 +259,7 @@ var Game = React.createClass({
                    onComplete={this.onComplete}
                    onRescued={this.onRescued}
                    stillAlive={this.state.stillAlive}
+                   startTime={this.state.startTime}
           />)}
       </div>
     );

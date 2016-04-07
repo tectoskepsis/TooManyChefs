@@ -223,7 +223,7 @@ var FishCurry = {
       pretext: 'Finally,',
       instruction: 'pass',
       posttext: 'the dish to the Friturier to pair with the fried rice.',
-      timer: 10,
+      timer: 9,
     },
   ],
 };

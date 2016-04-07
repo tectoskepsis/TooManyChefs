@@ -4,6 +4,7 @@ var TimerMixin = require('react-timer-mixin');
 var PureRenderMixin = require('react-addons-pure-render-mixin');
 var TransitionGroup = require('react-addons-css-transition-group');
 
+var _ = require('lodash');
 var chroma = require('chroma-js');
 var cx = require('classnames');
 
@@ -26,13 +27,7 @@ var ChefBox = React.createClass({
     onRescued: React.PropTypes.func.isRequired,
     onComplete: React.PropTypes.func.isRequired,
     stillAlive: React.PropTypes.number.isRequired,
-    widthClass: React.PropTypes.number,
-  },
-
-  getDefaultProps: function() {
-    return {
-      widthClass: 6,
-    };
+    startTime: React.PropTypes.number.isRequired,
   },
 
   getInitialState: function() {
@@ -265,15 +260,12 @@ var ChefBox = React.createClass({
       return null;
     }
 
-    function padZero(num) {
-      return (num < 10 ? '0' : '') + num.toString();
-    }
-    var min = Math.floor(this.state.timer / 60);
+    var min = (this.state.timer / 60) << 0; // floor
     var sec = this.state.timer % 60;
     return (
       <span className="padLeft">
         <span className="glyphicon glyphicon-hourglass" />
-        [{padZero(min)}:{padZero(sec)}]
+        [{_.padStart(min, 2, '0')}:{_.padStart(sec, 2, '0')}]
       </span>
     );
   },
@@ -293,7 +285,7 @@ var ChefBox = React.createClass({
   },
 
   renderChefSelect: function() {
-    var keys = ['q', 'p', 'z', 'm'];
+    const keys = ['q', 'p', 'z', 'm'];
     return (
       <div>
         <p>{Chef[this.props.recipe.chefName]}</p>
@@ -345,9 +337,16 @@ var ChefBox = React.createClass({
   },
 
   renderRecipeDone: function() {
+    var time = (new Date().getTime() - this.props.startTime) / 1000;
+    var min = (time / 60) << 0;
+    var sec = (time % 60) << 0;
+
     return (
-      <div>Great work! You've completed the recipe for {this.props.recipe.name}.</div>
-      // TODO: include total time taken
+      <div>
+        <p>Great work! You've completed the recipe for {this.props.recipe.name}.</p>
+        <b>Time Taken</b>: {_.padStart(min, 2, '0')}:{_.padStart(sec, 2, '0')}
+        <br/>
+      </div>
     );
   },
 
@@ -363,13 +362,10 @@ var ChefBox = React.createClass({
   },
 
   render: function() {
-    var classes = cx('col-xs-12', 'col-sm-6',
-      {[`col-md-${this.props.widthClass}`]: true}
-    );
     var style = {height: window.innerHeight / 2 - 20};
 
     return (
-      <div className={classes}>
+      <div className="col-xs-12 col-sm-6">
         <div className={cx('chefBox', this.state.backgroundClass)} style={style}>
           <h4>{this.props.chefName} {this.renderLives()} {this.renderTime()}</h4>
           <b className="recipeName pull-right">{this.props.recipe.name}</b>

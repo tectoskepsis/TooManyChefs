@@ -177,19 +177,12 @@ var BeefStroganoff = {
       timer: 10,
     },
     {
-      pretext: 'Toss in some mushroms into the beef stew with',
-      instruction: 's',
-      posttext: '.',
-      timer: 9,
-    },
-    {
       pretext: <span>Pour in <b className="green">1/3 cup</b> of white wine.<br/></span>,
       instruction: 'wiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiine',
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6&nbsp;&nbsp;&nbsp;&nbsp;^ 2/6&nbsp;&nbsp;&nbsp;&nbsp;^ 3/6</span>,
       timer: 9,
       onComplete: () => {},
       onTimeout: function(progress) {
-        console.log(progress);
         if (progress >= 18 && progress <= 23) {
           this.nextStep();
         } else {
