@@ -34,6 +34,8 @@ var Game = React.createClass({
       meal: 0,
       content: this.renderTitle(),
       startTime: 0,
+      singlePlayer: false,
+      fadeTitle: false,
     };
   },
 
@@ -70,7 +72,6 @@ var Game = React.createClass({
   },
 
   onStartGame: function() {
-    // Assign recipes based on selected meal
     this.setStateDelay('loading', 500);
 
     // Send Google Analytics event
@@ -85,6 +86,18 @@ var Game = React.createClass({
         startTime: new Date().getTime(),
       });
     }, 500 + _.random(3000, 5000));
+  },
+
+  onChooseMode: function(singlePlayer) {
+    this.setState({fadeTitle: true});
+    this.setTimeout(() => this.setState({
+      singlePlayer: singlePlayer,
+      fadeTitle: false,
+    }), 350);
+
+    this.setTimeout(() => {
+      this.setStateDelay('menu');
+    }, 1500);
   },
 
   onReady: function(player) {
@@ -157,14 +170,6 @@ var Game = React.createClass({
   },
 
   onComplete: function(winner) {
-    var chefs = this.state.chefs;
-    chefs[winner].dead = true; // mark "dead" so they can't get popups
-    var stillAlive = this.state.stillAlive - 1;
-    this.setState({
-      chefs: chefs,
-      stillAlive: stillAlive,
-    });
-
     if (stillAlive === 0) {
       // Send Google Analytics event
       ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name);
@@ -173,12 +178,31 @@ var Game = React.createClass({
     return null;
   },
 
+  onRenderMode: function() {
+    this.setState({content: null});
+    this.setTimeout(() => this.setState({
+      content: this.renderMode(),
+    }), 500);
+  },
+
   renderTitle: function() {
     return (
       <div className="padTop">
-        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>start</Inst> to begin</p>
+        <p>Type <Inst onComplete={this.onRenderMode}>start</Inst> to begin</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>credits</Inst> for culinary staff</p>
+      </div>
+    );
+  },
+
+  renderMode: function() {
+    return (
+      <div className="padTop">
+        <p>Select mode:</p>
+        <br/>
+
+        <p><Inst onComplete={_.partial(this.onChooseMode, true)}>solo</Inst> (single-player)</p>
+        <p><Inst onComplete={_.partial(this.onChooseMode, false)}>party</Inst> (2-4 players)</p>
       </div>
     );
   },
@@ -189,8 +213,11 @@ var Game = React.createClass({
 
   renderRecipeMenu: function() {
     return (
-      <RecipeSelect onProgress={this.onRecipeProgress}
-                    onSelect={this.onStartGame} />
+      <div>
+        <RecipeSelect onProgress={this.onRecipeProgress}
+                      onSelect={this.onStartGame} />
+        <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst>
+      </div>
     );
   },
 
@@ -269,13 +296,22 @@ var Game = React.createClass({
     if (this.state.gameState === 'started') {
       return this.renderChefBoxes();
     }
+    var titleText = this.state.singlePlayer ? 'Not Enough' : 'Too Many';
+    var spacing = this.state.singlePlayer && <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>; // for centering the longer title
+    var description = this.state.singlePlayer ? 'multitasking' : 'cooperative';
+    var fadeClass = cx('fade-leave', {'fade-leave-active': this.state.fadeTitle});
+    var fadeWithColor = cx('fade-leave', {
+      'fade-leave-active': this.state.fadeTitle,
+      'green': !this.state.singlePlayer,
+      'darkBlue': this.state.singlePlayer,
+    });
 
     return (
       <div className="center">
         <div className={cx('vcenter', {vtop: this.state.gameState !== 'title'})}>
           <img className="chefHat" src="images/chefhat.png" />
-          <h1>Too Many Chefs</h1>
-          <h4>A text-based cooperative cooking game</h4>
+          <h1><span className={fadeClass}>{titleText}</span> Chefs{spacing}</h1>
+          <h4>A text-based <span className={fadeWithColor}>{description}</span> cooking game</h4>
         </div>
 
         <TransitionGroup transitionName="fade"
