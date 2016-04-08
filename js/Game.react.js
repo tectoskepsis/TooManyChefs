@@ -129,6 +129,10 @@ var Game = React.createClass({
     if (stillAlive < 0) {
       return;
     }
+    if (!canSave || stillAlive === 0) {
+      // Send Google Analytics event
+      ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
+    }
 
     var chefs = this.state.chefs;
     chefs[loser].dead = true;
@@ -158,11 +162,6 @@ var Game = React.createClass({
             {stillAlive === 0 && 'Press Ctrl-R to start over.'}
           </div>
         );
-
-        // Send Google Analytics event
-        if (stillAlive === 0) {
-          ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
-        }
       }
     }
   },
@@ -178,7 +177,7 @@ var Game = React.createClass({
   },
 
   onComplete: function(winner) {
-    if (stillAlive === 0) {
+    if (this.state.stillAlive === 0) {
       // Send Google Analytics event
       ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name);
       return 'Press Ctrl-R to play again.';

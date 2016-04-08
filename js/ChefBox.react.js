@@ -165,22 +165,26 @@ var ChefBox = React.createClass({
     });
 
     // Wait 250ms before updating for fade effect
-    this.timeout = this.setTimeout(() => {
-      if (livesLeft === 0) {
-        this.timerInterval = this.setInterval(this.updateTimer, 1000);
-        this.setState({
-          popups: [],
-          startTime: 10,
-          timer: 10,
-          onTimeout: this.onRescueTimeout,
-          content: this.renderRescue(),
-          rescue: 0,
-        });
-        this.props.onFailure(true);
-      } else {
-        this.nextStep(true);
-      }
-    }, 250);
+    if (this.props.stillAlive <= 1) {
+      this.onRescueTimeout();
+    } else {
+      this.timeout = this.setTimeout(() => {
+        if (livesLeft === 0) {
+          this.timerInterval = this.setInterval(this.updateTimer, 1000);
+          this.setState({
+            popups: [],
+            startTime: 10,
+            timer: 10,
+            onTimeout: this.onRescueTimeout,
+            content: this.renderRescue(),
+            rescue: 0,
+          });
+          this.props.onFailure(true);
+        } else {
+          this.nextStep(true);
+        }
+      }, 250);
+    }
   },
 
   onRescueTimeout: function() {
