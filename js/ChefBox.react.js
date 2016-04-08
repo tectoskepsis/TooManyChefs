@@ -75,7 +75,9 @@ var ChefBox = React.createClass({
       return;
     }
 
+    this.clearTimeout(this.timeout);
     this.clearInterval(this.timerInterval);
+
     this.setState({
       content: null,
       popups: [],
@@ -91,6 +93,10 @@ var ChefBox = React.createClass({
   },
 
   nextStep: function(postFail) {
+    if (this.state.gameOver) {
+      return;
+    }
+
     var newStep = this.state.step + 1;
     this.clearInterval(this.timerInterval);
     if (!postFail) {
@@ -107,7 +113,7 @@ var ChefBox = React.createClass({
       });
 
       // Wait 250ms before updating for fade effect
-      this.setTimeout(() => this.setState({
+      this.timeout = this.setTimeout(() => this.setState({
         backgroundClass: 'success',
         content: <div>{this.renderRecipeDone()}{this.props.onComplete(this.props.chefId)}</div>,
         step: newStep,
@@ -131,7 +137,7 @@ var ChefBox = React.createClass({
       });
 
       // Wait 250ms before updating for fade effect
-      this.setTimeout(() => {
+      this.timeout = this.setTimeout(() => {
         this.timerInterval = this.setInterval(this.updateTimer, 1000);
         this.setState({
           backgroundClass: '',
@@ -154,16 +160,16 @@ var ChefBox = React.createClass({
     var livesLeft = this.state.lives - 1;
     this.setState({
       content: null,
-      popups: [],
       backgroundClass: 'failure',
       lives: livesLeft,
     });
 
     // Wait 250ms before updating for fade effect
-    this.setTimeout(() => {
+    this.timeout = this.setTimeout(() => {
       if (livesLeft === 0) {
         this.timerInterval = this.setInterval(this.updateTimer, 1000);
         this.setState({
+          popups: [],
           startTime: 10,
           timer: 10,
           onTimeout: this.onRescueTimeout,
@@ -180,11 +186,11 @@ var ChefBox = React.createClass({
   onRescueTimeout: function() {
     this.clearInterval(this.timerInterval);
     this.setState({content: null});
+    this.props.onFailure(false);
 
-    this.setTimeout(() => {
+    this.timeout = this.setTimeout(() => {
       this.setState({content: this.renderFailure()});
-      this.props.onFailure(false);
-    });
+    }, 250);
   },
 
   onProgress: function(progress) {
@@ -210,6 +216,10 @@ var ChefBox = React.createClass({
   },
 
   rescue: function(loser) {
+    if (this.state.gameOver) {
+      return;
+    }
+
     var rescueCount = this.state.rescue + 1;
 
     // No longer need rescuing

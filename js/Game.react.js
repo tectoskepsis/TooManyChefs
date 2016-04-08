@@ -89,15 +89,19 @@ var Game = React.createClass({
   },
 
   onChooseMode: function(singlePlayer) {
-    this.setState({fadeTitle: true});
-    this.setTimeout(() => this.setState({
-      singlePlayer: singlePlayer,
-      fadeTitle: false,
-    }), 350);
+    if (this.state.singlePlayer !== singlePlayer) {
+      this.setState({fadeTitle: true});
+      this.setTimeout(() => this.setState({
+        singlePlayer: singlePlayer,
+        fadeTitle: false,
+      }), 350);
 
-    this.setTimeout(() => {
-      this.setStateDelay('menu');
-    }, 1500);
+      this.setTimeout(() => {
+        this.setStateDelay('menu');
+      }, 1500);
+    } else {
+      this.setStateDelay('menu', 500);
+    }
   },
 
   onReady: function(player) {
@@ -122,6 +126,10 @@ var Game = React.createClass({
 
   onFailure: function(loser, canSave) {
     var stillAlive = this.state.stillAlive - 1;
+    if (stillAlive < 0) {
+      return;
+    }
+
     var chefs = this.state.chefs;
     chefs[loser].dead = true;
     this.setState({
