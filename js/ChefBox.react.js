@@ -98,11 +98,10 @@ var ChefBox = React.createClass({
       return;
     }
 
-    var newStep = this.state.step;
+    var newStep = this.state.step + 1;
     this.clearInterval(this.timerInterval);
     if (!postFail) {
       this.setState({backgroundClass: 'success'});
-      newStep++;
     }
 
     // Completed recipe
@@ -235,7 +234,10 @@ var ChefBox = React.createClass({
 
     // No longer need rescuing
     if (rescueCount >= this.props.stillAlive) {
-      this.setState({lives: 1});
+      this.setState({
+        lives: 1,
+        step: this.state.step - 1,
+      });
       this.nextStep(true);
       this.props.onRescued(loser);
     } else {

@@ -11,7 +11,7 @@ ReactDOM.render(
 );
 
 // Play music
-var audio = AudioPlayer('./audio/Fortaleza.mp3', {loop: true});
+var audio = AudioPlayer('./audio/Fortaleza.mp3', {loop: true, volume: 0.8});
 audio.on('load', () => {
   audio.play();
   audio.node.connect(audio.context.destination);
