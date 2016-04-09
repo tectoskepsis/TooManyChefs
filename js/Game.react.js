@@ -6,7 +6,6 @@ var TransitionGroup = require('react-addons-css-transition-group');
 var _ = require('lodash');
 var cx = require('classnames');
 
-var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
 var RecipeSelect = require('./RecipeSelect.react.js');
 var Inst = require('./Instruction.react.js');
@@ -31,11 +30,14 @@ var Game = React.createClass({
       gameState: 'title',  // title | help | menu | started | loading
       chefs: [],
       stillAlive: 0,
+      completed: 0,
       meal: 0,
       content: this.renderTitle(),
       startTime: 0,
       singlePlayer: false,
       fadeTitle: false,
+      gameOver: false,
+      report: null,
     };
   },
 
@@ -64,6 +66,7 @@ var Game = React.createClass({
     this.setState({
       gameState: '',
       content: null,
+      report: null,
     });
     this.setTimeout(() => this.setState({
       gameState: state,
@@ -82,8 +85,11 @@ var Game = React.createClass({
       this.setState({
         gameState: 'started',
         stillAlive: 0,
-        chefs: Recipes[this.state.meal].recipes,
+        completed: 0,
+        gameOver: false,
+        chefs: Recipes[this.state.meal].recipes.map(_.clone),
         startTime: new Date().getTime(),
+        report: null,
       });
     }, 500 + _.random(3000, 5000));
   },
@@ -98,7 +104,7 @@ var Game = React.createClass({
 
       this.setTimeout(() => {
         this.setStateDelay('menu');
-      }, 1500);
+      }, 1000);
     } else {
       this.setStateDelay('menu', 500);
     }
@@ -107,7 +113,6 @@ var Game = React.createClass({
   onReady: function(player) {
     var stillAlive = this.state.stillAlive + 1;
     var chefs = this.state.chefs;
-    chefs[player].ready = true;
     this.setState({
       chefs: chefs,
       stillAlive: stillAlive,
@@ -125,14 +130,12 @@ var Game = React.createClass({
   },
 
   onFailure: function(loser, canSave) {
-    var stillAlive = this.state.stillAlive - 1;
-    if (stillAlive < 0) {
+    if (this.state.gameOver) {
       return;
     }
-    if (!canSave || stillAlive === 0) {
-      // Send Google Analytics event
-      ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
-    }
+
+    var stillAlive = this.state.stillAlive - 1;
+    var gameOver = !canSave || stillAlive === this.state.completed;
 
     var chefs = this.state.chefs;
     chefs[loser].dead = true;
@@ -150,19 +153,18 @@ var Game = React.createClass({
       var chef = this.refs['chef' + i];
       var chefName = chefs[loser].chefName;
 
-      if (canSave && stillAlive > 0) {
-        if (!chefs[i].dead) {
-          chef.showRescuePopup(chefName,
-            () => this.refs['chef' + loser].rescue(loser));
-        }
-      } else {
-        chef.gameOver(
-          <div>
-            <p>{chefName} failed to complete their recipe!</p>
-            {stillAlive === 0 && 'Press Ctrl-R to start over.'}
-          </div>
-        );
+      if (gameOver) {
+        chef.gameOver(<p>{chefName} failed to complete their recipe!</p>);
+      } else if (!chefs[i].dead) {
+        chef.showRescuePopup(chefName,
+          () => this.refs['chef' + loser].rescue(loser));
       }
+    }
+
+    if (gameOver) {
+      // Send Google Analytics event
+      ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
+      this.setState({gameOver: true});
     }
   },
 
@@ -177,12 +179,24 @@ var Game = React.createClass({
   },
 
   onComplete: function(winner) {
-    if (this.state.stillAlive === 0) {
+    var completed = this.state.completed + 1;
+    var chefs = this.state.chefs;
+    chefs[winner].completed = true;
+    this.setState({
+      chefs: chefs,
+      completed: completed,
+    });
+
+    if (completed === 4) {
       // Send Google Analytics event
       ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name);
-      return 'Press Ctrl-R to play again.';
+      return <p>Type <Inst onComplete={this.onReport}>report</Inst> to view your results.</p>;
     }
     return null;
+  },
+
+  onReport: function() {
+    this.setState({report: this.renderReport()});
   },
 
   onRenderMode: function() {
@@ -292,9 +306,33 @@ var Game = React.createClass({
                    onFailure={_.partial(this.onFailure, i)}
                    onComplete={this.onComplete}
                    onRescued={this.onRescued}
+                   onReport={this.onReport}
                    stillAlive={this.state.stillAlive}
                    startTime={this.state.startTime}
           />)}
+        <TransitionGroup transitionName="fade"
+                         transitionEnterTimeout={250}
+                         transitionLeaveTimeout={250}>
+          {this.state.report}
+        </TransitionGroup>
+      </div>
+    );
+  },
+
+  renderReport: function() {
+    var meal = Recipes[this.state.meal];
+    var completeText = this.state.completed === 4
+      ? <b className="green">SUCCESS</b>
+      : <b className="fireRed">FAILURE</b>;
+    return (
+      <div className="report center">
+        <h4><b>{meal.name} - Review</b></h4>
+        {this.state.chefs.map((r, i) =>
+          <div key={i} className={cx({green: r.completed, fireRed: !r.completed})}>{r.name}</div>)}
+        <h3>{completeText}</h3>
+        <br/>
+        <p>Type <Inst onComplete={this.onStartGame}>replay</Inst> to restart the meal.</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>back</Inst> to return to the menu.</p>
       </div>
     );
   },
@@ -325,7 +363,6 @@ var Game = React.createClass({
                          transitionEnterTimeout={250}
                          transitionLeaveTimeout={250}>
           {this.state.content}
-          <CapsLock />
         </TransitionGroup>
       </div>
     );

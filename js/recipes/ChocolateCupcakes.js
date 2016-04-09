@@ -117,7 +117,7 @@ var ChocolateCupcakes = {
       ingredients: [
         {name: 'muffin pan', key: 'm', left: true},
       ],
-      timer: 8,
+      timer: 7,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;

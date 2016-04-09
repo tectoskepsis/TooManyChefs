@@ -9,7 +9,6 @@ var chroma = require('chroma-js');
 var cx = require('classnames');
 
 var Chef = require('./Chef.js');
-var CapsLock = require('./CapsLock.react.js');
 var Inst = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
@@ -26,6 +25,7 @@ var ChefBox = React.createClass({
     onReady: React.PropTypes.func.isRequired,
     onRescued: React.PropTypes.func.isRequired,
     onComplete: React.PropTypes.func.isRequired,
+    onReport: React.PropTypes.func.isRequired,
     stillAlive: React.PropTypes.number.isRequired,
     startTime: React.PropTypes.number.isRequired,
   },
@@ -72,6 +72,7 @@ var ChefBox = React.createClass({
 
   gameOver: function(text) {
     if (this.state.gameOver) {
+      this.setState({popups: []});
       return;
     }
 
@@ -97,14 +98,16 @@ var ChefBox = React.createClass({
       return;
     }
 
-    var newStep = this.state.step + 1;
+    var newStep = this.state.step;
     this.clearInterval(this.timerInterval);
     if (!postFail) {
       this.setState({backgroundClass: 'success'});
+      newStep++;
     }
 
     // Completed recipe
     if (newStep === this.props.recipe.steps.length) {
+      this.clearTimeout(this.timeout);
       this.setState({
         content: null,
         backgroundClass: '',
@@ -113,7 +116,7 @@ var ChefBox = React.createClass({
       });
 
       // Wait 250ms before updating for fade effect
-      this.timeout = this.setTimeout(() => this.setState({
+      this.setTimeout(() => this.setState({
         backgroundClass: 'success',
         content: <div>{this.renderRecipeDone()}{this.props.onComplete(this.props.chefId)}</div>,
         step: newStep,
@@ -189,7 +192,11 @@ var ChefBox = React.createClass({
 
   onRescueTimeout: function() {
     this.clearInterval(this.timerInterval);
-    this.setState({content: null});
+    this.setState({
+      gameOver: true,
+      content: null,
+      popups: [],
+    });
     this.props.onFailure(false);
 
     this.timeout = this.setTimeout(() => {
@@ -309,11 +316,7 @@ var ChefBox = React.createClass({
   },
 
   renderChefWaiting: function() {
-    return (
-      <div>
-        <p>Waiting for other chefs...</p>
-      </div>
-    );
+    return <p>Waiting for other chefs...</p>;
   },
 
   renderRecipeStart: function() {
@@ -331,7 +334,10 @@ var ChefBox = React.createClass({
   },
 
   renderFailure: function(text) {
-    text = text || <p>Out of time!</p>;
+    text = text || <div>
+      <p>Out of time!</p>
+      <p>Type <Inst onComplete={this.props.onReport}>report</Inst> to view your results.</p>
+    </div>;
     return (
       <div>
         <h4>GAME OVER - RECIPE FAILED</h4>
@@ -389,7 +395,6 @@ var ChefBox = React.createClass({
                              transitionEnterTimeout={250}
                              transitionLeaveTimeout={250}>
               {this.state.content}
-              <CapsLock />
               {this.state.popups.map((popup) =>
                 <div key={popup.key} className={cx('popup', 'alert', 'alert-' + popup.type)}>
                   {popup.content}

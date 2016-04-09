@@ -61,7 +61,7 @@ var BeefStroganoff = {
       timer: 7,
     },
     {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">MED</b>.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">MED</b>.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
@@ -121,7 +121,7 @@ var BeefStroganoff = {
       },
     },
     {
-      pretext: <span>Lower the heat on the stove to LOW.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Lower the heat on the stove to LOW.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       startValue: 13,
