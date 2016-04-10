@@ -1,4 +1,5 @@
 var React = require('react');
+var LocalStorageMixin = require('react-localstorage');
 var PureRenderMixin = require('react-addons-pure-render-mixin');
 var TimerMixin = require('react-timer-mixin');
 var TransitionGroup = require('react-addons-css-transition-group');
@@ -24,7 +25,15 @@ const LOADING_TEXT = [
 ];
 
 var Game = React.createClass({
-  mixins: [PureRenderMixin, TimerMixin],
+  mixins: [LocalStorageMixin, PureRenderMixin, TimerMixin],
+
+  getLocalStorageKey: function() {
+    return 'toomanychefs';
+  },
+
+  getStateFilterKeys: function() {
+    return ['saveData'];
+  },
 
   getInitialState: function() {
     return {
@@ -39,6 +48,8 @@ var Game = React.createClass({
       fadeTitle: false,
       gameOver: false,
       report: null,
+      mealTime: 0,
+      saveData: {},
     };
   },
 
@@ -92,8 +103,8 @@ var Game = React.createClass({
         completed: 0,
         gameOver: false,
         chefs: Recipes[this.state.meal].recipes.map(_.clone),
-        startTime: new Date().getTime(),
         report: null,
+        mealTime: null,
       });
     }, 500 + _.random(3000, 5000));
   },
@@ -118,6 +129,7 @@ var Game = React.createClass({
 
     // Are all chefs ready to begin?
     if (stillAlive === 4) {
+      this.setState({startTime: new Date().getTime()});
       for (var i = 0; i < 4; i++) {
         var chef = this.refs['chef' + i];
         chef.startGame();
@@ -179,15 +191,18 @@ var Game = React.createClass({
   onComplete: function(winner) {
     var completed = this.state.completed + 1;
     var chefs = this.state.chefs;
+    var newTime = ((new Date().getTime() - this.state.startTime) / 1000) << 0;
     chefs[winner].completed = true;
     this.setState({
       chefs: chefs,
       completed: completed,
+      mealTime: newTime,
     });
 
     if (completed === 4) {
       // Send Google Analytics event
-      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name);
+      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, newTime);
+      this.saveData(true, newTime);
       return <p>Type <Inst onComplete={this.onReport}>report</Inst> to view your results.</p>;
     }
     return null;
@@ -195,6 +210,17 @@ var Game = React.createClass({
 
   onReport: function() {
     this.setState({report: this.renderReport()});
+  },
+
+  saveData: function(completed, newTime) {
+    var meal = Recipes[this.state.meal];
+    var saveData = this.state.saveData;
+    var mealData = _.get(saveData, meal.key, {});
+    mealData.completed = completed;
+    mealData.bestTime = _.has(mealData, 'bestTime')
+      ? Math.min(newTime, mealData.bestTime) : newTime;
+    saveData[meal.key] = mealData;
+    this.setState({saveData: saveData});
   },
 
   renderTitle: function() {
@@ -233,7 +259,9 @@ var Game = React.createClass({
     return (
       <div>
         <RecipeSelect onProgress={this.onRecipeProgress}
-                      onSelect={this.onStartGame} />
+                      onSelect={this.onStartGame}
+                      saveData={this.state.saveData}
+                      />
         <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst>
       </div>
     );
@@ -318,15 +346,25 @@ var Game = React.createClass({
 
   renderReport: function() {
     var meal = Recipes[this.state.meal];
-    var completeText = this.state.completed === 4
-      ? <b className="green">SUCCESS</b>
+    var mealData = _.get(this.state.saveData, meal.key);
+    var won = this.state.completed === 4;
+    var newRecord = won && this.state.mealTime <= mealData.bestTime;
+    var completeText = won
+      ? <b className="green">SUCCESS {newRecord && '- NEW RECORD'}</b>
       : <b className="fireRed">FAILURE</b>;
+    var renderTime = function(time) {
+      var min = (time / 60) << 0; // floor
+      var sec = time % 60;
+      return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
+    };
+
     return (
       <div className="report center">
-        <h4><b>{meal.name} - Review</b></h4>
+        <h3><b>{meal.name} - Review</b></h3>
+        <h4>{completeText}</h4>
+        {won && <p>Cook Time: {renderTime(this.state.mealTime)}</p>}
         {this.state.chefs.map((r, i) =>
           <div key={i} className={cx({green: r.completed, fireRed: !r.completed})}>{r.name}</div>)}
-        <h3>{completeText}</h3>
         <br/>
         <p>Type <Inst onComplete={this.onStartGame}>replay</Inst> to restart the meal.</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>back</Inst> to return to the menu.</p>

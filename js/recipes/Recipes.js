@@ -1,6 +1,7 @@
 module.exports = [
   {
     name: 'American Diner',
+    key: 'amer-diner',
     rating: 2,
     recipes: [
       require('./Cornbread.js'),
@@ -11,6 +12,7 @@ module.exports = [
   },
   {
     name: 'Nice American Brunch',
+    key: 'amer-brunch',
     rating: 3,
     recipes: [
       require('./FruitCeviche.js'),
@@ -21,6 +23,7 @@ module.exports = [
   },
   {
     name: 'Pan-Asian Lunch',
+    key: 'asia-lunch',
     rating: 4,
     recipes: [
       require('./SpringRolls.js'),
@@ -31,6 +34,7 @@ module.exports = [
   },
   {
     name: 'French-Italian Bistro',
+    key: 'frit-bistro',
     locked: true,
     rating: 5,
     recipes: [

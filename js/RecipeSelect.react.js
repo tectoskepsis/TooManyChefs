@@ -15,6 +15,7 @@ var RecipeSelect = React.createClass({
   propTypes: {
     onProgress: React.PropTypes.func.isRequired,
     onSelect: React.PropTypes.func.isRequired,
+    saveData: React.PropTypes.object,
   },
 
   getInitialState: function() {
@@ -53,14 +54,22 @@ var RecipeSelect = React.createClass({
     var meal = Recipes[i];
     var emptyStar = (i) => <span key={i} className="lightBlue glyphicon glyphicon-star-empty" />;
     var fullStar = (i) => <span key={i} className="darkBlue glyphicon glyphicon-star" />;
+    var mealData = _.get(this.props.saveData, meal.key, {});
+    var renderTime = function(time) {
+      var min = (time / 60) << 0; // floor
+      var sec = time % 60;
+      return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
+    };
 
     return (
-      <div className={cx('padTop', {locked: meal.locked})}>
+      <div className={cx('meal', 'padTop', {locked: meal.locked})}>
         <h4>{meal.name}</h4>
         <p>
           Difficulty: {_.range(5).map((i) => i < meal.rating ? fullStar(i) : emptyStar(i))}
         </p>
-        {meal.locked ? <h4 className="fireRed">Coming Soon</h4> : <br/>}
+        {meal.locked ? <h4 className="fireRed">Coming Soon</h4> :
+         mealData.completed ? <h4 className="green">Completed!</h4> : <br/>}
+        {mealData.bestTime && <p className="green">Best Time: {renderTime(mealData.bestTime)}</p>}
 
         {meal.recipes.map((r, i) => (
           <div key={i}>{meal.locked ? '??????' : r.name} ({r.type})</div>
