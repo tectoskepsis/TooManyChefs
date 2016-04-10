@@ -105,7 +105,7 @@ var ChefBox = React.createClass({
     }
 
     // Completed recipe
-    if (newStep === this.props.recipe.steps.length) {
+    if (newStep >= this.props.recipe.steps.length) {
       this.clearTimeout(this.timeout);
       this.setState({
         content: null,

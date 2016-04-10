@@ -194,7 +194,7 @@ var FruitCeviche = {
     {
       pretext: 'Sit back and admire your handiwork.',
       timer: 8,
-      timer: nextStep,
+      onTimeout: nextStep,
     },
   ],
 };
