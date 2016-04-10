@@ -14,11 +14,14 @@ var Audio = {
     click.node.connect(click.context.destination);
   },
 
-  playBGM: function() {
+  playBGM: function(onLoad) {
     this.audio = AudioPlayer('./audio/Fortaleza.mp3', {loop: true, volume: 0.8});
     this.audio.on('load', () => {
       this.audio.play();
       this.audio.node.connect(this.audio.context.destination);
+      if (onLoad) {
+        onLoad();
+      }
     });
   },
 

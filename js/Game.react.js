@@ -7,6 +7,7 @@ var TransitionGroup = require('react-addons-css-transition-group');
 var _ = require('lodash');
 var cx = require('classnames');
 
+var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
 var RecipeSelect = require('./RecipeSelect.react.js');
 var Inst = require('./Instruction.react.js');
@@ -398,6 +399,7 @@ var Game = React.createClass({
                          transitionEnterTimeout={250}
                          transitionLeaveTimeout={250}>
           {this.state.content}
+          <CapsLock />
         </TransitionGroup>
       </div>
     );

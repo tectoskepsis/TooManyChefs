@@ -8,6 +8,7 @@ var _ = require('lodash');
 var chroma = require('chroma-js');
 var cx = require('classnames');
 
+var CapsLock = require('./CapsLock.react.js');
 var Chef = require('./Chef.js');
 var Inst = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
@@ -397,6 +398,7 @@ var ChefBox = React.createClass({
                              transitionEnterTimeout={250}
                              transitionLeaveTimeout={250}>
               {this.state.content}
+              <CapsLock />
               {this.state.popups.map((popup) =>
                 <div key={popup.key} className={cx('popup', 'alert', 'alert-' + popup.type)}>
                   {popup.content}

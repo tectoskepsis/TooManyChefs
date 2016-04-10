@@ -132,6 +132,9 @@ ul.ingredients-step > li {
 .capslock {
   width: 150px;
   margin: 0 auto;
+  -webkit-animation: blink 1s ease-out infinite alternate; /* Chrome, Safari, Opera */
+      -ms-animation: blink 1s ease-out infinite alternate; /* Internet Explorer */
+          animation: blink 1s ease-out infinite alternate;
 }
 
 .recipeName {
@@ -205,3 +208,16 @@ ul.ingredients-step > li {
   from { opacity: 0; margin-top: -80px; }
   to   { opacity: 1; margin-top: -40px; }
 }
+@keyframes blink {
+  0%   { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+@-webkit-keyframes blink {
+  0%   { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+@-ms-keyframes blink {
+  0%   { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
