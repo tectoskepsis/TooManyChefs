@@ -2,8 +2,8 @@ var React = require('react');
 
 var cx = require('classnames');
 
+var Audio = require('./Audio.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
-var SoundEffects = require('./SoundEffects.js');
 
 var Counter = React.createClass({
   mixins: [KeyboardMixin],
@@ -39,7 +39,7 @@ var Counter = React.createClass({
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === 38) {
       // up arrow pressed
-      SoundEffects.playRandomClick();
+      Audio.playRandomClick();
 
       var newValue = this.state.value + this.props.stepValue;
       this.setState({value: newValue});
@@ -50,7 +50,7 @@ var Counter = React.createClass({
       }
     } else if (keyCode === 40) {
       // down arrow pressed
-      SoundEffects.playRandomClick();
+      Audio.playRandomClick();
 
       var newValue = this.state.value - this.props.stepValue;
       this.setState({value: newValue});

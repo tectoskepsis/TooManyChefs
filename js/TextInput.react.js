@@ -1,7 +1,7 @@
 var React = require('react');
 
 var KeyboardMixin = require('./KeyboardMixin.react.js');
-var SoundEffects = require('./SoundEffects.js');
+var Audio = require('./Audio.js');
 
 var TextInput = React.createClass({
   mixins: [KeyboardMixin],
@@ -30,7 +30,7 @@ var TextInput = React.createClass({
     // normal key (only accept alphanumeric values)
     var key = String.fromCharCode(keyCode);
     if (/[a-zA-Z0-9-_ ]/.test(key)) {
-      SoundEffects.playRandomClick();
+      Audio.playRandomClick();
       var newValue = this.state.value.concat(key);
       this.setState({value: newValue});
     }

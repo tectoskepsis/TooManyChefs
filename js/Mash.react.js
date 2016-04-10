@@ -1,7 +1,7 @@
 var React = require('react');
 
+var Audio = require('./Audio.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
-var SoundEffects = require('./SoundEffects.js');
 
 var Mash = React.createClass({
   mixins: [KeyboardMixin],
@@ -38,7 +38,7 @@ var Mash = React.createClass({
 
     var keyCode = e.which || e.keyCode || 0;
     if (String.fromCharCode(keyCode).toLowerCase() === this.props.children || (this.props.children === 'CAPSLOCK' && keyCode === 20)) {
-      SoundEffects.playRandomClick();
+      Audio.playRandomClick();
 
       var newValue = this.state.value - 1;
       this.setState({value: newValue});

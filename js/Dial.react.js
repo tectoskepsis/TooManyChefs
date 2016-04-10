@@ -1,8 +1,8 @@
 var React = require('react');
 var _ = require('lodash');
 
+var Audio = require('./Audio.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
-var SoundEffects = require('./SoundEffects.js');
 
 var Dial = React.createClass({
   holdInterval: 75,
@@ -40,10 +40,10 @@ var Dial = React.createClass({
 
   checkHeldKey: function() {
     if (this.isKeyPressed('left') && this.state.value > 0) {
-      SoundEffects.playRandomClick();
+      Audio.playRandomClick();
       this.setState({value: this.state.value - 1});
     } else if (this.isKeyPressed('right') && this.state.value < this.props.maxValue) {
-      SoundEffects.playRandomClick();
+      Audio.playRandomClick();
       this.setState({value: this.state.value + 1});
     }
   },

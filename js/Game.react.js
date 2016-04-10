@@ -10,6 +10,7 @@ var ChefBox = require('./ChefBox.react.js');
 var RecipeSelect = require('./RecipeSelect.react.js');
 var Inst = require('./Instruction.react.js');
 var Recipes = require('./recipes/Recipes.js');
+var Volume = require('./Volume.react.js');
 
 const LOADING_TEXT = [
   'Compiling recipes',
@@ -27,7 +28,7 @@ var Game = React.createClass({
 
   getInitialState: function() {
     return {
-      gameState: 'title',  // title | help | menu | started | loading
+      gameState: 'title',  // title | help | menu | started | options | loading
       chefs: [],
       stillAlive: 0,
       completed: 0,
@@ -57,6 +58,9 @@ var Game = React.createClass({
         break;
       case 'credits':
         renderContent = this.renderCredits;
+        break;
+      case 'options':
+        renderContent = this.renderOptions;
         break;
       case 'loading':
         renderContent = this.renderLoading;
@@ -101,12 +105,6 @@ var Game = React.createClass({
         singlePlayer: singlePlayer,
         fadeTitle: false,
       }), 350);
-
-      this.setTimeout(() => {
-        this.setStateDelay('menu');
-      }, 1000);
-    } else {
-      this.setStateDelay('menu', 500);
     }
   },
 
@@ -199,31 +197,30 @@ var Game = React.createClass({
     this.setState({report: this.renderReport()});
   },
 
-  onRenderMode: function() {
-    this.setState({content: null});
-    this.setTimeout(() => this.setState({
-      content: this.renderMode(),
-    }), 500);
-  },
-
   renderTitle: function() {
     return (
       <div className="padTop">
-        <p>Type <Inst onComplete={this.onRenderMode}>start</Inst> to begin</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>start</Inst> to begin</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'options')}>options</Inst> for restaurant settings</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>credits</Inst> for culinary staff</p>
       </div>
     );
   },
 
-  renderMode: function() {
+  renderOptions: function() {
     return (
       <div className="padTop">
-        <p>Select mode:</p>
+        <h4>Options</h4>
         <br/>
-
-        <p><Inst onComplete={_.partial(this.onChooseMode, true)}>solo</Inst> (single-player)</p>
-        <p><Inst onComplete={_.partial(this.onChooseMode, false)}>party</Inst> (2-4 players)</p>
+        <p>Select mode:</p>
+        <p><Inst reset onComplete={_.partial(this.onChooseMode, true)}>solo</Inst> (single-player)</p>
+        <p><Inst reset onComplete={_.partial(this.onChooseMode, false)}>party</Inst> (2-4 players)</p>
+        <br/>
+        <p>Volume:</p>
+        <Volume />
+        <br/>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>
       </div>
     );
   },
@@ -253,7 +250,7 @@ var Game = React.createClass({
         <p>Follow the instructions, step by step, to complete your recipe!</p>
         <br/>
 
-        <p>You may need to <Inst onComplete={_.noop}>type a command</Inst>,<br/> move a dial with the arrow keys, <br/> and more.</p>
+        <p>You may need to <Inst reset onComplete={_.noop}>type a command</Inst>,<br/> move a dial with the arrow keys, <br/> and more.</p>
         <br/>
 
         <p>Watch your health {heartFull}{heartFull}{heartEmpty}<br/> and complete each step before the {timer} timer runs out!</p>

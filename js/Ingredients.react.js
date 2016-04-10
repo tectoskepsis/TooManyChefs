@@ -1,13 +1,12 @@
 var React = require('react');
 
+var Audio = require('./Audio.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
-var SoundEffects = require('./SoundEffects.js');
 
 var Ingredients = React.createClass({
   mixins: [KeyboardMixin],
 
   propTypes: {
-    //children: React.PropTypes.string.isRequired,
     leftName: React.PropTypes.string,
     rightName: React.PropTypes.string,
     ingredients: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -39,7 +38,7 @@ var Ingredients = React.createClass({
 
     for (var i = 0; i < ingredients.length; i++) {
       if (keyCode === ingredients[i].key.charCodeAt(0)) {
-        SoundEffects.playRandomClick();
+        Audio.playRandomClick();
 
         ingredients[i].left = !ingredients[i].left;
         this.setState({ingredients: ingredients});

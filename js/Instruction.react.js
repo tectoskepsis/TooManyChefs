@@ -4,8 +4,8 @@ var React = require('react');
 var _ = require('lodash');
 var cx = require('classnames');
 
+var Audio = require('./Audio.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
-var SoundEffects = require('./SoundEffects.js');
 
 var Instruction = React.createClass({
   mixins: [KeyboardMixin],
@@ -15,6 +15,7 @@ var Instruction = React.createClass({
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func,
     disabled: React.PropTypes.bool,
+    reset: React.PropTypes.bool,
   },
 
   getInitialState: function() {
@@ -36,7 +37,7 @@ var Instruction = React.createClass({
     }
 
     if (this.isKeyPressed(this.props.children.charAt(this.state.progress))) {
-      SoundEffects.playRandomClick();
+      Audio.playRandomClick();
 
       var newProgress = this.state.progress + 1;
       while (newProgress < this.props.children.length && this.props.children.charAt(newProgress) === ' ') {
@@ -50,6 +51,12 @@ var Instruction = React.createClass({
 
       if (complete && this.props.onComplete) {
         this.props.onComplete();
+      }
+      if (complete && this.props.reset) {
+        this.setTimeout(() => this.setState({
+          progress: 0,
+          complete: false,
+        }), 250);
       }
     }
   },
