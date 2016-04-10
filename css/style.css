@@ -155,6 +155,10 @@ ul.ingredients-step > li {
   color: gray;
 }
 
+.meal {
+  height: 250px;
+}
+
 .report {
   background-color: #edf4ff;
   position: fixed;
