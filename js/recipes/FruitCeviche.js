@@ -103,7 +103,7 @@ var FruitCeviche = {
       timer: 10,
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 24 && progress <= 27) {
+        if (progress >= 26 && progress <= 30) {
           this.nextStep();
         } else {
           this.failure();

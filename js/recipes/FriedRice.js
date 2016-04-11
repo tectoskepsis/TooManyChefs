@@ -123,7 +123,7 @@ var FriedRice = {
       },
     },
     {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">HIGH</b>.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Use the arrow keys to turn the dial on the stove to <b className="fireRed">HIGH</b>.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
@@ -206,10 +206,8 @@ var FriedRice = {
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 30) {
           this.nextStep();
-        } else if (progress > 30) {
-          this.failure(<p>Recipe failed. Too much soy sauce!</p>);
         } else {
-          this.failure(<p>Recipe failed. Not enough soy sauce!</p>);
+          this.failure();
         }
       },
     },
@@ -220,7 +218,7 @@ var FriedRice = {
       timer: 7,
     },
     {
-      pretext: <span>Use the arrow keys to turn off the stove.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Use the arrow keys to turn off the stove.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       startValue: 21,

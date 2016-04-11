@@ -180,7 +180,7 @@ var FishCurry = {
       timer: 10,
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 20 && progress <= 25) {
+        if (progress >= 20 && progress <= 26) {
           this.nextStep();
         } else {
           this.failure();

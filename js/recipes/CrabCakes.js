@@ -41,12 +41,10 @@ var CrabCakes = {
       timer: 10,
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 27 && progress <= 31) {
+        if (progress >= 25 && progress <= 33) {
           this.nextStep();
-        } else if (progress > 32) {
-          this.failure(<p>Recipe failed, too much mayo!</p>);
         } else {
-          this.failure(<p>Recipe failed, not enough mayo!</p>);
+          this.failure();
         }
       },
     },
