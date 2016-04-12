@@ -1,4 +1,3 @@
-var AudioPlayer = require('web-audio-player');
 var React = require('react');
 
 var _ = require('lodash');

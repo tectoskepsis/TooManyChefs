@@ -1,35 +1,62 @@
-var AudioPlayer = require('web-audio-player');
-
 var _ = require('lodash');
 
-var click1 = AudioPlayer('./audio/sounds/click1.wav');
-var click2 = AudioPlayer('./audio/sounds/click2.wav');
-var click3 = AudioPlayer('./audio/sounds/click3.wav');
-var CLICKS = [click1, click2, click3];
+var Sound = createjs.Sound;
+
+const AUDIO_PATH = './audio/sounds/';
+const BGM = './audio/Fortaleza.mp3';
+const CLICKS = ['click1', 'click2', 'click3'];
+const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery', 'frying', 'mixer', 'pouring', 'sink', 'slice'];
+
+var soundManifest = SOUNDS.map((se) => {
+  return {id: se, src: AUDIO_PATH + se + '.wav'};
+});
+soundManifest.push({id: 'bgm', src: BGM});
 
 var Audio = {
-  playRandomClick: function() {
-    var click = _.sample(CLICKS);
-    click.play();
-    click.node.connect(click.context.destination);
+  audio: null,
+  playing: {},
+  volume: 0.8,
+
+  loadAllSounds: function(onLoad, onError) {
+    var queue = new createjs.LoadQueue(true);
+    queue.installPlugin(Sound);
+    queue.on('complete', onLoad, this);
+    queue.on('error', onError, this);
+    queue.loadManifest(soundManifest);
   },
 
-  playBGM: function(onLoad) {
-    this.audio = AudioPlayer('./audio/Fortaleza.mp3', {loop: true, volume: 0.8});
-    this.audio.on('load', () => {
-      this.audio.play();
-      this.audio.node.connect(this.audio.context.destination);
-      if (onLoad) {
-        onLoad();
-      }
-    });
+  playRandomClick: function() {
+    Sound.play(_.sample(CLICKS), {volume: this.volume});
+  },
+
+  playBGM: function() {
+    this.audio = Sound.play('bgm', {loop: -1, volume: this.volume});
+  },
+
+  playSE: function(sound) {
+    if (_.has(this.playing, sound)) {
+      this.playing[sound].play();
+      this.playing[sound].volume = this.volume;
+      return;
+    }
+    this.playing[sound] = Sound.play(sound, {volume: this.volume});
+  },
+
+  pauseSE: function(sound) {
+    if (_.has(this.playing, sound)) {
+      this.playing[sound].paused = true;
+    }
+  },
+
+  stopSE: function(sound) {
+    if (_.has(this.playing, sound)) {
+      this.playing[sound].stop();
+    }
   },
 
   setVolume: function(vol) {
+    this.volume = vol;
     this.audio.volume = vol;
-    _.forEach(CLICKS, (audio) => {
-      audio.volume = vol;
-    });
   },
 };
 
