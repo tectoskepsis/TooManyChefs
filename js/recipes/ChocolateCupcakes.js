@@ -34,10 +34,10 @@ var ChocolateCupcakes = {
       leftName: 'Selection',
       rightName: 'Pantry',
       ingredients: [
-        {name: 'pot', key: 'p', left: false},
-        {name: 'wok', key: 'w', left: false},
-        {name: 'muffin pan', key: 'm', left: false},
-        {name: 'saucepan', key: 's', left: false},
+        {name: 'pot', key: 'p', left: false, sound: 'boop'},
+        {name: 'wok', key: 'w', left: false, sound: 'boop'},
+        {name: 'muffin pan', key: 'm', left: false, sound: 'boop'},
+        {name: 'saucepan', key: 's', left: false, sound: 'boop'},
       ],
       timer: 10,
       onProgress: function(left, right) {
@@ -115,7 +115,7 @@ var ChocolateCupcakes = {
       leftName: 'Table',
       rightName: 'Oven',
       ingredients: [
-        {name: 'muffin pan', key: 'm', left: true},
+        {name: 'muffin pan', key: 'm', left: true, sound: 'boop'},
       ],
       timer: 7,
       onProgress: function(left, right) {

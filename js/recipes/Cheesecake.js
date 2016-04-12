@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var nextStep = function() {
@@ -83,6 +84,13 @@ var Cheesecake = {
       instruction: '^',
       type: 'dial',
       timer: 10,
+      onProgress: function(value) {
+        if (value >= 4) {
+          Audio.playSE('mixer', {loop: 3});
+        } else if (value < 4) {
+          Audio.pauseSE('mixer');
+        }
+      },
       onTimeout: function(value) {
         if (value >= 4 && value <= 7) {
           this.nextStep();
@@ -102,7 +110,15 @@ var Cheesecake = {
       type: 'dial',
       startValue: 5,
       timer: 10,
+      onProgress: function(value) {
+        if (value >= 4) {
+          Audio.playSE('mixer', {loop: 3});
+        } else if (value < 4) {
+          Audio.pauseSE('mixer');
+        }
+      },
       onTimeout: function(value) {
+        Audio.stopSE('mixer');
         if (value <= 3) {
           this.nextStep();
         } else {

@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -99,6 +100,10 @@ var EggsBenedict = {
       instruction: 'u',
       type: 'arrows',
       timer: 8,
+      onComplete: function() {
+        Audio.playSE('blender', {loop: 3});
+        this.nextStep();
+      },
     },
     {
       pretext: <span>To speed up, shake the blender by mashing 's'.<br/></span>,
@@ -112,6 +117,10 @@ var EggsBenedict = {
       instruction: 'd',
       type: 'arrows',
       timer: 8,
+      onComplete: function() {
+        Audio.stopSE('blender');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Well done! Brag to the Pâtissier by using <b>butyraceous</b> in a sentence.<br/></span>,

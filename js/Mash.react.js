@@ -11,6 +11,7 @@ var Mash = React.createClass({
     mashCount: React.PropTypes.number,
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func.isRequired,
+    onPressSound: React.PropTypes.string,
   },
 
   getDefaultProps: function() {
@@ -38,7 +39,11 @@ var Mash = React.createClass({
 
     var keyCode = e.which || e.keyCode || 0;
     if (String.fromCharCode(keyCode).toLowerCase() === this.props.children || (this.props.children === 'CAPSLOCK' && keyCode === 20)) {
-      Audio.playRandomClick();
+      if (this.props.onPressSound) {
+        Audio.playSE(this.props.onPressSound);
+      } else {
+        Audio.playRandomClick();
+      }
 
       var newValue = this.state.value - 1;
       this.setState({value: newValue});

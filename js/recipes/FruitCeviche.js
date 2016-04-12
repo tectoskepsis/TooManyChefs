@@ -28,7 +28,7 @@ var FruitCeviche = {
       leftName: 'Items',
       rightName: 'Table',
       ingredients: [
-        {name: 'cutting board', key: 'c', left: true},
+        {name: 'cutting board', key: 'c', left: true, sound: 'cupboard'},
         {name: 'knife', key: 'k', left: true},
       ],
       timer: 10,
@@ -87,6 +87,7 @@ var FruitCeviche = {
     {
       pretext: 'Cut the pineapple into',
       instruction: 'circular',
+      onHoldSound: 'slice',
       posttext: 'slices.',
       timer: 10,
     },
@@ -99,9 +100,10 @@ var FruitCeviche = {
     {
       pretext: () => <span>Bathe {recipeData.name} in <b>1 cup</b> of citrus juices by holding 'j'.<br/></span>,
       instruction: 'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjuice',
-      posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4&nbsp;&nbsp;&nbsp;&nbsp;^ 5/4</span>,
+      posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 5/4</span>,
       timer: 10,
       onComplete: () => {},
+      onHoldSound: 'pouring',
       onTimeout: function(progress) {
         if (progress >= 26 && progress <= 30) {
           this.nextStep();
@@ -171,7 +173,7 @@ var FruitCeviche = {
         recipeData.right = right;
       },
       onTimeout: function() {
-        if (recipeData.right.length === 1 && recipeData.right[0] === 'filling') {
+        if (recipeData.right.length === 1 && recipeData.right[0].name === 'filling') {
           this.nextStep();
         } else {
           this.failure();

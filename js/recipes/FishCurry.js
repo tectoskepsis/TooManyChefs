@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -41,6 +42,7 @@ var FishCurry = {
       pretext: <span>Cut tomatoes into little pieces by mashing 't'.<br/></span>,
       instruction: 't',
       type: 'mash',
+      onPressSound: 'slice',
       mashCount: 10,
       timer: 10,
     },
@@ -65,6 +67,7 @@ var FishCurry = {
       type: 'dial',
       timer: 10,
       onTimeout: function(value) {
+        Audio.playSE('slice');
         if (value >= 10 && value <= 13) {
           this.nextStep();
         } else {
@@ -94,9 +97,9 @@ var FishCurry = {
       leftName: 'Table',
       rightName: 'Cabinet',
       ingredients: [
-        {name: 'pan', key: 'p', left: false},
-        {name: 'clock', key: 'c', left: false},
-        {name: 'wok', key: 'w', left: false},
+        {name: 'pan', key: 'p', left: false, sound: 'cupboard'},
+        {name: 'clock', key: 'c', left: false, sound: 'cupboard'},
+        {name: 'wok', key: 'w', left: false, sound: 'cupboard'},
         {name: 'duck', key: 'd', left: false},
       ],
       timer: 10,
@@ -160,6 +163,10 @@ var FishCurry = {
       instruction: 'deep fry',
       posttext: '.',
       timer: 8,
+      onComplete: function() {
+        Audio.playSE('frying');
+        this.nextStep();
+      },
     },
     {
       pretext: 'Add a',
@@ -178,6 +185,7 @@ var FishCurry = {
       instruction: 'waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaater',
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1&nbsp;&nbsp;&nbsp;&nbsp;^ 2&nbsp;&nbsp;&nbsp;&nbsp;^ 3&nbsp;&nbsp;&nbsp;&nbsp;^ 4</span>,
       timer: 10,
+      onHoldSound: 'pouring',
       onComplete: () => {},
       onTimeout: function(progress) {
         if (progress >= 20 && progress <= 26) {
@@ -198,6 +206,11 @@ var FishCurry = {
       type: 'dial',
       startValue: 21,
       timer: 7,
+      onProgress: function(value) {
+        if (value <= 3) {
+          Audio.stopSE('frying');
+        }
+      },
       onTimeout: function(value) {
         if (value <= 3) {
           this.nextStep();

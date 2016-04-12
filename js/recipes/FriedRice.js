@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -55,6 +56,7 @@ var FriedRice = {
       pretext: <span>Dice up the carrots into little cubes by mashing 'd'.<br/></span>,
       instruction: 'd',
       type: 'mash',
+      onPressSound: 'slice',
       mashCount: 10,
       timer: 10,
     },
@@ -62,6 +64,7 @@ var FriedRice = {
       pretext: <span>Next, cut up the onions like they threatened your family.<br/></span>,
       instruction: 'c',
       type: 'mash',
+      onPressSound: 'slice',
       mashCount: 10,
       timer: 10,
     },
@@ -76,6 +79,7 @@ var FriedRice = {
       timer: 8,
     },
     {
+      onStart: () => Audio.playSE('sink'),
       pretext: 'Excellent work! Onto the meat. Defrost the chicken by running it under',
       instruction: 'warm',
       posttext: 'water.',
@@ -86,6 +90,10 @@ var FriedRice = {
       instruction: 'off',
       posttext: 'the faucet to support the environment. Go green!',
       timer: 8,
+      onComplete: function() {
+        Audio.stopSE('sink');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Give the chicken a name.<br/></span>,
@@ -112,6 +120,7 @@ var FriedRice = {
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too little&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
       timer: 10,
       onComplete: () => {},
+      onHoldSound: 'pouring',
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 30) {
           this.nextStep();
@@ -143,6 +152,7 @@ var FriedRice = {
       onTimeout: nextStep,
     },
     {
+      onStart: () => Audio.playSE('frying'),
       pretext: 'Toss in the onions to',
       instruction: 'soak up',
       posttext: 'the oily goodness.',
@@ -223,6 +233,11 @@ var FriedRice = {
       type: 'dial',
       startValue: 21,
       timer: 10,
+      onProgress: function(value) {
+        if (value <= 3) {
+          Audio.stop('frying');
+        }
+      },
       onTimeout: function(value) {
         if (value <= 3) {
           this.nextStep();

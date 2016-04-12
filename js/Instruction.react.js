@@ -15,12 +15,14 @@ var Instruction = React.createClass({
     onProgress: React.PropTypes.func,
     disabled: React.PropTypes.bool,
     reset: React.PropTypes.bool,
+    onHoldSound: React.PropTypes.string,
   },
 
   getInitialState: function() {
     return {
       complete: false,
       progress: 0,
+      playingSound: false,
     };
   },
 
@@ -30,13 +32,25 @@ var Instruction = React.createClass({
     }
   },
 
+  onKeyUp: function() {
+    if (this.props.onHoldSound && this.state.playingSound) {
+      Audio.pauseSE(this.props.onHoldSound);
+      this.setState({playingSound: false});
+    }
+  },
+
   checkHeldKey: function() {
     if (this.state.complete || this.props.disabled) {
       return;
     }
 
     if (this.isKeyPressed(this.props.children.charAt(this.state.progress))) {
-      Audio.playRandomClick();
+      if (!this.props.onHoldSound) {
+        Audio.playRandomClick();
+      } else if (!this.state.playingSound) {
+        Audio.playSE(this.props.onHoldSound);
+        this.setState({playingSound: true});
+      }
 
       var newProgress = this.state.progress + 1;
       while (newProgress < this.props.children.length && this.props.children.charAt(newProgress) === ' ') {

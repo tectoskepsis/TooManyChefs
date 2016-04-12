@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -63,10 +64,15 @@ var SpringRolls = {
       },
     },
     {
+      onStart: () => Audio.playSE('sink'),
       pretext: 'Grab another bowl and',
       instruction: 'fill',
       posttext: 'it with water.',
       timer: 10,
+      onComplete: function() {
+        Audio.stopSE('sink');
+        this.nextStep();
+      },
     },
     {
       pretext: <span><b>Dip</b> a rice wrapper into the water for a few seconds, then <b>take it out</b>.</span>,
@@ -178,6 +184,7 @@ var SpringRolls = {
       instruction: 'llllllllllllllllllllllllllllllllllllllllime',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 1.5 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2.5</span>,
       timer: 10,
+      onHoldSound: 'pouring',
       onComplete: () => {},
       onTimeout: function(progress) {
         if (progress >= 16 && progress <= 22) {

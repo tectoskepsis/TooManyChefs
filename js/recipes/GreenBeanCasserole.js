@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -38,6 +39,7 @@ var GreenBeanCasserole = {
       instruction: 'd',
       type: 'mash',
       mashCount: 10,
+      onPressSound: 'slice',
       timer: 10,
     },
     {
@@ -91,6 +93,7 @@ var GreenBeanCasserole = {
       },
     },
     {
+      onStart: () => Audio.playSE('frying'),
       pretext: 'Saute the onions and mushrooms in butter with',
       instruction: 's',
       posttext: '.',
@@ -120,11 +123,13 @@ var GreenBeanCasserole = {
       },
     },
     {
+      onStart: () => Audio.stopSE('frying'),
       pretext: <span>Pour in <b className="green">10 oz</b> of cream of mushroom soup by holding 's'.<br/><br/></span>,
       instruction: 'ssssssssssssssssssssssssssssssssssssssoup',
       posttext: <span><br/>oz:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 15</span>,
       timer: 10,
       onComplete: () => {},
+      onHoldSound: 'pouring',
       onTimeout: function(progress) {
         if (progress >= 6 && progress <= 9) {
           this.nextStep();

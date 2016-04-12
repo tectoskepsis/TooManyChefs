@@ -61,9 +61,10 @@ var Cornbread = {
       instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmilk',
       posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 2/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 3/2</span>,
       timer: 10,
+      onHoldSound: 'pouring',
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 21 && progress <= 25) {
+        if (progress >= 20 && progress <= 25) {
           this.nextStep();
         } else {
           this.failure();

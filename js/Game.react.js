@@ -7,6 +7,7 @@ var TransitionGroup = require('react-addons-css-transition-group');
 var _ = require('lodash');
 var cx = require('classnames');
 
+var Audio = require('./Audio.js');
 var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
 var RecipeSelect = require('./RecipeSelect.react.js');
@@ -111,7 +112,7 @@ var Game = React.createClass({
     // Send Google Analytics event
     ga('send', 'event', 'Game', 'play', Recipes[this.state.meal].name);
 
-    // Wait a random amount of time before loading (9-11s)
+    // Wait a random amount of time before loading (8-10s)
     this.setTimeout(() => {
       this.setState({
         gameState: 'started',
@@ -122,7 +123,7 @@ var Game = React.createClass({
         report: null,
         mealTime: null,
       });
-    }, 500 + _.random(9000, 11000));
+    }, 500 + _.random(8000, 10000));
   },
 
   onChooseMode: function(singlePlayer) {
@@ -217,6 +218,7 @@ var Game = React.createClass({
 
     if (completed === 4) {
       // Send Google Analytics event
+      Audio.stopAllSounds();
       ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, newTime);
       this.saveData(true, newTime);
       return <p>Type <Inst onComplete={this.onReport}>report</Inst> to view your results.</p>;

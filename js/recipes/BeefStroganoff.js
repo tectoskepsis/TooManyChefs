@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -50,6 +51,7 @@ var BeefStroganoff = {
       pretext: <span>Cut the roast into strips by tapping 'k'.<br/></span>,
       instruction: 'k',
       type: 'mash',
+      onPressSound: 'slice',
       mashCount: 10,
       timer: 8,
     },
@@ -80,6 +82,7 @@ var BeefStroganoff = {
       timer: 10,
     },
     {
+      onStart: () => Audio.playSE('frying', {loop: 6}),
       pretext: <span>Add the <ColorChange duration={5000} toColor="#a94442">BEEF</ColorChange> and cook until brown; then type</span>,
       instruction: 'ready',
       posttext: '.',
@@ -112,6 +115,7 @@ var BeefStroganoff = {
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ too little &nbsp;&nbsp;&nbsp;&nbsp;^ just right &nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
       timer: 8,
       onComplete: () => {},
+      onHoldSound: 'pouring',
       onTimeout: function(progress) {
         if (progress >= 20 && progress <= 25) {
           this.nextStep();
@@ -141,8 +145,14 @@ var BeefStroganoff = {
       maxValue: 20,
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-POT-</span>,
       timer: 9,
+      onProgress: function(value) {
+        if (value >= 7 && value <= 12) {
+          Audio.pauseSE('frying');
+        }
+      },
       onTimeout: function(value) {
-        if (value >= 7 && value <= 11) {
+        Audio.stopSE('frying');
+        if (value >= 7 && value <= 12) {
           this.nextStep();
         } else {
           this.failure(<p>Recipe failed. Failed to put lid on pot.</p>);
@@ -182,6 +192,7 @@ var BeefStroganoff = {
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6&nbsp;&nbsp;&nbsp;&nbsp;^ 2/6&nbsp;&nbsp;&nbsp;&nbsp;^ 3/6</span>,
       timer: 9,
       onComplete: () => {},
+      onHoldSound: 'pouring',
       onTimeout: function(progress) {
         if (progress >= 18 && progress <= 23) {
           this.nextStep();

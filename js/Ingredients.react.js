@@ -13,6 +13,7 @@ var Ingredients = React.createClass({
       name: React.PropTypes.string.isRequired,
       key: React.PropTypes.string.isRequired,
       left: React.PropTypes.bool.isRequired,
+      sound: React.PropTypes.string,
     })).isRequired,
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func,
@@ -38,7 +39,11 @@ var Ingredients = React.createClass({
 
     for (var i = 0; i < ingredients.length; i++) {
       if (keyCode === ingredients[i].key.charCodeAt(0)) {
-        Audio.playRandomClick();
+        if (ingredients[i].sound) {
+          Audio.playSE(ingredients[i].sound);
+        } else {
+          Audio.playRandomClick();
+        }
 
         ingredients[i].left = !ingredients[i].left;
         this.setState({ingredients: ingredients});

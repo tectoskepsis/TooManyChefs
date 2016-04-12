@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -112,6 +113,7 @@ var CrabCakes = {
       },
     },
     {
+      onStart: () => Audio.playSE('frying', {loop: 6}),
       pretext: 'Melt the',
       instruction: 'butter',
       posttext: 'on a skillet over the heat.',
@@ -186,8 +188,14 @@ var CrabCakes = {
       type: 'dial',
       startValue: 13,
       timer: 10,
+      onProgress: function(value) {
+        if (value <= 3) {
+          Audio.stopSE('frying');
+        }
+      },
       onTimeout: function(value) {
-        if (value <= 2) {
+        Audio.stopSE('frying');
+        if (value <= 3) {
           this.nextStep();
         } else {
           this.failure(<p>Recipe failed-- did not turn off stove.</p>);

@@ -22,7 +22,5 @@ Audio.loadAllSounds(() => {
   Audio.playBGM();
   renderGameDOM();
 }, () => {
-  // failed to load sounds
   console.error('failed to load sounds!');
-  renderGameDOM();
 });

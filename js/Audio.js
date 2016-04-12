@@ -15,7 +15,6 @@ soundManifest.push({id: 'bgm', src: BGM});
 var Audio = {
   audio: null,
   playing: {},
-  volume: 0.8,
 
   // TODO: load only BGM first, then SE after game start
   loadAllSounds: function(onLoad, onError) {
@@ -27,20 +26,20 @@ var Audio = {
   },
 
   playRandomClick: function() {
-    Sound.play(_.sample(CLICKS), {volume: this.volume});
+    Sound.play(_.sample(CLICKS));
   },
 
   playBGM: function() {
-    this.audio = Sound.play('bgm', {loop: -1, volume: this.volume});
+    this.audio = Sound.play('bgm', {loop: -1});
   },
 
+  // TODO: return _.uniqueId and map each new instance to different sound
   playSE: function(sound) {
     if (_.has(this.playing, sound)) {
       this.playing[sound].play();
-      this.playing[sound].volume = this.volume;
       return;
     }
-    this.playing[sound] = Sound.play(sound, {volume: this.volume});
+    this.playing[sound] = Sound.play.apply(this, arguments);
   },
 
   pauseSE: function(sound) {
@@ -55,9 +54,13 @@ var Audio = {
     }
   },
 
+  stopAllSounds: function() {
+    _.forEach(this.playing, (sound) => sound.stop());
+  },
+
   setVolume: function(vol) {
+    Sound.volume = vol;
     this.volume = vol;
-    this.audio.volume = vol;
   },
 };
 
