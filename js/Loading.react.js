@@ -18,6 +18,9 @@ var loadingText = [
   'Chasing rats',
   'Wringing dish towels',
   'Turning on the radio',
+  'Sweeping floors',
+  'Washing hands',
+  'Rolling up sleeves',
 ];
 
 var Loading = React.createClass({
