@@ -17,6 +17,7 @@ var Audio = {
   playing: {},
   volume: 0.8,
 
+  // TODO: load only BGM first, then SE after game start
   loadAllSounds: function(onLoad, onError) {
     var queue = new createjs.LoadQueue(true);
     queue.installPlugin(Sound);

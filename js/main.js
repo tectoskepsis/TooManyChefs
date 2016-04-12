@@ -1,10 +1,17 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Game = require('./Game.react.js');
 var Audio = require('./Audio.js');
+var Game = require('./Game.react.js');
+var Loading = require('./Loading.react.js');
 
-// Render game DOM
+// Render loading screen
+ReactDOM.render(
+  <Loading />,
+  document.getElementById('loading-text')
+);
+
+// Render game DOM on load
 var renderGameDOM = ReactDOM.render.bind(this,
   <Game />,
   document.getElementById('content')
