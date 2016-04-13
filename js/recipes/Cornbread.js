@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -76,12 +77,17 @@ var Cornbread = {
       instruction: 'c',
       posttext: '.',
       timer: 8,
+      onComplete: function() {
+        Audio.playSE('eggcrack');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Beat the butter, milk, and egg mixture by mashing 'b'.<br/></span>,
       instruction: 'b',
       type: 'mash',
       mashCount: 10,
+      onPressSound: ['eggbeat1', 'eggbeat2'],
       timer: 10,
     },
     {

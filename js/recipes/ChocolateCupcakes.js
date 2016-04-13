@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -84,11 +85,16 @@ var ChocolateCupcakes = {
       instruction: 'eggs',
       posttext: 'into the bowl.',
       timer: 10,
+      onComplete: function() {
+        Audio.playSE('eggcrack');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Beat the mixture by mashing 'b'.<br/></span>,
       instruction: 'b',
       type: 'mash',
+      onPressSound: ['eggbeat1', 'eggbeat2'],
       mashCount: 10,
       timer: 10,
     },

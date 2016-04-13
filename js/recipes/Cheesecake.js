@@ -86,7 +86,7 @@ var Cheesecake = {
       timer: 10,
       onProgress: function(value) {
         if (value >= 4) {
-          Audio.playSE('mixer', {loop: 3});
+          Audio.unpauseSE('mixer', {loop: 3});
         } else if (value < 4) {
           Audio.pauseSE('mixer');
         }
@@ -102,6 +102,7 @@ var Cheesecake = {
     {
       pretext: <span>Crack in the eggs, but not too fast.<br/></span>,
       instruction: 'egg egg egg egg',
+      onHoldSound: 'eggcrack',
       timer: 15,
     },
     {
@@ -112,7 +113,7 @@ var Cheesecake = {
       timer: 10,
       onProgress: function(value) {
         if (value >= 4) {
-          Audio.playSE('mixer', {loop: 3});
+          Audio.unpauseSE('mixer', {loop: 3});
         } else if (value < 4) {
           Audio.pauseSE('mixer');
         }

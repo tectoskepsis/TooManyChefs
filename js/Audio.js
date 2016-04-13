@@ -5,10 +5,10 @@ var Sound = createjs.Sound;
 const AUDIO_PATH = './audio/sounds/';
 const BGM = './audio/Fortaleza.mp3';
 const CLICKS = ['click1', 'click2', 'click3'];
-const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery', 'frying', 'mixer', 'pouring', 'sink', 'slice'];
+const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery1', 'cutlery2', 'frying', 'grinder', 'mixer', 'pouring', 'sink', 'slice', 'eggcrack', 'eggbeat1', 'eggbeat2'];
 
 var soundManifest = SOUNDS.map((se) => {
-  return {id: se, src: AUDIO_PATH + se + '.wav'};
+  return {id: se, src: AUDIO_PATH + se + '.mp3'};
 });
 soundManifest.push({id: 'bgm', src: BGM});
 
@@ -16,7 +16,6 @@ var Audio = {
   audio: null,
   playing: {},
 
-  // TODO: load only BGM first, then SE after game start
   loadAllSounds: function(onLoad, onError) {
     var queue = new createjs.LoadQueue(true);
     queue.installPlugin(Sound);
@@ -33,13 +32,18 @@ var Audio = {
     this.audio = Sound.play('bgm', {loop: -1});
   },
 
-  // TODO: return _.uniqueId and map each new instance to different sound
-  playSE: function(sound) {
+  playSE: function(sound, opt) {
+    var soundEffect = _.isArray(sound) ? _.sample(sound) : sound;
+    this.playing[soundEffect] = Sound.play(soundEffect, opt);
+  },
+
+  unpauseSE: function(sound, opt) {
+    // Play paused sound
     if (_.has(this.playing, sound)) {
       this.playing[sound].play();
-      return;
+    } else {
+      this.playing[sound] = Sound.play(sound, opt);
     }
-    this.playing[sound] = Sound.play.apply(this, arguments);
   },
 
   pauseSE: function(sound) {

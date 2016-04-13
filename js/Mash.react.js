@@ -11,7 +11,10 @@ var Mash = React.createClass({
     mashCount: React.PropTypes.number,
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func.isRequired,
-    onPressSound: React.PropTypes.string,
+    onPressSound: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.arrayOf(React.PropTypes.string),
+    ]),
   },
 
   getDefaultProps: function() {

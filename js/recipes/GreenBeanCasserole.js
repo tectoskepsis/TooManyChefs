@@ -93,7 +93,7 @@ var GreenBeanCasserole = {
       },
     },
     {
-      onStart: () => Audio.playSE('frying'),
+      onStart: () => Audio.playSE('frying', {loop: 3}),
       pretext: 'Saute the onions and mushrooms in butter with',
       instruction: 's',
       posttext: '.',

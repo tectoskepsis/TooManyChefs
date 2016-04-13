@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -64,6 +65,10 @@ var BelgianWaffle = {
       instruction: 'crack',
       posttext: 'to open some eggs.',
       timer: 10,
+      onComplete: function() {
+        Audio.playSE('eggcrack');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Separate the <b>yolk</b> from the <b>egg white</b>.</span>,
@@ -98,6 +103,7 @@ var BelgianWaffle = {
       instruction: 'm',
       type: 'mash',
       mashCount: 10,
+      onPressSound: ['eggbeat1', 'eggbeat2'],
       timer: 10,
     },
     {

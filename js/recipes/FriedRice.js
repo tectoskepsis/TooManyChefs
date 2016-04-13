@@ -152,7 +152,7 @@ var FriedRice = {
       onTimeout: nextStep,
     },
     {
-      onStart: () => Audio.playSE('frying'),
+      onStart: () => Audio.playSE('frying', {loop: 3}),
       pretext: 'Toss in the onions to',
       instruction: 'soak up',
       posttext: 'the oily goodness.',
@@ -161,12 +161,14 @@ var FriedRice = {
     {
       pretext: <span>Crack some eggs into a bowl using your friend's thick skull.<br/></span>,
       instruction: 'crack crack',
+      onHoldSound: 'eggcrack',
       timer: 10,
     },
     {
       pretext: <span>Beat some sense into the eggs by mashing 'b'.<br/></span>,
       instruction: 'b',
       type: 'mash',
+      onPressSound: ['eggbeat1', 'eggbeat2'],
       timer: 10,
     },
     {
@@ -235,10 +237,11 @@ var FriedRice = {
       timer: 10,
       onProgress: function(value) {
         if (value <= 3) {
-          Audio.stop('frying');
+          Audio.stopSE('frying');
         }
       },
       onTimeout: function(value) {
+        Audio.stopSE('frying');
         if (value <= 3) {
           this.nextStep();
         } else {

@@ -299,7 +299,7 @@ var Game = React.createClass({
           <b>Chef de cuisine</b> (designer): Ivan Wang<br/>
           <b>Sous-chef</b> (programmer): Ivan Wang<br/>
           <b>Culinary consultant</b>: Anshu Bansal<br/>
-          <b>Cafe jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena
+          <b>Café jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena
         </p>
         <br/><br/>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>

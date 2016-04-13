@@ -212,6 +212,7 @@ var FishCurry = {
         }
       },
       onTimeout: function(value) {
+        Audio.stopSE('frying');
         if (value <= 3) {
           this.nextStep();
         } else {

@@ -48,7 +48,7 @@ var Instruction = React.createClass({
       if (!this.props.onHoldSound) {
         Audio.playRandomClick();
       } else if (!this.state.playingSound) {
-        Audio.playSE(this.props.onHoldSound);
+        Audio.unpauseSE(this.props.onHoldSound);
         this.setState({playingSound: true});
       }
 

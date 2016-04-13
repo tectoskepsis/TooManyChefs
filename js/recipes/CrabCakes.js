@@ -27,6 +27,10 @@ var CrabCakes = {
       instruction: 'e',
       posttext: '.',
       timer: 8,
+      onComplete: function() {
+        Audio.playSE('eggcrack');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Drip in 4 tsp lemon juice with 'd'.<br/></span>,

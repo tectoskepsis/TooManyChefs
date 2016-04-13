@@ -17,10 +17,15 @@ var loadingText = [
   'Taking orders',
   'Chasing rats',
   'Wringing dish towels',
-  'Turning on the radio',
   'Sweeping floors',
   'Washing hands',
   'Rolling up sleeves',
+  'Polishing tables',
+  'Folding napkins',
+  'Freezing ice cubes',
+  'Buttering toast',
+  'Stirring coffee',
+  'Milking cows',
 ];
 
 var Loading = React.createClass({
@@ -37,11 +42,15 @@ var Loading = React.createClass({
   },
 
   updateLoadingText: function() {
+    this.setState({content: null});
+    var content;
     if (loadingText.length > 0) {
       var newText = _.pullAt(loadingText, _.random(0, loadingText.length - 1));
-      var content = <span>{newText[0]}...</span>;
-      this.setState({content: null});
-      this.setTimeout(this.updateLoadingText, _.random(500, 5000));
+      content = <span>{newText[0]}...</span>;
+      this.setTimeout(this.updateLoadingText, _.random(300, 5000));
+      this.setTimeout(() => this.setState({content: content}), 250);
+    } else {
+      content = <span>Running out of tasks while game loads...</span>;
       this.setTimeout(() => this.setState({content: content}), 250);
     }
   },

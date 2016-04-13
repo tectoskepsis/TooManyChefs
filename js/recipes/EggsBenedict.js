@@ -140,6 +140,7 @@ var EggsBenedict = {
       instruction: 'c',
       type: 'mash',
       mashCount: 4,
+      onPressSound: 'eggcrack',
       timer: 10,
     },
     {
