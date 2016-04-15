@@ -13,6 +13,7 @@ var ChefBox = require('./ChefBox.react.js');
 var RecipeSelect = require('./RecipeSelect.react.js');
 var Inst = require('./Instruction.react.js');
 var LoadingQuote = require('./LoadingQuote.react.js');
+var ModeSelect = require('./ModeSelect.react.js');
 var Recipes = require('./recipes/Recipes.js');
 var Volume = require('./Volume.react.js');
 
@@ -37,7 +38,7 @@ var Game = React.createClass({
       meal: 0,
       content: this.renderTitle(),
       startTime: 0,
-      singlePlayer: false,
+      singlePlayer: null,
       fadeTitle: false,
       gameOver: false,
       report: null,
@@ -109,6 +110,12 @@ var Game = React.createClass({
         singlePlayer: singlePlayer,
         fadeTitle: false,
       }), 350);
+    }
+
+    if (this.state.singlePlayer === null) {
+      this.setTimeout(() => {
+        this.setStateDelay('menu');
+      }, 1500);
     }
   },
 
@@ -217,14 +224,32 @@ var Game = React.createClass({
     this.setState({saveData: saveData});
   },
 
+  onRenderMode: function() {
+    if (this.state.singlePlayer !== null) {
+      this.setStateDelay('menu');
+    } else {
+      this.setState({content: null});
+      this.setTimeout(() => this.setState({
+        content: this.renderMode(),
+      }), 500);
+    }
+  },
+
   renderTitle: function() {
     return (
       <div className="padTop">
-        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>start</Inst> to begin</p>
+        <p>Type <Inst onComplete={this.onRenderMode}>start</Inst> to begin</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'options')}>options</Inst> for restaurant settings</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>credits</Inst> for culinary staff</p>
       </div>
+    );
+  },
+
+  renderMode: function() {
+    return (
+      <ModeSelect onSolo={_.partial(this.onChooseMode, true)}
+                  onParty={_.partial(this.onChooseMode, false)} />
     );
   },
 
@@ -233,9 +258,7 @@ var Game = React.createClass({
       <div className="padTop">
         <h4>Options</h4>
         <br/>
-        <p>Select mode:</p>
-        <p><Inst reset onComplete={_.partial(this.onChooseMode, true)}>solo</Inst> (single-player)</p>
-        <p><Inst reset onComplete={_.partial(this.onChooseMode, false)}>party</Inst> (2-4 players)</p>
+        {this.renderMode()}
         <br/>
         <p>Volume:</p>
         <Volume />

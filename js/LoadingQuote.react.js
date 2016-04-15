@@ -9,7 +9,7 @@ const LOADING_QUOTES = [
   {quote: <span>Human behavior flows from three main sources: desire, emotion, and <span className="goldenBrown">cooking</span>.</span>, source: 'Plato'},
   {quote: <span>At his best, man is the noblest of all animals; <span className="fireRed">separated from cuisine</span> he is the worst.</span>, source: 'Aristotle'},
   {quote: <span>One chef, two chef.<br/><span className="fireRed">Red chef</span>, <span className="darkBlue">blue chef</span>.</span>, source: 'Dr. Seuss'},
-  {quote: <span>To improve is <span className="darkBlue">to cook</span>; to be perfect is <span className="green">to cook often</span>.</span>, source: 'Winston Churchill'},
+  {quote: <span>To improve is <span className="darkBlue">to cook</span>;<br/>to be perfect is <span className="green">to cook often</span>.</span>, source: 'Winston Churchill'},
   {quote: <span><span className="green">To cook</span> or <span className="darkBlue">not to cook</span>,<br/>that is the question.</span>, source: 'Hamlet, William Shakespeare'},
   {quote: <span><span className="goldenBrown">Perfect steak</span>, like perfect men,<br/>are <span className="fireRed">very rare</span>.</span>, source: 'Rene Descartes'},
   {quote: <span>I cannot believe in a God who wants<br/> to be <span className="fireRed">fed all the time</span>.</span>, source: 'Friedrich Nietzsche'},
