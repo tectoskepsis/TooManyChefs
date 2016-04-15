@@ -16,38 +16,150 @@ var ChickenMarsala = {
   chefName: 'Saucier',
   type: 'entrée',
   difficulty: 'hard',
-  // TODO: below
-  ingredients: ['2 lbs beef chuck roast', '1/2 tsp salt', '1/2 tsp ground black pepper', '4 oz butter', '4 green onions', '4 tbsp flour', '1 can condensed beef broth', '6 oz sliced mushrooms', '1/3 cup white wine'],
-  description: 'A creamy roast served over noodles that melts on your tongue.',
+  ingredients: ['4 tbsp butter', '1 8-oz package mushrooms', '2 tbsp shallots', '1 tbsp minced garlic', '4 chicken breast halves', '1/4 tsp salt', '3/4 cup chicken broth', '1/2 cup Marsala wine', '1/2 cup frozen peas', '8 oz uncooked pasta'],
+  description: 'A traditional Italian classic, just the way Mama used to make it.',
 
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: 'Type',
-      instruction: 'take',
-      posttext: 'to grab a hunk of chuck roast, cutting board, and knife.',
+      pretext: <span>Grab a <b>glass measuring cup</b> from the pantry.</span>,
+      type: 'ingredients',
+      leftName: 'Selection',
+      rightName: 'Pantry',
+      ingredients: [
+        {name: 'glass measuring cap', key: 'g', left: false},
+        {name: 'glass measuring cup', key: 'm', left: false},
+        {name: 'gloss measuring cup', key: 'c', left: false},
+        {name: 'glass massaging cup', key: 's', left: false},
+      ],
       timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'glass measuring cup') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
-      pretext: 'Equip the blade with',
-      instruction: 'e',
-      posttext: 'for +2 STR.',
-      timer: 10,
-    },
-    {
-      pretext: <span>Cut the roast into strips by tapping 'k'.<br/></span>,
-      instruction: 'k',
+      pretext: <span>Pour 3 tbsp butter into the measuring cup by tapping 'p'.<br/></span>,
+      instruction: 'p',
       type: 'mash',
-      mashCount: 10,
-      timer: 8,
-    },
-    {
-      pretext: <span>Season with a little bit of salt and pepper.<br/></span>,
-      instruction: 's',
-      type: 'mash',
-      mashCount: 4,
+      mashCount: 3,
       timer: 7,
     },
+    {
+      instruction: 'Place',
+      posttext: 'the butter into the microwave.',
+      timer: 10,
+    },
+    // TODO: Microwave step
+    {
+      pretext: 'Let the butter stand for a bit-- it\'s hot!',
+      timer: 10,
+      onTimeout: nextStep,
+    },
+    {
+      pretext: <span>Is it cool yet? Poke the butter with the arrow keys to check.<br/>&nbsp;&nbsp;&nbsp;&nbsp;BUTTER</span>,
+      type: 'dial',
+      maxValue: 10,
+      startValue: 10,
+      instruction: '<=finger=',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;\\cup/</span>,
+      timer: 10,
+      onTimeout: function(value) {
+        if (value <= 2) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Nope-- you burn your finger!<br/></span>,
+      instruction: 'ouch!',
+      timer: 10,
+    },
+    {
+      pretext: <span>Quickly run your finger under <b className="darkBlue">cold water</b>.</span>,
+      type: 'ingredients',
+      leftName: 'Hot water',
+      rightName: 'Cold water',
+      ingredients: [
+        {name: 'finger', key: 'f', left: true},
+      ],
+      timer: 6,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 1) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: 'Phew! That feels much butter. Now,',
+      instruction: 'skim',
+      posttext: 'the foam off the top of the melted butter.',
+      timer: 9,
+    },
+    {
+      pretext: <span>Using the arrow keys, pour the butter through a fine sieve over a small bowl, to get rid of those nasty butter chunks.<br/></span>,
+      type: 'dial',
+      maxValue: 10,
+      startValue: 10,
+      instruction: 'BUTTER',
+      posttext: <span><br/>----------SIE|         |EVE------------</span>,
+      timer: 10,
+      onTimeout: function(value) {
+        if (value >= 9 && value <= 12) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Get a <b>non-stick pan</b> from the pantry.</span>,
+      type: 'ingredients',
+      leftName: 'Selection',
+      rightName: 'Pantry',
+      ingredients: [
+        {name: 'slightly sticky pan', key: 's', left: false},
+        {name: 'non-stick pan', key: 'n', left: false},
+        {name: 'very sticky pan', key: 'v', left: false},
+        {name: 'wok', key: 'w', left: false},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'non-stick pan') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: 'Coat the pan with',
+      instruction: 'cooking spray',
+      posttext: '.',
+      timer: 9,
+    },
+
+/* TODO */
+
     {
       pretext: <span>Use the arrow keys to turn the dial on the stove to MED.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
       instruction: '^',
@@ -60,12 +172,6 @@ var ChickenMarsala = {
           this.failure(<p>Recipe failed-- did not turn on stove to MED!</p>);
         }
       },
-    },
-    {
-      pretext: 'Melt the',
-      instruction: 'butter',
-      posttext: 'with a large skillet over the heat.',
-      timer: 10,
     },
     {
       pretext: <span>Add the <ColorChange duration={5000} toColor="#a94442">BEEF</ColorChange> and cook until brown; then type</span>,
