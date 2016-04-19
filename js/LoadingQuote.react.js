@@ -3,7 +3,6 @@ var React = require('react');
 var _ = require('lodash');
 
 const LOADING_QUOTES = [
-  {quote: <span>A good chef doesn't <span className="darkBlue">use</span> ingredients.<br/>A good chef <span className="green">eats</span> them.</span>, source: 'unknown'},
   {quote: <span><span className="fireRed">Well done</span> is better than well said, except for steaks, which should always be<br/><span className="fireRed">medium-rare</span>.</span>, source: 'Benjamin Franklin'},
   {quote: <span>A kitchen <span className="fireRed">divided</span> against itself<br/>cannot stand.</span>, source: 'Abraham Lincoln'},
   {quote: <span>Human behavior flows from three main sources: desire, emotion, and <span className="goldenBrown">cooking</span>.</span>, source: 'Plato'},

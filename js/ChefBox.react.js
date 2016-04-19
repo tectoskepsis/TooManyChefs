@@ -94,12 +94,12 @@ var ChefBox = React.createClass({
     }, 250);
   },
 
-  nextStep: function(postFail) {
+  nextStep: function(postFail, inc) {
     if (this.state.gameOver) {
       return;
     }
 
-    var newStep = this.state.step + 1;
+    var newStep = this.state.step + (inc === 0 ? 0 : inc || 1);
     this.clearInterval(this.timerInterval);
     if (!postFail) {
       this.setState({backgroundClass: 'success'});

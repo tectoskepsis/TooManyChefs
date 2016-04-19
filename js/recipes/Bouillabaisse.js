@@ -10,14 +10,15 @@ var nextStep = function() {
   return this.nextStep();
 }
 
-var FrenchOnionSoup = {
-  name: 'French Onion Soup',
+var Bouillabaisse = {
+  name: 'Bouillabaisse',
   chefName: 'Entremetier',
   type: 'side',
   difficulty: 'medium',
-  // TODO: update below
-  ingredients: ['1 onion', '2 cups steamed rice', '2 eggs', '2 tbsp vegetable oil', '8 oz chicken breast', '1/2 cup carrots', 'soy sauce to taste'],
-  description: 'A tasty balanced meal, perfect for getting rid of leftover rice.',
+  ingredients: ['3 tbsp virgin oil', '2 leeks', '1 onion', '4 garlic cloves', '2 tomatoes', 'one 2-lb live lobster', '2 dozen littleneck clams', '1 lb monkfish', '1 lb red snapper fillet', '1 lb halibut fillet'],
+  description: 'A diverse fish stew, as savory as it is unpronounceable.',
+
+  // TODO: steps below
 
   /* A recipe is a list of json steps */
   steps: [
@@ -218,4 +219,4 @@ var FrenchOnionSoup = {
   ],
 };
 
-module.exports = FrenchOnionSoup;
+module.exports = Bouillabaisse;

@@ -4,7 +4,8 @@ var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
-  cowName: 'pat',
+  left: [],
+  right: [],
 };
 
 var nextStep = function() {
@@ -57,7 +58,12 @@ var ChickenMarsala = {
       posttext: 'the butter into the microwave.',
       timer: 10,
     },
-    // TODO: Microwave step
+    {
+      pretext: 'Microwave the butter for',
+      instruction: '45',
+      posttext: 'seconds.',
+      timer: 8,
+    },
     {
       pretext: 'Let the butter stand for a bit-- it\'s hot!',
       timer: 10,
@@ -69,7 +75,7 @@ var ChickenMarsala = {
       maxValue: 10,
       startValue: 10,
       instruction: '<=finger=',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;\\cup/</span>,
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;\cup/</span>,
       timer: 10,
       onTimeout: function(value) {
         if (value <= 2) {
@@ -157,11 +163,32 @@ var ChickenMarsala = {
       posttext: '.',
       timer: 9,
     },
-
-/* TODO */
-
     {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to MED.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Get the <b>mushrooms</b>, <b>shallots</b>, and <b>garlic</b> from the fridge onto your cutting board.</span>,
+      type: 'ingredients',
+      leftName: 'Cutting board',
+      rightName: 'Fridge',
+      ingredients: [
+        {name: 'mushrooms', key: 'm', left: false},
+        {name: 'shallots', key: 's', left: false},
+        {name: 'garlic', key: 'g', left: false},
+        {name: 'leftover Chinese', key: 'l', left: false},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 1 && recipeData.right[0].name === 'leftover Chinese') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Use the arrow keys to set the skillet to <b className="fireRed">MED</b> heat.<br/>OFF LOW - - MED - - HIGH - -&nbsp;- - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
@@ -169,197 +196,202 @@ var ChickenMarsala = {
         if (value >= 11 && value <= 15) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed-- did not turn on stove to MED!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: <span>Add the <ColorChange duration={5000} toColor="#a94442">BEEF</ColorChange> and cook until brown; then type</span>,
-      instruction: 'ready',
-      posttext: '.',
+      pretext: 'Add the',
+      instruction: 'mushrooms garlic shallots',
+      posttext: 'into the pan.',
+      timer: 10,
+    },
+    {
+      pretext: 'Wait for the moisture to evaporate, then',
+      instruction: 'remove',
+      posttext: <span>it from the pan to set aside.<br/><br/>&nbsp;&nbsp;&nbsp;<ColorChange toColor="#5cb85c">&#9679;</ColorChange> evaporated</span>,
+      timer: 30,
+      onComplete: function(progress, time) {
+        if (time <= 20) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>What's the next step again? You forget the recipe. Mash 't' to think really hard.<br/></span>,
+      instruction: 't',
+      type: 'mash',
+      mashCount: 10,
+      timer: 8,
+    },
+    {
+      pretext: <span>Call your mother to ask her what to do next.<br/></span>,
+      instruction: '412 268 6667',
+      timer: 9,
+    },
+    {
+      pretext: <span>Mom ignores your question and asks how your day has been and why you haven't called.<br/></span>,
+      instruction: 'You tell her: ',
+      type: 'textinput',
+      timer: 8,
+      onTimeout: function(okmom) {
+        if (okmom.length < 3) {
+          this.failure();
+        } else {
+          this.nextStep();
+        }
+      },
+    },
+    {
+      instruction: 'Ask',
+      posttext: 'her again what the recipe is.',
+      timer: 8,
+    },
+    {
+      pretext: 'Wait and jot down the recipe as she explains it to you.',
+      timer: 10,
+      onTimeout: nextStep,
+    },
+    {
+      pretext: <span>She is now ranting about Aunt Marie, but you have a dish to finish...<br/></span>,
+      type: 'ingredients',
+      leftName: 'Keep listening',
+      rightName: 'Hang up on mother',
+      ingredients: [
+        {name: 'choose', key: 'c', left: true},
+      ],
+      timer: 8,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1) {
+          this.nextStep(false, 0); // repeat
+        } else {
+          this.nextStep();
+        }
+      },
+    },
+    {
+      pretext: 'You hang up on her and feel slightly guilty. Type',
+      instruction: 'repent',
+      posttext: 'and bow your head for forgiveness.',
+      timer: 8,
+    },
+    {
+      pretext: <span>Return to your dish and pound the chicken to 1/4 in thickness.<br/></span>,
+      instruction: 'p',
+      type: 'mash',
+      mashCount: 10,
+      timer: 10,
+    },
+    {
+      pretext: 'Add the',
+      instruction: 'butter and chicken',
+      posttext: 'to the pan.',
+      timer: 8,
+    },
+    {
+      pretext: <span>Wait until the <ColorChange duration={5000} toColor="#a94442">CHICKEN</ColorChange> browns; then</span>,
+      instruction: 'flip',
+      posttext: 'the chicken over.',
       timer: 20,
       onComplete: function(progress, time) {
         // Only proceed if color is brown
         if (time <= 10) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed. Patty not cooked to brown.</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Toss in the onions by pressing',
-      instruction: 't',
-      posttext: '.',
-      timer: 7,
-    },
-    {
-      pretext: 'Daydream about grazing cows while the onions sizzle.',
-      timer: 10,
-      onTimeout: nextStep,
-    },
-    {
-      pretext: <span>Stir in the flour by tapping 'f'.<br/></span>,
-      instruction: 'f',
-      type: 'mash',
-      mashCount: 10,
-      timer: 8,
-    },
-    {
-      pretext: <span>Pour in beef broth, but not too much!<br/></span>,
-      instruction: 'beeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef broth',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ too little &nbsp;&nbsp;&nbsp;&nbsp;^ just right &nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
-      timer: 8,
-      onComplete: () => {},
-      onTimeout: function(progress) {
-        if (progress >= 20 && progress <= 25) {
-          this.nextStep();
-        } else if (progress > 25) {
-          this.failure(<p>Recipe failed, too much beef broth!</p>);
-        } else {
-          this.failure(<p>Recipe failed, not enough beef broth!</p>);
-        }
-      },
-    },
-    {
-      pretext: <span>Stir the contents with the arrow keys.<br/></span>,
-      instruction: 'urdlurdl',
-      type: 'arrows',
-      timer: 10,
-    },
-    {
-      pretext: <span>Lower the heat on the stove to LOW.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
-      instruction: '^',
-      type: 'dial',
-      startValue: 13,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 3 && value <= 7) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed-- did not turn stove to LOW!</p>);
-        }
-      },
-    },
-    {
-      pretext: <span>Cover the pot with the lid.<br/></span>,
-      instruction: '/lid\\',
-      type: 'dial',
-      maxValue: 20,
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-POT-</span>,
-      timer: 9,
-      onTimeout: function(value) {
-        if (value >= 7 && value <= 11) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed. Failed to put lid on pot.</p>);
-        }
-      },
-    },
-    {
-      pretext: 'Let it simmer for a time. Daydream about cows again.',
-      timer: 10,
-      onTimeout: nextStep,
-    },
-    {
-      pretext: <span>Think about what you would call your very own cow.<br/></span>,
-      instruction: 'Name: ',
-      type: 'textinput',
-      timer: 6,
-      onTimeout: function(name) {
-        if (!name) {
-          this.failure(<p>Recipe failed. Failed to name cow.</p>);
-        } else {
-          recipeData.cowName = name;
-          this.nextStep();
-        }
-      },
-    },
-    {
-      pretext: 'Yes, what a good name! Tell',
-      instruction: () => recipeData.cowName,
-      posttext: 'to the beef roast sitting in the skillet.',
-      timer: 8,
-    },
-    {
-      pretext: <span>Fill up a different pot with water.<br/></span>,
-      instruction: '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~water~',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ too little &nbsp;&nbsp;&nbsp;&nbsp;^ just right &nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
-      timer: 8,
-      onComplete: () => {},
-      onTimeout: function(progress) {
-        if (progress >= 20 && progress <= 25) {
-          this.nextStep();
-        } else if (progress > 25) {
-          this.failure(<p>Recipe failed, too much water!</p>);
-        } else {
-          this.failure(<p>Recipe failed, not enough water!</p>);
-        }
-      },
-    },
-    {
-      pretext: <span>Boil the water with some masterful firebending.<br/></span>,
-      instruction: 'f',
+      pretext: <span>Spread the veggies into the pan by mashing 'v'.<br/></span>,
+      instruction: 'v',
       type: 'mash',
       mashCount: 20,
       timer: 10,
     },
     {
-      pretext: 'Add',
-      instruction: 'noodles',
-      posttext: 'to the pot.',
-      timer: 10,
-    },
-    {
-      pretext: <span>Pour out the water with the arrow keys, but keep the noodles!<br/></span>,
-      instruction: 'noodles  ~w~a~t~e~r~',
-      posttext: <span><br/>-------------------&nbsp;&nbsp;&nbsp;\_SINK_/</span>,
-      type: 'dial',
-      maxValue: 25,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 10 && value <= 14) {
+      pretext: <span>Add the <b>broth</b> and <b>marsala wine</b> to the pan.<br/></span>,
+      type: 'ingredients',
+      leftName: 'Table',
+      rightName: 'Pan',
+      ingredients: [
+        {name: 'marsala wine', key: 'm', left: true},
+        {name: 'broth', key: 'r', left: true},
+        {name: 'veggies', key: 'v', left: false},
+        {name: 'chicken', key: 'c', left: false},
+        {name: 'butter', key: 'b', left: false},
+      ],
+      timer: 8,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 5) {
           this.nextStep();
-        } else if (value > 14) {
-          this.failure(<p>Recipe failed, poured out noodles!</p>);
         } else {
-          this.failure(<p>Recipe failed, failed to pour out water.</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Toss in some',
-      instruction: 'mushrooms',
-      posttext: 'into the beef stew.',
-      timer: 9,
+      instruction: 'Stir',
+      posttext: 'in some peas into the pan.',
+      timer: 7,
     },
     {
-      pretext: <span>Pour in 1/3 cup of white wine.<br/></span>,
-      instruction: 'wiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiine',
-      posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6 &nbsp;&nbsp;&nbsp;&nbsp;^ 2/6 &nbsp;&nbsp;&nbsp;&nbsp;^ 3/6</span>,
+      pretext: <span>Add <b className="green">1 tbsp</b> of half-and-half.<br/></span>,
+      instruction: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhalf-half',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 0 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 1 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 3 tbsp</span>,
       timer: 8,
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 17 && progress <= 22) {
+        if (progress >= 15 && progress <= 21) {
           this.nextStep();
-        } else if (progress > 22) {
-          this.failure(<p>Recipe failed, too much white wine!</p>);
         } else {
-          this.failure(<p>Recipe failed, not enough white wine!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Top the noodles with your delicious concoction with',
-      instruction: 't',
-      posttext: '.',
-      timer: 6,
+      pretext: <span>Stir fry your delicious creation using the arrow keys.<br/></span>,
+      instruction: 'ududududud',
+      type: 'arrows',
+      timer: 10,
     },
     {
-      pretext: 'Wave goodbye to',
-      instruction: () => recipeData.cowName,
-      posttext: 'as you finish the meal.',
-      timer: 10,
+      pretext: <span>Take <b>everything out</b>, put it on a plate with <b>pasta</b>, and serve!<br/></span>,
+      type: 'ingredients',
+      leftName: 'Plate',
+      rightName: 'Pan',
+      ingredients: [
+        {name: 'pasta', key: 't', left: true},
+        {name: 'veggies', key: 'v', left: false},
+        {name: 'butter', key: 'b', left: false},
+        {name: 'peas', key: 'p', left: false},
+        {name: 'half-and-half', key: 'h', left: false},
+        {name: 'marsala', key: 'm', left: false},
+        {name: 'broth', key: 'r', left: false},
+        {name: 'chicken', key: 'c', left: false},
+      ],
+      timer: 8,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 8) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
   ],
 };

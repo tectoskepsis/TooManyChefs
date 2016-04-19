@@ -1,6 +1,13 @@
 var React = require('react');
 
+var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
+
+var recipeData = {
+  name: 'bready',
+  left: [],
+  right: [],
+};
 
 var nextStep = function() {
   return this.nextStep();
@@ -10,10 +17,9 @@ var CremeBrulee = {
   name: 'Crème Brûlée',
   chefName: 'Pâtissier',
   type: 'dessert',
-  difficulty: 'hard',
-  // TODO: update below
-  ingredients: ['1 cup graham crackers', '3 tbsp + 1 cup sugar', '1/3 cup butter', '32 oz cream cheese', '1 tbsp vanilla', '4 eggs'],
-  description: 'Creamy and rich, this scrumptious dessert is a classic at the dinner table.',
+  difficulty: 'medium',
+  ingredients: ['1 qt heavy cream', '1 vanilla bean', '1 cup vanilla sugar', '6 large eggs', '2 qt hot water', '1 blowtorch'],
+  description: 'A creamy custard topped with caramelized sugar, sweet enough to melt a sweetheart\'s heart.',
 
   /* A recipe is a list of json steps */
   steps: [
@@ -27,229 +33,373 @@ var CremeBrulee = {
         if (value >= 320 && value <= 330) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed, oven set to wrong temperature!</p>);
+          this.failure();
         }
       }
     },
     {
-      pretext: 'Break the graham crackers into little',
-      instruction: 'c r u m b s',
-      posttext: 'by typing the letters.',
+      pretext: <span>Grab a <b>medium saucepan</b> from the pantry.</span>,
+      type: 'ingredients',
+      leftName: 'Hand',
+      rightName: 'Pantry',
+      ingredients: [
+        {name: 'wok', key: 'w', left: false},
+        {name: 'cup', key: 'c', left: false},
+        {name: 'mug', key: 'm', left: false},
+        {name: 'skillet', key: 's', left: false},
+      ],
       timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: nextStep,
     },
     {
-      pretext: <span>Smush together the graham crackers and butter by mashing 'm'.<br/></span>,
-      instruction: 'm',
+      pretext: <span>Uh oh! Looks like the saucepan was lost in the Great Cheesecake Fire of 2016. Mash 'r' quickly to run to the store and buy another.<br/></span>,
+      instruction: 'r',
       type: 'mash',
-      mashCount: 10,
+      mashCount: 20,
       timer: 10,
     },
     {
-      pretext: <span>Pour in 3 tbsp sugar by holding 's'.<br/></span>,
-      instruction: 'sssssssssssssssssssssssssssssssssssssssssssssugar',
-      posttext: <span><br/>TBSP:&nbsp;&nbsp;&nbsp;&nbsp;^ 1&nbsp;&nbsp;&nbsp;&nbsp;^ 2&nbsp;&nbsp;&nbsp;&nbsp;^ 3&nbsp;&nbsp;&nbsp;&nbsp;^ ALL THE SUGAR</span>,
+      pretext: 'Buy a saucepan for',
+      instruction: '$14.99',
+      posttext: '.',
       timer: 10,
-      onComplete: () => {},
-      onTimeout: function(progress) {
-        if (progress >= 18 && progress <= 30) {
+    },
+    {
+      pretext: <span>Quickly bike back to the <b>kitchen</b> using the arrow keys.<br/>KITCHEN&nbsp;&nbsp;&nbsp;&nbsp;LIBRARY&nbsp;&nbsp;&nbsp;&nbsp;STORE&nbsp;&nbsp;&nbsp;&nbsp;BANK<br/></span>,
+      instruction: '<bike>',
+      type: 'dial',
+      maxValue: 15,
+      startValue: 22,
+      timer: 10,
+      onTimeout: function(value) {
+        if (value <= 4) {
           this.nextStep();
-        } else if (progress > 30) {
-          this.failure(<p>Recipe failed, too much sugar!</p>);
         } else {
-          this.failure(<p>Recipe failed, not enough sugar!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Layer the',
-      instruction: 'bottom',
-      posttext: 'of a 9-inch pan with the sugary mixture.',
-      timer: 10,
-    },
-    {
-      pretext: <span>Toss cream cheese, 1 cup sugar, and vanilla into a large bowl by tapping 't'.<br/></span>,
-      instruction: 't',
-      type: 'mash',
-      mashCount: 3,
-      timer: 7,
-    },
-    {
-      pretext: 'Equip the electric',
-      instruction: 'mixer',
-      posttext: 'for +3 AGI vs baked goods.',
-      timer: 10,
-    },
-    {
-      pretext: <span>Use the arrow keys to turn the mixer on LOW.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: <span>Put the saucepan on the stove, and set it to <b className="fireRed">HIGH</b> heat.<br/>OFF LOW - - MED - - HIGH - - - - AHHHHHH<br/></span>,
       instruction: '^',
       type: 'dial',
       timer: 10,
       onTimeout: function(value) {
-        if (value >= 4 && value <= 7) {
+        if (value >= 20 && value <= 24) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed, mixer on wrong setting!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: <span>Crack in the eggs, but not too fast.<br/></span>,
-      instruction: 'egg egg egg egg',
-      timer: 15,
+      pretext: <span>Grab the <b>vanilla bean</b> from the cupboard.</span>,
+      type: 'ingredients',
+      leftName: 'Selection',
+      rightName: 'Cupboard',
+      ingredients: [
+        {name: 'vanilla cake', key: 'c', left: false},
+        {name: 'vanilla bean', key: 'b', left: false},
+        {name: 'vanilla extract', key: 'e', left: false},
+        {name: 'vanilla ice', key: 'i', left: false},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'vanilla bean') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
-      pretext: <span>Turn the mixer off and set it aside.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
+      pretext: 'Grab the',
+      instruction: 'cream',
+      posttext: 'from the refrigerator.',
+      timer: 8,
+    },
+    {
+      pretext: <span>Mash 'x' to mix the cream and vanilla together.<br/></span>,
+      instruction: 'x',
+      type: 'mash',
+      mashCount: 10,
+      timer: 7,
+    },
+    {
+      instruction: 'Stir',
+      posttext: 'the vanilla and cream into the saucepan.',
+      timer: 8,
+    },
+    {
+      pretext: <span>Turn <b>off</b> the stove and remove the saucepan from the heat.<br/>OFF LOW - - MED - - HIGH - - - - AHHHHHH<br/></span>,
       instruction: '^',
       type: 'dial',
-      startValue: 5,
+      startValue: 21,
       timer: 10,
       onTimeout: function(value) {
         if (value <= 3) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed-- did not turn off mixer!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Taking the bowl,',
-      instruction: 'pour',
-      posttext: 'the mixture over the crust in the pan.',
-      timer: 9,
+      pretext: 'Grab a',
+      instruction: 'medium bowl',
+      posttext: 'from the pantry.',
+      timer: 8,
     },
     {
-      pretext: <span>Pat yourself on the back while the oven finishes heating.<br/></span>,
-      instruction: 'patpatpat',
-      timer: 9,
+      pretext: <span>Pour <b>1/2 cup</b> of sugar into a measuring cup.<br/></span>,
+      instruction: 'suuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuggggaaaaarrrrrrrrrrrrrrr',
+      posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6&nbsp;&nbsp;&nbsp;&nbsp;^ 2/6&nbsp;&nbsp;&nbsp;&nbsp;^ 3/6&nbsp;&nbsp;&nbsp;&nbsp;^ 4/6&nbsp;&nbsp;&nbsp;&nbsp;^ 5/6&nbsp;&nbsp;&nbsp;&nbsp;^ 6/6</span>,
+      timer: 10,
+      onComplete: () => {},
+      onTimeout: function(progress) {
+        if (progress >= 26 && progress <= 30) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
-      pretext: <span>Put the pan in the oven with the arrow keys.<br/></span>,
+      pretext: <span>Crack open 6 large eggs.<br/></span>,
+      instruction: 'egg egg egg egg egg egg',
+      timer: 15,
+    },
+    {
+      pretext: <span>Use the arrow keys to whisk the sugar and eggs together.<br/></span>,
+      instruction: 'lurdlurdlurdlurd',
+      type: 'arrows',
+      timer: 10,
+    },
+    {
+      pretext: <span>Add the cream to the mixture <b>a little at a time</b>, stirring slowly.<br/></span>,
+      type: 'mash',
+      instruction: 'c',
+      mashCount: 6,
+      timer: 20,
+    },
+    {
+      pretext: <span>Grab three <b>ramekins</b> from the pantry.</span>,
+      type: 'ingredients',
+      leftName: 'Selection',
+      rightName: 'Pantry',
+      ingredients: [
+        {name: 'ramekin', key: 'r', left: false},
+        {name: 'ramekin', key: 'k', left: false},
+        {name: 'not a ramekin', key: 'n', left: false},
+        {name: 'ramekin', key: 'm', left: false},
+        {name: 'also not a ramekin', key: 'a', left: false},
+        {name: 'definitely not a ramekin', key: 'd', left: false},
+      ],
+      timer: 9,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 3 && recipeData.left[0].name === 'ramekin' && recipeData.left[1].name === 'ramekin' && recipeData.left[2].name === 'ramekin') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Pour the mixture into the three ramekins. Careful not to overfill!<br/></span>,
+      instruction: 'poooooooooooooooooooooooooouuuuuuuuuuuuuuurrrrrrrrr',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ not enough&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;^ too much&nbsp;&nbsp;&nbsp;&nbsp;</span>,
+      timer: 10,
+      onComplete: () => {},
+      onTimeout: function(progress) {
+        if (progress >= 19 && progress <= 22) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: 'Place the ramekins into a',
+      instruction: 'large cake pan',
+      posttext: '.',
+      timer: 10,
+    },
+    {
+      pretext: <span>Pour boiling water into the pan until it fills <b>halfway</b>.<br/></span>,
+      instruction: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwater',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4</span>,
+      timer: 10,
+      onComplete: () => {},
+      onTimeout: function(progress) {
+        if (progress >= 16 && progress <= 21) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Using the arrow keys, put the pan in the oven.<br/></span>,
       instruction: '-|pan|-',
       type: 'dial',
       maxValue: 15,
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-oven-</span>,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 12) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed. Failed to put pan in oven.</p>);
-        }
-      },
-    },
-    {
-      pretext: 'Set the oven timer for',
-      instruction: '55',
-      posttext: 'minutes.',
-      timer: 10,
-    },
-    {
-      pretext: 'Twiddle your thumbs for 55 minutes.',
-      timer: 3300,
-      onStart: function() {
-        this.setTimeout(nextStep, 10000); // just wait 10 seconds
-      },
-    },
-    {
-      pretext: <span>Has it been 55 minutes yet? Tap CAPS-LOCK to turn on the oven light and check on the cheesecake.<br/></span>,
-      instruction: 'CAPSLOCK',
-      type: 'mash',
-      mashCount: 1,
-      timer: 10,
-    },
-    {
-      pretext: <span>Turn off the oven light and apologize profusely to the other chefs.<br/></span>,
-      instruction: 'CAPSLOCK',
-      type: 'mash',
-      mashCount: 1,
-      timer: 10,
-    },
-    {
-      pretext: <span>54 minutes to go... maybe we should turn up the temperature to 400°F to speed things up.<br/></span>,
-      instruction: 325,
-      type: 'counter',
-      goalValue: 400,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 395 && value <= 405) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed, oven set to wrong temperature.</p>);
-        }
-      }
-    },
-    {
-      pretext: <span>What the hell, make that <span className="fireRed">1000°F</span><br/></span>,
-      instruction: 400,
-      type: 'counter',
-      stepValue: 50,
-      goalValue: 1000,
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 995) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed, oven set to wrong temperature.</p>);
-        }
-      }
-    },
-    {
-      pretext: <span>There! Now it should only take-- oh god did something catch on <span className="fireRed">fire</span>!<br/></span>,
-      instruction: 'yes',
-      timer: 6,
-    },
-    {
-      pretext: <span>Take it out you fool!<br/></span>,
-      instruction: '-|pan|-',
-      type: 'dial',
-      maxValue: 15,
-      startValue: 15,
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-oven-</span>,
       timer: 5,
       onTimeout: function(value) {
-        if (value <= 8) {
+        if (value >= 10) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed, failed to remove pan from oven.</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Equip the fire',
-      instruction: 'extinguisher',
-      posttext: 'for +3 against the element fire.',
+      pretext: 'Sit back and wait for it to bake.',
+      timer: 10,
+      onTimeout: nextStep,
+    },
+    {
+      pretext: 'While you\'re bored waiting, brush up on your pronunciation of',
+      instruction: 'hors d\'oeuvre',
+      posttext: '.',
       timer: 10,
     },
     {
-      pretext: <span>Mash 'w' to put out the fire.<br/></span>,
-      instruction: 'w',
-      type: 'mash',
-      timer: 8,
-    },
-    {
-      pretext: 'Turn',
-      instruction: 'off',
-      posttext: 'the oven before your friends catch fire.',
-      timer: 8,
-    },
-    {
-      pretext: <span>Taste a little bit of the cheesecake.<br/></span>,
-      instruction: 'yum?',
-      timer: 8,
-    },
-    {
-      pretext: <span>Give your beautiful mess a name.<br/></span>,
-      instruction: 'We\'ll call it: ',
+      pretext: <span>Name the brulees for your enjoyment.<br/></span>,
+      instruction: 'Name: ',
       type: 'textinput',
       timer: 6,
       onTimeout: function(name) {
         if (!name) {
-          this.failure(<p>Recipe failed. Failed to name cheesecake.</p>);
+          this.failure();
         } else {
-          Cheesecake.name = Cheesecake.name.concat(' (' + name + ')');
+          recipeData.name = name;
           this.nextStep();
         }
       },
+    },
+    {
+      pretext: () => <span>Take out <b>{recipeData.name}</b> and place them into the <b className="darkBlue">Super Power Freezer</b>.</span>,
+      type: 'ingredients',
+      leftName: 'Tray',
+      rightName: 'Super Power Freezer',
+      ingredients: [
+        {name: 'ramekins', key: 'r', left: true},
+      ],
+      timer: 7,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 1) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: 'Wait a bit for it to freeze; then take it out to',
+      instruction: 'thaw',
+      posttext: <span>.<br/><br/>&nbsp;&nbsp;&nbsp;<ColorChange toColor="#659cf3">&#9679;</ColorChange> frozen</span>,
+      timer: 30,
+      onComplete: function(progress, time) {
+        if (time <= 20) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Bring out <b>brown sugar</b> from the cupboard.</span>,
+      type: 'ingredients',
+      leftName: 'Hand',
+      rightName: 'Cupboard',
+      ingredients: [
+        {name: 'white sugar', key: 'w', left: false},
+        {name: 'yellow sugar', key: 'y', left: false},
+        {name: 'brown sugar', key: 'b', left: false},
+        {name: 'race-agnostic sugar', key: 'r', left: false},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'brown sugar') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      instruction: 'Spread',
+      posttext: 'the brown sugar across the dessert.',
+      timer: 10,
+    },
+    {
+      pretext: 'Grab a',
+      instruction: 'blowtorch',
+      posttext: '(how exciting!)',
+      timer: 10,
+    },
+    {
+      pretext: <span>Plug the torch into the wall using the arrow keys.<br/><br/>|OUTLET|</span>,
+      instruction: '<=plug=',
+      type: 'dial',
+      startValue: 10,
+      onTimeout: function(value) {
+        if (value <= 2) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+      timer: 10,
+    },
+    {
+      pretext: <span>Tap <b>CAPS-LOCK</b> to turn on the blowtorch.<br/></span>,
+      instruction: 'CAPSLOCK',
+      type: 'mash',
+      mashCount: 1,
+      timer: 8,
+    },
+    {
+      pretext: <span>Melt the sugar by passing the fire <b className="darkBlue">above the creme brulees</b>. Hope to god you don't start another fire.<br/><br/></span>,
+      instruction: '=FIRE>',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\cb1/&nbsp;&nbsp;&nbsp;&nbsp;\cb2/&nbsp;&nbsp;&nbsp;&nbsp;\cb3/&nbsp;&nbsp;&nbsp;&nbsp;done&nbsp;&nbsp;&nbsp;&nbsp;too far&nbsp;&nbsp;&nbsp;&nbsp;PLEASE STOP</span>,
+      type: 'dial',
+      timer: 10,
+      onTimeout: function(value) {
+        if (value >= 22 && value <= 26) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Turn off the blowtorch and breathe a sigh of relief.<br/></span>,
+      instruction: 'CAPSLOCK',
+      type: 'mash',
+      mashCount: 1,
+      timer: 7,
     },
   ],
 };

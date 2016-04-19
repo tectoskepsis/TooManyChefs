@@ -38,9 +38,12 @@ module.exports = [
     locked: true,
     rating: 5,
     recipes: [
-      require('./Bruschetta.js'),
+      // TODO: get rid of oatmeal
+      //require('./Bruschetta.js'),
+      require('./Oatmeal.js'),
       require('./ChickenMarsala.js'),
-      require('./FrenchOnionSoup.js'),
+      require('./Oatmeal.js'),
+      //require('./Bouillabaisse.js'),
       require('./CremeBrulee.js'),
     ],
   },
