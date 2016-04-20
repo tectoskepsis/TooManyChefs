@@ -45,6 +45,7 @@ var ChefBox = React.createClass({
       lives: 3,
       rescue: 0, // how many times been rescued
       gameOver: false, // true if lost or won
+      justFailed: false,
     };
   },
 
@@ -96,7 +97,10 @@ var ChefBox = React.createClass({
   },
 
   nextStep: function(postFail, completeAudio) {
-    if (this.state.gameOver) {
+    if (postFail) {
+      this.setState({justFailed: false});
+    }
+    if (this.state.gameOver || (!postFail && this.state.justFailed)) {
       return;
     }
 
@@ -173,6 +177,7 @@ var ChefBox = React.createClass({
       content: null,
       backgroundClass: 'failure',
       lives: livesLeft,
+      justFailed: true,
     });
 
     // Wait 250ms before updating for fade effect
@@ -204,6 +209,7 @@ var ChefBox = React.createClass({
       gameOver: true,
       content: null,
       popups: [],
+      justFailed: false,
     });
     this.props.onFailure(false);
 

@@ -192,6 +192,7 @@ var Game = React.createClass({
 
     if (gameOver) {
       // Send Google Analytics event
+      Audio.stopAllSounds();
       ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
       Audio.playSE('failure');
       this.setState({gameOver: true});

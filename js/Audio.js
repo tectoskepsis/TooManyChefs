@@ -75,6 +75,7 @@ var Audio = {
 
   stopAllSounds: function() {
     _.forEach(this.playing, (sound) => sound.stop());
+    this.playing = {};
   },
 
   setVolume: function(vol) {
