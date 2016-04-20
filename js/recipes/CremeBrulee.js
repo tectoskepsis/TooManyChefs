@@ -176,6 +176,33 @@ var CremeBrulee = {
       },
     },
     {
+      pretext: <span>Put <b>all your eggs</b> in one basket.</span>,
+      type: 'ingredients',
+      leftName: 'Carton',
+      rightName: 'Basket',
+      ingredients: [
+        {name: 'egg', key: 'b', left: true},
+        {name: 'egg', key: 'a', left: true},
+        {name: 'egg', key: 's', left: true},
+        {name: 'egg', key: 'k', left: true},
+        {name: 'egg', key: 'e', left: true},
+        {name: 'egg', key: 't', left: true},
+      ],
+      timer: 10,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.right.length === 6) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+
+    {
       pretext: <span>Crack open 6 large eggs.<br/></span>,
       instruction: 'egg egg egg egg egg egg',
       timer: 15,

@@ -10,7 +10,7 @@ const GOOD_VOICES = ['excellent', 'welldone', 'fantastic', 'brilliant', 'remarka
 const BAD_VOICES = ['disgraceful', 'no', 'oops', 'pathetic', 'sloppy', 'tsktsk', 'shoddy'];
 
 const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery1', 'cutlery2', 'frying', 'grinder', 'mixer', 'pouring', 'sink', 'slice', 'eggcrack', 'eggbeat1', 'eggbeat2', 'microwave', 'phone1', 'phone2', 'phone3', 'money'];
-const VOICES = ['horsdoeuvre', 'excellent', 'welldone', 'fantastic', 'brilliant', 'remarkable', 'terrific', 'sensational', 'sublime', 'disgraceful', 'no', 'oops', 'failure', 'newrecord', 'pathetic', 'sloppy', 'tsktsk', 'shoddy', 'success', 'wonderful', 'marvelous', 'firstclass', 'sterling', 'superb', 'ready', 'begin', 'start', 'staff', 'loading', 'help', 'solo', 'party', 'yum', 'ouch', 'delicious'];
+const VOICES = ['horsdoeuvre', 'excellent', 'welldone', 'fantastic', 'brilliant', 'remarkable', 'terrific', 'sensational', 'sublime', 'disgraceful', 'no', 'oops', 'failure', 'newrecord', 'pathetic', 'sloppy', 'tsktsk', 'shoddy', 'success', 'wonderful', 'marvelous', 'firstclass', 'sterling', 'superb', 'ready', 'begin', 'start', 'staff', 'loading', 'help', 'solo', 'party', 'yum', 'ouch', 'delicious', 'halibut'];
 
 function genManifest(path, se) {
   return {id: se, src: path + se + '.mp3'};

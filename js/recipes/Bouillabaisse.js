@@ -1,5 +1,7 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
+var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
@@ -85,13 +87,6 @@ var Bouillabaisse = {
       timer: 9,
     },
     {
-      pretext: <span>Mash 't' to sprinkle garlic, cayenne, and salt into the processor.<br/></span>,
-      instruction: 't',
-      type: 'mash',
-      mashCount: 10,
-      timer: 10,
-    },
-    {
       pretext: <span>Press the arrow keys to process the food into crouton chunks.<br/></span>,
       instruction: 'urrullurrd',
       type: 'arrows',
@@ -137,142 +132,154 @@ var Bouillabaisse = {
         }
       },
     },
-
-    // TODO: steps below
     {
-      pretext: <span>Next, cut up the onions like they threatened your family.<br/></span>,
-      instruction: 'c',
-      type: 'mash',
-      mashCount: 10,
+      pretext: 'Put',
+      instruction: () => recipeData.name,
+      posttext: 'into a pot.',
       timer: 10,
     },
     {
-      pretext: 'Take a few seconds to mourn the onions for their beautiful sacrifice.',
-      timer: 10,
-      onTimeout: nextStep,
-    },
-    {
-      pretext: 'Excellent work! Onto the meat. Defrost the chicken by running it under',
-      instruction: 'warm',
-      posttext: 'water.',
-      timer: 10,
-    },
-    {
-      pretext: 'Turn',
-      instruction: 'off',
-      posttext: 'the faucet to support the environment. Go green!',
-      timer: 8,
-    },
-    {
-      pretext: () => <span>Cut {recipeData.chickenName} up into little pieces.<br/></span>,
-      instruction: () => recipeData.chickenName.split('').join(' '),
-      timer: 10,
-    },
-    {
-      pretext: <span>All done! It's time to start cooking. Pour some oil, but not too much, into a wok.<br/></span>,
-      instruction: 'ooooooooooooooooooooooooooooooooooooooooooooooooil',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too little&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
-      timer: 10,
-      onComplete: () => {},
-      onTimeout: function(progress) {
-        if (progress >= 18 && progress <= 30) {
+      pretext: () => <span>Wait for <ColorChange fromColor="#659cf3" toColor="#ff0500">{recipeData.name}</ColorChange> the lobster to turn <b className="fireRed">red</b>; then</span>,
+      instruction: 'take',
+      posttext: 'it out.',
+      timer: 30,
+      onComplete: function(progress, time) {
+        if (time <= 20) {
           this.nextStep();
-        } else if (progress > 30) {
-          this.failure(<p>Recipe failed. Too much oil!</p>);
         } else {
-          this.failure(<p>Recipe failed. Too little oil!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Check your Facebook status while the oil heats up.',
-      timer: 10,
-      onTimeout: nextStep,
-    },
-    {
-      pretext: 'Toss in the onions to',
-      instruction: 'soak up',
-      posttext: 'the oily goodness.',
-      timer: 10,
-    },
-    {
-      pretext: <span>Crack some eggs into a bowl using your friend's thick skull.<br/></span>,
-      instruction: 'crack crack',
-      timer: 10,
-    },
-    {
-      pretext: <span>Beat some sense into the eggs by mashing 'b'.<br/></span>,
-      instruction: 'b',
+      pretext: () => <span>Mash 'c' to chop {recipeData.name} into nice, 1 inch pieces.<br/></span>,
+      instruction: 'c',
       type: 'mash',
       timer: 10,
     },
     {
-      pretext: <span>Pour the eggs into the wok with the arrow keys.<br/></span>,
-      instruction: '\\eggs\\',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|_wok_|</span>,
+      pretext: 'Drizzle the lobster with',
+      instruction: 'olive oil & vinaigrette',
+      posttext: '. Yum!',
+      timer: 12,
+      onComplete: function() {
+        this.nextStep(false, 'yum');
+      },
+    },
+    {
+      pretext: <span>Set the heat to <b className="fireRed">MEDIUM-HIGH</b>.<br/>OFF LOW - - - MED - - - HIGH - - - - WAY TOO HIGH<br/></span>,
+      instruction: '^',
       type: 'dial',
+      timer: 10,
       onTimeout: function(value) {
-        if (value >= 10 && value <= 14) {
+        if (value >= 18 && value <= 22) {
           this.nextStep();
         } else {
-          this.failure(<p>Recipe failed. Failed to pour eggs in wok.</p>);
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: 'Add the',
+      instruction: 'clams',
+      posttext: 'to the pot.',
+      timer: 8,
+    },
+    {
+      pretext: 'Drop some',
+      instruction: 'monkfish',
+      posttext: 'into the pot.',
+      timer: 7,
+    },
+    {
+      pretext: 'Take a break and watch your scrumptious aquarium evolve into a delicious stew.',
+      timer: 10,
+      onTimeout: nextStep,
+    },
+    {
+      pretext: <span>Try to say halibut three times fast:<br/></span>,
+      instruction: 'halibuthalibuthalibut',
+      timer: 10,
+      onProgress: function(value) {
+        if (value % 7 === 0) {
+          Audio.playSE('halibut');
+        }
+      },
+    },
+    {
+      pretext: <span>While waiting for the fish to cook, cut up some baguettes with 'b'.<br/></span>,
+      instruction: 'b',
+      type: 'mash',
+      mashCount: 20,
+      timer: 10,
+    },
+    {
+      pretext: <span>Pour a glass of merlot to go with the meal.<br/></span>,
+      instruction: 'meeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrlooooooooooooooot',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ not enough&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;^ overflow&nbsp;&nbsp;&nbsp;&nbsp;alcoholic</span>,
+      timer: 10,
+      onHoldSound: 'pouring',
+      onComplete: () => {},
+      onTimeout: function(progress) {
+        if (progress >= 20 && progress <= 27) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>Stir up your fishy concoction.<br/></span>,
+      instruction: 'udududud',
+      type: 'arrows',
+      timer: 10,
+    },
+    {
+      pretext: <span>Taste a spoonful of the soup to test for flavor with the arrow keys.<br/>&nbsp;&nbsp;&nbsp;(MOUTH)</span>,
+      instruction: '(spoon)==',
+      type: 'dial',
+      startValue: 15,
+      onTimeout: function(value) {
+        if (value <= 3) {
+          this.nextStep(false, 'delicious');
+        } else {
+          this.failure();
         }
       },
       timer: 9,
     },
     {
-      pretext: 'Add in the carrots, and your best friend',
-      instruction: () => recipeData.chickenName,
-      posttext: '(the chicken).',
+      pretext: <span>Not enough salt! Add <b>a tiny bit of seasoning</b>, but not too much!<br/></span>,
+      instruction: 'NaaaaaaaaaaaaaaaaaaaaaaClllllllllllllllllllllllllll',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;^ much salt&nbsp;&nbsp;&nbsp;&nbsp;^ so spice&nbsp;&nbsp;&nbsp;&nbsp;^ wow</span>,
       timer: 10,
-    },
-    {
-      pretext: 'Dump in all the',
-      instruction: 'riiiiiiccccceeeeeeeeeeee',
-      timer: 10,
-    },
-    {
-      pretext: <span>Toss the wok to mix everything up every so often by pressing t (but not too often!)<br/></span>,
-      instruction: 't',
-      type: 'mash',
-      mashCount: 5,
-      timer: 30,
-    },
-    {
-      pretext: 'Pour in some soy sauce by holding p.',
-      instruction: 'ppppppppppppppppppppppppppppppppppppppppppppppppppp',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too little&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ just right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ too much</span>,
-      timer: 10,
+      onHoldSound: 'pouring',
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 18 && progress <= 30) {
+        if (progress >= 5 && progress <= 11) {
           this.nextStep();
-        } else if (progress > 30) {
-          this.failure(<p>Recipe failed. Too much soy sauce!</p>);
         } else {
-          this.failure(<p>Recipe failed. Not enough soy sauce!</p>);
+          this.failure();
         }
       },
     },
     {
-      pretext: 'Stir it up one more time with',
-      instruction: 's',
-      posttext: '.',
-      timer: 7,
+      pretext: 'Add a',
+      instruction: 'spoonful',
+      posttext: 'of milk to your soup to make it a bit more creamy.',
+      timer: 8,
     },
     {
-      pretext: <span>Use the arrow keys to turn off the stove.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
-      instruction: '^',
-      type: 'dial',
-      startValue: 21,
+      pretext: <span>Oh no! You spilt some milk on the ground. Mash 'c' to cry over the spilt milk.<br/></span>,
+      instruction: 'c',
+      type: 'mash',
+      mashCount: 10,
+      timer: 8,
+    },
+    {
+      pretext: <span>Pull yourself together! The soup is ready. Scoop into bowls and serve!<br/></span>,
+      instruction: 'bowlbowlbowlbowl',
       timer: 10,
-      onTimeout: function(value) {
-        if (value <= 3) {
-          this.nextStep();
-        } else {
-          this.failure(<p>Recipe failed. Forgot to turn off stove!</p>);
-        }
-      },
     },
   ],
 };

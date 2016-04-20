@@ -57,13 +57,13 @@ var ChickenMarsala = {
     {
       instruction: 'Place',
       posttext: 'the butter into the microwave.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: 'Microwave the butter for',
       instruction: '45',
       posttext: 'seconds.',
-      timer: 8,
+      timer: 6,
       onComplete: function() {
         this.nextStep(false, 'microwave');
       },
@@ -133,7 +133,7 @@ var ChickenMarsala = {
       posttext: <span><br/>----------SIE|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|EVE------------</span>,
       timer: 10,
       onTimeout: function(value) {
-        if (value >= 9 && value <= 12) {
+        if (value >= 14 && value <= 17) {
           this.nextStep();
         } else {
           this.failure();
