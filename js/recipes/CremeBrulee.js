@@ -12,7 +12,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var CremeBrulee = {
   name: 'Crème Brûlée',

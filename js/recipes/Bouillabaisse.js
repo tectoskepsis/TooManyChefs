@@ -10,10 +10,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
-var failure = function() {
-  return this.failure();
-}
+};
 
 var Bouillabaisse = {
   name: 'Bouillabaisse',
@@ -121,7 +118,9 @@ var Bouillabaisse = {
       pretext: <span>Wait for the pot to boil. <b className="fireRed">Don't stare</b> at it or it won't boil!<br/></span>,
       instruction: 'stare',
       timer: 8,
-      onComplete: failure,
+      onComplete: function() {
+        this.failure();
+      },
       onTimeout: nextStep,
     },
     {

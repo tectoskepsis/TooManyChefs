@@ -322,7 +322,7 @@ var Game = React.createClass({
         <p>Follow the instructions, step by step, to complete your recipe!</p>
         <br/>
 
-        <p>You may need to <Inst reset onComplete={_.noop}>type a command</Inst>,<br/> move a dial with the arrow keys, <br/> and more.</p>
+        <p>You may need to <Inst reset onComplete={Audio.playGoodVoice}>type a command</Inst>,<br/> move a dial with the arrow keys, <br/> and more.</p>
         <br/>
 
         <p>Watch your health {heartFull}{heartFull}{heartEmpty}<br/> and complete each step before the {timer} timer runs out!</p>
@@ -346,8 +346,8 @@ var Game = React.createClass({
         <br/><br/>
         <h4>Credits</h4>
         <p>
-          <b>Chef de cuisine</b> (designer): Ivan Wang<br/>
-          <b>Sous-chef</b> (programmer): Ivan Wang<br/>
+          <b>Chef de cuisine</b>: Ivan Wang (design, programming)<br/>
+          <b>Sous-chef</b>: James Wu (design)<br/>
           <b>Culinary consultant</b>: Anshu Bansal<br/>
           <b>Café jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena
         </p>
@@ -443,6 +443,10 @@ var Game = React.createClass({
           {this.state.content}
           <CapsLock />
         </TransitionGroup>
+
+        <div className="visible-xs-block alert alert-danger" role="alert">
+          Sorry! This restaurant is incompatible with mobile devices. Please come back on a desktop web browser.
+        </div>
       </div>
     );
   },

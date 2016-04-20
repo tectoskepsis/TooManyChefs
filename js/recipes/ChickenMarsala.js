@@ -11,7 +11,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var ChickenMarsala = {
   name: 'Chicken Marsala',
