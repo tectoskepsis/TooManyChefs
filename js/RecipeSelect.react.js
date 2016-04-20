@@ -60,19 +60,20 @@ var RecipeSelect = React.createClass({
       var sec = time % 60;
       return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
     };
+    var mealLocked = meal.locked && (i === 0 || !_.get(this.props.saveData, [Recipes[i-1].key, 'completed'], false));
 
     return (
-      <div className={cx('meal', 'padTop', {locked: meal.locked})}>
+      <div className={cx('meal', 'padTop', {locked: mealLocked})}>
         <h4>{meal.name}</h4>
         <p>
           Difficulty: {_.range(5).map((i) => i < meal.rating ? fullStar(i) : emptyStar(i))}
         </p>
-        {meal.locked ? <h4 className="fireRed">Coming Soon</h4> :
+        {mealLocked ? <h4 className="fireRed">Locked</h4> :
          mealData.completed ? <h4 className="green">Completed!</h4> : <br/>}
         {mealData.bestTime && <p className="green">Best Time: {renderTime(mealData.bestTime)}</p>}
 
         {meal.recipes.map((r, i) => (
-          <div key={i}>{meal.locked ? '??????' : r.name} ({r.type})</div>
+          <div key={i}>{mealLocked ? '??????' : r.name} ({r.type})</div>
         ))}
 
         <br/>
@@ -81,7 +82,7 @@ var RecipeSelect = React.createClass({
   },
 
   render: function() {
-    var locked = Recipes[this.state.value].locked;
+    var locked = Recipes[this.state.value].locked && (this.state.value === 0 || !_.get(this.props.saveData, [Recipes[this.state.value - 1].key, 'completed'], false));
 
     return (
       <div>

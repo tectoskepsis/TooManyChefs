@@ -110,6 +110,12 @@ var Game = React.createClass({
         singlePlayer: singlePlayer,
         fadeTitle: false,
       }), 350);
+
+      if (singlePlayer) {
+        document.title = 'Not Enough Chefs';
+      } else {
+        document.title = 'Too Many Chefs';
+      }
     }
 
     if (this.state.singlePlayer === null) {
