@@ -164,8 +164,7 @@ var FishCurry = {
       posttext: '.',
       timer: 8,
       onComplete: function() {
-        Audio.playSE('frying');
-        this.nextStep();
+        this.nextStep(false, 'frying');
       },
     },
     {

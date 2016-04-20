@@ -8,6 +8,7 @@ var _ = require('lodash');
 var chroma = require('chroma-js');
 var cx = require('classnames');
 
+var Audio = require('./Audio.js');
 var CapsLock = require('./CapsLock.react.js');
 var Chef = require('./Chef.js');
 var Inst = require('./Instruction.react.js');
@@ -36,7 +37,7 @@ var ChefBox = React.createClass({
       step: -1,
       startTime: 10,
       timer: 0,
-      onTimeout: this.nextStep,
+      onTimeout: _.partial(this.nextStep, true),
       progress: 0,
       backgroundClass: '',
       content: null,
@@ -94,7 +95,7 @@ var ChefBox = React.createClass({
     }, 250);
   },
 
-  nextStep: function(postFail) {
+  nextStep: function(postFail, completeAudio) {
     if (this.state.gameOver) {
       return;
     }
@@ -103,6 +104,12 @@ var ChefBox = React.createClass({
     this.clearInterval(this.timerInterval);
     if (!postFail) {
       this.setState({backgroundClass: 'success'});
+      // Play SE
+      if (completeAudio) {
+        Audio.playSE(completeAudio);
+      } else {
+        Audio.playGoodVoice();
+      }
     }
 
     // Completed recipe
@@ -159,6 +166,7 @@ var ChefBox = React.createClass({
     if (this.state.lives === 0) {
       return;
     }
+    Audio.playBadVoice();
 
     var livesLeft = this.state.lives - 1;
     this.setState({

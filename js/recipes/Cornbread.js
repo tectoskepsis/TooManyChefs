@@ -1,6 +1,5 @@
 var React = require('react');
 
-var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -78,8 +77,7 @@ var Cornbread = {
       posttext: '.',
       timer: 8,
       onComplete: function() {
-        Audio.playSE('eggcrack');
-        this.nextStep();
+        this.nextStep(false, 'eggcrack');
       },
     },
     {

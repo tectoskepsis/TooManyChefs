@@ -3,13 +3,20 @@ var _ = require('lodash');
 var Sound = createjs.Sound;
 
 const AUDIO_PATH = './audio/sounds/';
+const VOICE_PATH = './audio/sounds/voice/';
 const BGM = './audio/Fortaleza.mp3';
 const CLICKS = ['click1', 'click2', 'click3'];
-const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery1', 'cutlery2', 'frying', 'grinder', 'mixer', 'pouring', 'sink', 'slice', 'eggcrack', 'eggbeat1', 'eggbeat2', 'microwave', 'phone1', 'phone2', 'phone3', 'money', 'horsdoeuvre'];
+const GOOD_VOICES = ['excellent', 'welldone', 'fantastic', 'brilliant', 'remarkable', 'terrific', 'sensational', 'sublime', 'wonderful', 'marvelous', 'firstclass', 'sterling', 'superb'];
+const BAD_VOICES = ['disgraceful', 'no', 'oops', 'pathetic', 'sloppy', 'tsktsk', 'shoddy'];
 
-var soundManifest = SOUNDS.map((se) => {
-  return {id: se, src: AUDIO_PATH + se + '.mp3'};
-});
+const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery1', 'cutlery2', 'frying', 'grinder', 'mixer', 'pouring', 'sink', 'slice', 'eggcrack', 'eggbeat1', 'eggbeat2', 'microwave', 'phone1', 'phone2', 'phone3', 'money'];
+const VOICES = ['horsdoeuvre', 'excellent', 'welldone', 'fantastic', 'brilliant', 'remarkable', 'terrific', 'sensational', 'sublime', 'disgraceful', 'no', 'oops', 'failure', 'newrecord', 'pathetic', 'sloppy', 'tsktsk', 'shoddy', 'success', 'wonderful', 'marvelous', 'firstclass', 'sterling', 'superb', 'ready', 'begin', 'start', 'staff', 'loading', 'help', 'solo', 'party'];
+
+function genManifest(path, se) {
+  return {id: se, src: path + se + '.mp3'};
+}
+var soundManifest = SOUNDS.map(_.partial(genManifest, AUDIO_PATH))
+            .concat(VOICES.map(_.partial(genManifest, VOICE_PATH)));
 soundManifest.push({id: 'bgm', src: BGM});
 
 var Audio = {
@@ -35,6 +42,14 @@ var Audio = {
   playSE: function(sound, opt) {
     var soundEffect = _.isArray(sound) ? _.sample(sound) : sound;
     this.playing[soundEffect] = Sound.play(soundEffect, opt);
+  },
+
+  playGoodVoice: function() {
+    Sound.play(_.sample(GOOD_VOICES));
+  },
+
+  playBadVoice: function() {
+    Sound.play(_.sample(BAD_VOICES));
   },
 
   unpauseSE: function(sound, opt) {

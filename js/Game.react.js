@@ -56,18 +56,21 @@ var Game = React.createClass({
         renderContent = this.renderTitle;
         break;
       case 'help':
+        Audio.playSE('help');
         renderContent = this.renderHelp;
         break;
       case 'menu':
         renderContent = this.renderRecipeMenu;
         break;
       case 'credits':
+        Audio.playSE('staff');
         renderContent = this.renderCredits;
         break;
       case 'options':
         renderContent = this.renderOptions;
         break;
       case 'loading':
+        this.setTimeout(() => Audio.playSE('loading'), delay);
         renderContent = this.renderLoading;
         break;
     }
@@ -135,6 +138,7 @@ var Game = React.createClass({
 
     // Are all chefs ready to begin?
     if (stillAlive === 4) {
+      Audio.playSE(['ready', 'begin']);
       this.setState({startTime: new Date().getTime()});
       for (var i = 0; i < 4; i++) {
         var chef = this.refs['chef' + i];
@@ -180,6 +184,7 @@ var Game = React.createClass({
     if (gameOver) {
       // Send Google Analytics event
       ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
+      Audio.playSE('failure');
       this.setState({gameOver: true});
     }
   },
@@ -231,6 +236,7 @@ var Game = React.createClass({
   },
 
   onRenderMode: function() {
+    Audio.playSE('start');
     if (this.state.singlePlayer !== null) {
       this.setStateDelay('menu');
     } else {
@@ -247,7 +253,7 @@ var Game = React.createClass({
         <p>Type <Inst onComplete={this.onRenderMode}>start</Inst> to begin</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'options')}>options</Inst> for restaurant settings</p>
-        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>credits</Inst> for culinary staff</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>staff</Inst> for culinary credits</p>
       </div>
     );
   },
@@ -373,6 +379,12 @@ var Game = React.createClass({
       var sec = time % 60;
       return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
     };
+
+    if (newRecord) {
+      Audio.playSE('newrecord');
+    } else {
+      Audio.playSE('success');
+    }
 
     return (
       <div className="report center">

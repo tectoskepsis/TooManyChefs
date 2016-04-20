@@ -28,8 +28,7 @@ var CrabCakes = {
       posttext: '.',
       timer: 8,
       onComplete: function() {
-        Audio.playSE('eggcrack');
-        this.nextStep();
+        this.nextStep(false, 'eggcrack');
       },
     },
     {

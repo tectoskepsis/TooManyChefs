@@ -23,7 +23,7 @@ const LOADING_QUOTES = [
   {quote: <span>Be less curious about <span className="green">people</span><br/>and more curious about <span className="goldenBrown">food</span>.</span>, source: 'Marie Curie'},
   {quote: <span>Do not tell <span className="green">secret recipes</span> to those whose faith and silence you have not already tested.</span>, source: 'Queen Elizabeth I'},
   {quote: <span>A <span className="darkBlue">single grain of rice</span> can tip the scale.</span>, source: 'The Emperor of China, Mulan'},
-  {quote: <span><span className="darkBlue">The truth.</span> It is a beautiful and terrible thing, and should therefore be treated with great caution.</span>, source: 'Albus Dumbledore, J. K. Rowling'},
+  {quote: <span><span className="darkBlue">The oven.</span> It is a beautiful and terrible thing, and should therefore be treated with great caution.</span>, source: 'Albus Dumbledore, J. K. Rowling'},
   {quote: <span>Food is the only force capable of<br/>transforming an <span className="fireRed">enemy</span> into <span className="green">friend</span>.</span>, source: 'Martin Luther King, Jr.'},
 ];
 

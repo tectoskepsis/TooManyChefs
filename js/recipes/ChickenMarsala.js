@@ -65,8 +65,7 @@ var ChickenMarsala = {
       posttext: 'seconds.',
       timer: 8,
       onComplete: function() {
-        Audio.playSE('microwave');
-        this.nextStep();
+        this.nextStep(false, 'microwave');
       },
     },
     {
@@ -104,9 +103,7 @@ var ChickenMarsala = {
         {name: 'finger', key: 'f', left: true},
       ],
       timer: 6,
-      onStart: function() {
-        Audio.playSE('sink', {loop: 3});
-      },
+      onStart: () => Audio.playSE('sink', {loop: 3}),
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;

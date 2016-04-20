@@ -69,8 +69,7 @@ var CremeBrulee = {
       posttext: '.',
       timer: 10,
       onComplete: function() {
-        Audio.playSE('money');
-        this.nextStep();
+        this.nextStep(false, 'money');
       },
     },
     {
@@ -287,8 +286,7 @@ var CremeBrulee = {
       posttext: '.',
       timer: 10,
       onComplete: function() {
-        Audio.playSE('horsdoeuvre');
-        this.nextStep();
+        this.nextStep(false, 'horsdoeuvre');
       },
     },
     {
