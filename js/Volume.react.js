@@ -11,9 +11,20 @@ var Audio = require('./Audio.js');
 var Volume = React.createClass({
   mixins: [KeyboardMixin],
 
+  propTypes: {
+    init: React.PropTypes.number,
+    onVolumeChange: React.PropTypes.func.isRequired,
+  },
+
+  getDefaultProps: function() {
+    return {
+      init: 80,
+    };
+  },
+
   getInitialState: function() {
     return {
-      volume: 80,
+      volume: this.props.init,
     };
   },
 
@@ -26,12 +37,14 @@ var Volume = React.createClass({
       this.setState({volume: newVolume});
       Audio.setVolume(newVolume / 100);
       Audio.playRandomClick();
+      this.props.onVolumeChange(newVolume);
     } else if (keyCode === 39 && this.state.volume < 100) {
       // right arrow pressed
       newVolume = this.state.volume + 1;
       this.setState({volume: newVolume});
       Audio.setVolume(newVolume / 100);
       Audio.playRandomClick();
+      this.props.onVolumeChange(newVolume);
     }
   },
 

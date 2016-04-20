@@ -3,11 +3,16 @@ var React = require('react');
 var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
-  chickenName: 'alfred',
+  name: 'jimmy',
+  left: [],
+  right: [],
 };
 
 var nextStep = function() {
   return this.nextStep();
+}
+var failure = function() {
+  return this.failure();
 }
 
 var Bouillabaisse = {
@@ -18,29 +23,123 @@ var Bouillabaisse = {
   ingredients: ['3 tbsp virgin oil', '2 leeks', '1 onion', '4 garlic cloves', '2 tomatoes', 'one 2-lb live lobster', '2 dozen littleneck clams', '1 lb monkfish', '1 lb red snapper fillet', '1 lb halibut fillet'],
   description: 'A diverse fish stew, as savory as it is unpronounceable.',
 
-  // TODO: steps below
-
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: 'Type',
-      instruction: 'g',
-      posttext: 'to grab a cutting board from the kitchen cabinet.',
+      pretext: 'Grab a',
+      instruction: 'large skillet',
+      posttext: 'from the pantry.',
       timer: 10,
     },
     {
-      pretext: 'Equip a',
-      instruction: 'knife',
-      posttext: 'for +3 ATK vs vegetables.',
-      timer: 12,
+      pretext: <span>Put <b className="green">3 tbsp</b> of olive oil (but <b>no more</b>) into the pan.<br/></span>,
+      instruction: 'oooooooooo',
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Key: <span className="darkBlue">oo</span> = <span className="green">1 tbsp</span></b></span>,
+      timer: 8,
+      onComplete: () => {},
+      onTimeout: function(progress) {
+        if (progress >= 5 && progress <= 7) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
     },
     {
-      pretext: <span>Dice up the carrots into little cubes by mashing 'd'.<br/></span>,
-      instruction: 'd',
+      pretext: <span>Turn on the stove to <b className="fireRed">MED</b> heat.<br/>OFF LOW - - MED - - HIGH - - - - TOO HIGH<br/></span>,
+      instruction: '^',
+      type: 'dial',
+      timer: 10,
+      onTimeout: function(value) {
+        if (value >= 11 && value <= 15) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>While it heats up, grab a <b>food processor</b> from the cupboard to make the croutons.</span>,
+      type: 'ingredients',
+      leftName: 'Table',
+      rightName: 'Cupboard',
+      ingredients: [
+        {name: 'food processor', key: 'r', left: false},
+        {name: 'computer processor', key: 'c', left: false},
+        {name: 'word processor', key: 'w', left: false},
+        {name: 'firewood processor', key: 'f', left: false},
+      ],
+      timer: 7,
+      onProgress: function(left, right) {
+        recipeData.left = left;
+        recipeData.right = right;
+      },
+      onTimeout: function() {
+        if (recipeData.left.length === 1 && recipeData.left[0].name === 'food processor') {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      instruction: 'S p r i n k l e',
+      posttext: 'the diced bread with water and put it into the food processor.',
+      timer: 9,
+    },
+    {
+      pretext: <span>Mash 't' to sprinkle garlic, cayenne, and salt into the processor.<br/></span>,
+      instruction: 't',
       type: 'mash',
       mashCount: 10,
       timer: 10,
     },
+    {
+      pretext: <span>Press the arrow keys to process the food into crouton chunks.<br/></span>,
+      instruction: 'urrullurrd',
+      type: 'arrows',
+      timer: 10,
+    },
+    {
+      pretext: <span>Add tomatoes, leeks, onions, fennel, and chopped garlic into the now-heated pan.<br/></span>,
+      instruction: 'tlofcg',
+      timer: 8,
+    },
+    {
+      pretext: <span>Use the food processor to pulse the veggies and broth into a puree.<br/></span>,
+      instruction: 'ududlrlrududlrlr',
+      type: 'arrows',
+      timer: 10,
+    },
+    {
+      pretext: 'Get a',
+      instruction: 'large pot',
+      posttext: 'from the cupboard.',
+      timer: 8,
+    },
+    {
+      pretext: <span>Wait for the pot to boil. <b className="fireRed">Don't stare</b> at it or it won't boil!<br/></span>,
+      instruction: 'stare',
+      timer: 8,
+      onComplete: failure,
+      onTimeout: nextStep,
+    },
+    {
+      pretext: <span>Give the lobster a name.<br/></span>,
+      instruction: 'Name: ',
+      type: 'textinput',
+      timer: 6,
+      onTimeout: function(name) {
+        if (!name) {
+          this.failure();
+        } else {
+          recipeData.name = name;
+          this.nextStep();
+        }
+      },
+    },
+
+    // TODO: steps below
     {
       pretext: <span>Next, cut up the onions like they threatened your family.<br/></span>,
       instruction: 'c',
@@ -54,11 +153,6 @@ var Bouillabaisse = {
       onTimeout: nextStep,
     },
     {
-      pretext: <span>Wipe away a single tear.<br/></span>,
-      instruction: ':\'(',
-      timer: 8,
-    },
-    {
       pretext: 'Excellent work! Onto the meat. Defrost the chicken by running it under',
       instruction: 'warm',
       posttext: 'water.',
@@ -69,20 +163,6 @@ var Bouillabaisse = {
       instruction: 'off',
       posttext: 'the faucet to support the environment. Go green!',
       timer: 8,
-    },
-    {
-      pretext: <span>Give the chicken a name.<br/></span>,
-      instruction: 'Name: ',
-      type: 'textinput',
-      timer: 6,
-      onTimeout: function(name) {
-        if (!name) {
-          this.failure(<p>Recipe failed. Failed to name chicken.</p>);
-        } else {
-          recipeData.chickenName = name;
-          this.nextStep();
-        }
-      },
     },
     {
       pretext: () => <span>Cut {recipeData.chickenName} up into little pieces.<br/></span>,
@@ -102,21 +182,6 @@ var Bouillabaisse = {
           this.failure(<p>Recipe failed. Too much oil!</p>);
         } else {
           this.failure(<p>Recipe failed. Too little oil!</p>);
-        }
-      },
-    },
-    {
-      pretext: <span>Use the arrow keys to turn the dial on the stove to HIGH.<br/>OFF LOW - - MED - - HIGH - -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WAY TOO HIGH<br/></span>,
-      instruction: '^',
-      type: 'dial',
-      timer: 10,
-      onTimeout: function(value) {
-        if (value >= 18 && value <= 25) {
-          this.nextStep();
-        } else if (value > 25) {
-          this.failure(<p>Recipe failed. Stove too hot!</p>);
-        } else {
-          this.failure(<p>Recipe failed. Stove too low!</p>);
         }
       },
     },
@@ -161,12 +226,6 @@ var Bouillabaisse = {
       instruction: () => recipeData.chickenName,
       posttext: '(the chicken).',
       timer: 10,
-    },
-    {
-      pretext: <span>Stir everything around with the arrow keys until it's all mixed up.<br/></span>,
-      instruction: 'urdlurdl',
-      type: 'arrows',
-      timer: 12,
     },
     {
       pretext: 'Dump in all the',

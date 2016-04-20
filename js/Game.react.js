@@ -47,6 +47,15 @@ var Game = React.createClass({
     };
   },
 
+  componentDidMount: function() {
+    this.setTimeout(() => {
+      if (this.state.saveData.volume !== undefined) {
+        Audio.setVolume(this.state.saveData.volume / 100);
+      }
+      Audio.playBGM(); // play music
+    }, 500); // HACK: wait half a second to read saved volume
+  },
+
   setStateDelay: function(state, delay) {
     delay = delay || 500;
 
@@ -247,13 +256,19 @@ var Game = React.createClass({
     }
   },
 
+  onVolumeChange: function(vol) {
+    var saveData = this.state.saveData;
+    saveData.volume = vol;
+    this.setState({saveData: saveData});
+  },
+
   renderTitle: function() {
     return (
       <div className="padTop">
         <p>Type <Inst onComplete={this.onRenderMode}>start</Inst> to begin</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'options')}>options</Inst> for restaurant settings</p>
-        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>staff</Inst> for culinary credits</p>
+        <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'credits')}>credits</Inst> for culinary staff</p>
       </div>
     );
   },
@@ -273,7 +288,7 @@ var Game = React.createClass({
         {this.renderMode()}
         <br/>
         <p>Volume:</p>
-        <Volume />
+        <Volume init={this.state.saveData.volume} onVolumeChange={this.onVolumeChange} />
         <br/>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>
       </div>
@@ -382,7 +397,7 @@ var Game = React.createClass({
 
     if (newRecord) {
       Audio.playSE('newrecord');
-    } else {
+    } else if (won) {
       Audio.playSE('success');
     }
 

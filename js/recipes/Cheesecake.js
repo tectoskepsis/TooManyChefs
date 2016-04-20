@@ -252,6 +252,9 @@ var Cheesecake = {
       pretext: <span>Taste a little bit of the cheesecake.<br/></span>,
       instruction: 'yum?',
       timer: 8,
+      onComplete: function() {
+        this.nextStep(false, 'yum');
+      },
     },
     {
       pretext: <span>Give your beautiful mess a name.<br/></span>,

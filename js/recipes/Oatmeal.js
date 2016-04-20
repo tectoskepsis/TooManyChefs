@@ -8,9 +8,9 @@ var nextStep = function() {
 
 /* Used for tutorial or testing */
 var Oatmeal = {
-  name: 'Desperation a la Oatmeal',
-  chefName: 'Garcon de cuisine',
-  type: 'entree',
+  name: 'Oatmeal',
+  chefName: 'Garçon de cuisine',
+  type: 'entrée',
   difficulty: 'easy',
   ingredients: ['oatmeal', 'desperation', 'creativity'],
   description: 'A basic meal of oats.',

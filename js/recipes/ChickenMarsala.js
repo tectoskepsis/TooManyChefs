@@ -93,6 +93,9 @@ var ChickenMarsala = {
       pretext: <span>Nope-- you burn your finger!<br/></span>,
       instruction: 'ouch!',
       timer: 10,
+      onComplete: function() {
+        this.nextStep(false, 'ouch');
+      },
     },
     {
       pretext: <span>Quickly run your finger under <b className="darkBlue">cold water</b>.</span>,

@@ -10,7 +10,7 @@ const LOADING_QUOTES = [
   {quote: <span>One chef, two chef.<br/><span className="fireRed">Red chef</span>, <span className="darkBlue">blue chef</span>.</span>, source: 'Dr. Seuss'},
   {quote: <span>To improve is <span className="darkBlue">to cook</span>;<br/>to be perfect is <span className="green">to cook often</span>.</span>, source: 'Winston Churchill'},
   {quote: <span><span className="green">To cook</span> or <span className="darkBlue">not to cook</span>,<br/>that is the question.</span>, source: 'Hamlet, William Shakespeare'},
-  {quote: <span><span className="goldenBrown">Perfect steak</span>, like perfect men,<br/>are <span className="fireRed">very rare</span>.</span>, source: 'Rene Descartes'},
+  {quote: <span><span className="goldenBrown">Perfect steak</span>, like perfect men,<br/>are <span className="fireRed">very rare</span>.</span>, source: 'René Descartes'},
   {quote: <span>I cannot believe in a God who wants<br/> to be <span className="fireRed">fed all the time</span>.</span>, source: 'Friedrich Nietzsche'},
   {quote: <span><span className="goldenBrown">Cuisine</span> is the mediator between the spiritual and the sensual life.</span>, source: 'Ludwig van Beethoven'},
   {quote: <span>I pay no attention whatever to anybody's praise or blame. <span className="green">I simply follow my own recipe.</span></span>, source: 'Wolfgang Amadeus Mozart'},
