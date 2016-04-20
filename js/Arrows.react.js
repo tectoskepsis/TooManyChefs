@@ -17,6 +17,10 @@ var Arrows = React.createClass({
     children: React.PropTypes.string.isRequired,
     onComplete: React.PropTypes.func.isRequired,
     onProgress: React.PropTypes.func,
+    onPressSound: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.arrayOf(React.PropTypes.string),
+    ]),
   },
 
   getInitialState: function() {
@@ -39,7 +43,11 @@ var Arrows = React.createClass({
 
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === KEYCODES[this.props.children.charAt(this.state.progress)]) {
-      Audio.playRandomClick();
+      if (this.props.onPressSound) {
+        Audio.playSE(this.props.onPressSound);
+      } else {
+        Audio.playRandomClick();
+      }
 
       var newProgress = this.state.progress + 1;
       var complete = newProgress === this.props.children.length;

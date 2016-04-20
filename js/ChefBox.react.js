@@ -13,7 +13,7 @@ var Chef = require('./Chef.js');
 var Inst = require('./Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
-const RESCUE_TEXT = ['save', 'rescue', 'help', 'assist', 'support', 'inspire', 'bail', 'hug', 'heal', 'comfort'];
+const RESCUE_TEXT = ['save', 'rescue', 'help', 'assist', 'support', 'inspire', 'bail', 'hug', 'heal', 'comfort', 'tickle', 'calm', 'feed'];
 
 var ChefBox = React.createClass({
   mixins: [PureRenderMixin, TimerMixin],
@@ -94,12 +94,12 @@ var ChefBox = React.createClass({
     }, 250);
   },
 
-  nextStep: function(postFail, inc) {
+  nextStep: function(postFail) {
     if (this.state.gameOver) {
       return;
     }
 
-    var newStep = this.state.step + (inc === 0 ? 0 : inc || 1);
+    var newStep = this.state.step + 1;
     this.clearInterval(this.timerInterval);
     if (!postFail) {
       this.setState({backgroundClass: 'success'});

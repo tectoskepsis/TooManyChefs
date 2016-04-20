@@ -161,8 +161,12 @@ var FriedRice = {
     {
       pretext: <span>Crack some eggs into a bowl using your friend's thick skull.<br/></span>,
       instruction: 'crack crack',
-      onHoldSound: 'eggcrack',
       timer: 10,
+      onProgress: function(value) {
+        if (value === 5 || value === 10) {
+          Audio.playSE('eggcrack');
+        }
+      },
     },
     {
       pretext: <span>Beat some sense into the eggs by mashing 'b'.<br/></span>,

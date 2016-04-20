@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -48,7 +49,7 @@ var CremeBrulee = {
         {name: 'mug', key: 'm', left: false},
         {name: 'skillet', key: 's', left: false},
       ],
-      timer: 10,
+      timer: 7,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -56,7 +57,7 @@ var CremeBrulee = {
       onTimeout: nextStep,
     },
     {
-      pretext: <span>Uh oh! Looks like the saucepan was lost in the Great Cheesecake Fire of 2016. Mash 'r' quickly to run to the store and buy another.<br/></span>,
+      pretext: <span>Uh oh! Looks like the saucepan was lost in the <b className="fireRed">Great Cheesecake Fire of 2016</b>. Mash 'r' quickly to run to the store and buy another.<br/></span>,
       instruction: 'r',
       type: 'mash',
       mashCount: 20,
@@ -67,12 +68,15 @@ var CremeBrulee = {
       instruction: '$14.99',
       posttext: '.',
       timer: 10,
+      onComplete: function() {
+        Audio.playSE('money');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Quickly bike back to the <b>kitchen</b> using the arrow keys.<br/>KITCHEN&nbsp;&nbsp;&nbsp;&nbsp;LIBRARY&nbsp;&nbsp;&nbsp;&nbsp;STORE&nbsp;&nbsp;&nbsp;&nbsp;BANK<br/></span>,
       instruction: '<bike>',
       type: 'dial',
-      maxValue: 15,
       startValue: 22,
       timer: 10,
       onTimeout: function(value) {
@@ -107,7 +111,7 @@ var CremeBrulee = {
         {name: 'vanilla extract', key: 'e', left: false},
         {name: 'vanilla ice', key: 'i', left: false},
       ],
-      timer: 10,
+      timer: 8,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -160,7 +164,7 @@ var CremeBrulee = {
     },
     {
       pretext: <span>Pour <b>1/2 cup</b> of sugar into a measuring cup.<br/></span>,
-      instruction: 'suuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuggggaaaaarrrrrrrrrrrrrrr',
+      instruction: 'suuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuggggaaaaarrrrrrrrrr',
       posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/6&nbsp;&nbsp;&nbsp;&nbsp;^ 2/6&nbsp;&nbsp;&nbsp;&nbsp;^ 3/6&nbsp;&nbsp;&nbsp;&nbsp;^ 4/6&nbsp;&nbsp;&nbsp;&nbsp;^ 5/6&nbsp;&nbsp;&nbsp;&nbsp;^ 6/6</span>,
       timer: 10,
       onComplete: () => {},
@@ -176,12 +180,18 @@ var CremeBrulee = {
       pretext: <span>Crack open 6 large eggs.<br/></span>,
       instruction: 'egg egg egg egg egg egg',
       timer: 15,
+      onProgress: function(value) {
+        if (value % 4 === 0) {
+          Audio.playSE('eggcrack');
+        }
+      },
     },
     {
       pretext: <span>Use the arrow keys to whisk the sugar and eggs together.<br/></span>,
       instruction: 'lurdlurdlurdlurd',
       type: 'arrows',
       timer: 10,
+      onPressSound: ['eggbeat1', 'eggbeat2'],
     },
     {
       pretext: <span>Add the cream to the mixture <b>a little at a time</b>, stirring slowly.<br/></span>,
@@ -242,6 +252,7 @@ var CremeBrulee = {
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4</span>,
       timer: 10,
       onComplete: () => {},
+      onHoldSound: 'pouring',
       onTimeout: function(progress) {
         if (progress >= 16 && progress <= 21) {
           this.nextStep();
@@ -275,6 +286,10 @@ var CremeBrulee = {
       instruction: 'hors d\'oeuvre',
       posttext: '.',
       timer: 10,
+      onComplete: function() {
+        Audio.playSE('horsdoeuvre');
+        this.nextStep();
+      },
     },
     {
       pretext: <span>Name the brulees for your enjoyment.<br/></span>,

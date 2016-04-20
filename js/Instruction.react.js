@@ -16,6 +16,10 @@ var Instruction = React.createClass({
     disabled: React.PropTypes.bool,
     reset: React.PropTypes.bool,
     onHoldSound: React.PropTypes.string,
+    onPressSound: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.arrayOf(React.PropTypes.string),
+    ]),
   },
 
   getInitialState: function() {
@@ -46,7 +50,11 @@ var Instruction = React.createClass({
 
     if (this.isKeyPressed(this.props.children.charAt(this.state.progress))) {
       if (!this.props.onHoldSound) {
-        Audio.playRandomClick();
+        if (this.props.onPressSound) {
+          Audio.playSE(this.props.onPressSound);
+        } else {
+          Audio.playRandomClick();
+        }
       } else if (!this.state.playingSound) {
         Audio.unpauseSE(this.props.onHoldSound);
         this.setState({playingSound: true});

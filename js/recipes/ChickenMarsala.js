@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -63,6 +64,10 @@ var ChickenMarsala = {
       instruction: '45',
       posttext: 'seconds.',
       timer: 8,
+      onComplete: function() {
+        Audio.playSE('microwave');
+        this.nextStep();
+      },
     },
     {
       pretext: 'Let the butter stand for a bit-- it\'s hot!',
@@ -76,7 +81,7 @@ var ChickenMarsala = {
       startValue: 10,
       instruction: '<=finger=',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;\cup/</span>,
-      timer: 10,
+      timer: 8,
       onTimeout: function(value) {
         if (value <= 2) {
           this.nextStep();
@@ -99,11 +104,15 @@ var ChickenMarsala = {
         {name: 'finger', key: 'f', left: true},
       ],
       timer: 6,
+      onStart: function() {
+        Audio.playSE('sink', {loop: 3});
+      },
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
       },
       onTimeout: function() {
+        Audio.stopSE('sink');
         if (recipeData.right.length === 1) {
           this.nextStep();
         } else {
@@ -120,10 +129,8 @@ var ChickenMarsala = {
     {
       pretext: <span>Using the arrow keys, pour the butter through a fine sieve over a small bowl, to get rid of those nasty butter chunks.<br/></span>,
       type: 'dial',
-      maxValue: 10,
-      startValue: 10,
       instruction: 'BUTTER',
-      posttext: <span><br/>----------SIE|         |EVE------------</span>,
+      posttext: <span><br/>----------SIE|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|EVE------------</span>,
       timer: 10,
       onTimeout: function(value) {
         if (value >= 9 && value <= 12) {
@@ -139,10 +146,10 @@ var ChickenMarsala = {
       leftName: 'Selection',
       rightName: 'Pantry',
       ingredients: [
-        {name: 'slightly sticky pan', key: 's', left: false},
-        {name: 'non-stick pan', key: 'n', left: false},
-        {name: 'very sticky pan', key: 'v', left: false},
-        {name: 'wok', key: 'w', left: false},
+        {name: 'slightly sticky pan', key: 's', left: false, sound: 'cupboard'},
+        {name: 'non-stick pan', key: 'n', left: false, sound: 'cupboard'},
+        {name: 'very sticky pan', key: 'v', left: false, sound: 'cupboard'},
+        {name: 'wok', key: 'w', left: false, sound: 'cupboard'},
       ],
       timer: 10,
       onProgress: function(left, right) {
@@ -188,6 +195,14 @@ var ChickenMarsala = {
       },
     },
     {
+      pretext: <span>Chop the veggies by mashing 'v'.<br/></span>,
+      instruction: 'v',
+      type: 'mash',
+      onPressSound: 'slice',
+      mashCount: 15,
+      timer: 10,
+    },
+    {
       pretext: <span>Use the arrow keys to set the skillet to <b className="fireRed">MED</b> heat.<br/>OFF LOW - - MED - - HIGH - -&nbsp;- - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
@@ -205,13 +220,19 @@ var ChickenMarsala = {
       instruction: 'mushrooms garlic shallots',
       posttext: 'into the pan.',
       timer: 10,
+      onProgress: function(value) {
+        if (value === 8) {
+          Audio.playSE('frying', {loop: 3});
+        }
+      },
     },
     {
       pretext: 'Wait for the moisture to evaporate, then',
       instruction: 'remove',
-      posttext: <span>it from the pan to set aside.<br/><br/>&nbsp;&nbsp;&nbsp;<ColorChange toColor="#5cb85c">&#9679;</ColorChange> evaporated</span>,
+      posttext: <span>the pan and set it aside.<br/><br/>&nbsp;&nbsp;&nbsp;<ColorChange toColor="#5cb85c">&#9679;</ColorChange> evaporated</span>,
       timer: 30,
       onComplete: function(progress, time) {
+        Audio.stopSE('frying');
         if (time <= 20) {
           this.nextStep();
         } else {
@@ -229,6 +250,7 @@ var ChickenMarsala = {
     {
       pretext: <span>Call your mother to ask her what to do next.<br/></span>,
       instruction: '412 268 6667',
+      onPressSound: ['phone1', 'phone2', 'phone3'],
       timer: 9,
     },
     {
@@ -268,10 +290,10 @@ var ChickenMarsala = {
         recipeData.right = right;
       },
       onTimeout: function() {
-        if (recipeData.left.length === 1) {
-          this.nextStep(false, 0); // repeat
-        } else {
+        if (recipeData.right.length === 1) {
           this.nextStep();
+        } else {
+          this.failure();
         }
       },
     },
@@ -351,6 +373,7 @@ var ChickenMarsala = {
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 0 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 1 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 3 tbsp</span>,
       timer: 8,
       onComplete: () => {},
+      onHoldSound: 'pouring',
       onTimeout: function(progress) {
         if (progress >= 15 && progress <= 21) {
           this.nextStep();

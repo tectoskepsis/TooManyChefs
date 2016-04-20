@@ -5,7 +5,7 @@ var Sound = createjs.Sound;
 const AUDIO_PATH = './audio/sounds/';
 const BGM = './audio/Fortaleza.mp3';
 const CLICKS = ['click1', 'click2', 'click3'];
-const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery1', 'cutlery2', 'frying', 'grinder', 'mixer', 'pouring', 'sink', 'slice', 'eggcrack', 'eggbeat1', 'eggbeat2'];
+const SOUNDS = ['click1', 'click2', 'click3', 'blender', 'boop', 'cork', 'cupboard', 'cutlery1', 'cutlery2', 'frying', 'grinder', 'mixer', 'pouring', 'sink', 'slice', 'eggcrack', 'eggbeat1', 'eggbeat2', 'microwave', 'phone1', 'phone2', 'phone3', 'money', 'horsdoeuvre'];
 
 var soundManifest = SOUNDS.map((se) => {
   return {id: se, src: AUDIO_PATH + se + '.mp3'};
