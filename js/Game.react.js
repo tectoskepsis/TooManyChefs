@@ -263,7 +263,7 @@ var Game = React.createClass({
 
   renderTitle: function() {
     return (
-      <div className="padTop">
+      <div key="title" className="padTop">
         <p>Type <Inst onComplete={this.onRenderMode}>start</Inst> to begin</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'help')}>help</Inst> for instructions</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'options')}>options</Inst> for restaurant settings</p>
@@ -274,14 +274,15 @@ var Game = React.createClass({
 
   renderMode: function() {
     return (
-      <ModeSelect onSolo={_.partial(this.onChooseMode, true)}
+      <ModeSelect key="mode"
+                  onSolo={_.partial(this.onChooseMode, true)}
                   onParty={_.partial(this.onChooseMode, false)} />
     );
   },
 
   renderOptions: function() {
     return (
-      <div className="padTop">
+      <div key="options" className="padTop">
         <h4>Options</h4>
         <br/>
         {this.renderMode()}
@@ -300,7 +301,7 @@ var Game = React.createClass({
 
   renderRecipeMenu: function() {
     return (
-      <div>
+      <div key="recipe-menu">
         <RecipeSelect onProgress={this.onRecipeProgress}
                       onSelect={this.onStartGame}
                       saveData={this.state.saveData}
@@ -336,12 +337,12 @@ var Game = React.createClass({
   },
 
   renderLoading: function() {
-    return <LoadingQuote />;
+    return <LoadingQuote key="loading" />;
   },
 
   renderCredits: function() {
     return (
-      <div className="padTop">
+      <div key="credits" className="padTop">
         <br/><br/>
         <h4>Credits</h4>
         <p>
@@ -440,7 +441,7 @@ var Game = React.createClass({
                          transitionEnterTimeout={250}
                          transitionLeaveTimeout={250}>
           {this.state.content}
-          <CapsLock />
+          <CapsLock key="capslock" />
         </TransitionGroup>
 
         <div className="visible-xs-block alert alert-danger" role="alert">

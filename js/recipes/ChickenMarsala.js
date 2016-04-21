@@ -146,10 +146,10 @@ var ChickenMarsala = {
       leftName: 'Selection',
       rightName: 'Pantry',
       ingredients: [
-        {name: 'slightly sticky pan', key: 's', left: false, sound: 'cupboard'},
-        {name: 'non-stick pan', key: 'n', left: false, sound: 'cupboard'},
-        {name: 'very sticky pan', key: 'v', left: false, sound: 'cupboard'},
-        {name: 'wok', key: 'w', left: false, sound: 'cupboard'},
+        {name: 'slightly sticky pan', key: 's', left: false, sound: 'boop'},
+        {name: 'non-stick pan', key: 'n', left: false, sound: 'boop'},
+        {name: 'very sticky pan', key: 'v', left: false, sound: 'boop'},
+        {name: 'wok', key: 'w', left: false, sound: 'boop'},
       ],
       timer: 8,
       onProgress: function(left, right) {
@@ -168,7 +168,7 @@ var ChickenMarsala = {
       pretext: 'Coat the pan with',
       instruction: 'cooking spray',
       posttext: '.',
-      timer: 9,
+      timer: 10,
     },
     {
       pretext: <span>Get the <b>mushrooms</b>, <b>shallots</b>, and <b>garlic</b> from the fridge onto your cutting board.</span>,
@@ -219,7 +219,7 @@ var ChickenMarsala = {
       pretext: 'Add the',
       instruction: 'mushrooms garlic shallots',
       posttext: 'into the pan.',
-      timer: 10,
+      timer: 12,
       onProgress: function(value) {
         if (value === 8) {
           Audio.playSE('frying', {loop: 3});
@@ -250,7 +250,7 @@ var ChickenMarsala = {
     },
     {
       pretext: <span>Call your mother to ask her what to do next.<br/></span>,
-      instruction: '412 268 6667',
+      instruction: '412 368 6167',
       onPressSound: ['phone1', 'phone2', 'phone3'],
       timer: 9,
     },

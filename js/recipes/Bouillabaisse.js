@@ -107,7 +107,7 @@ var Bouillabaisse = {
       pretext: 'Get a',
       instruction: 'large pot',
       posttext: 'from the cupboard.',
-      timer: 8,
+      timer: 9,
     },
     {
       pretext: <span>Wait for the pot to boil. <b className="fireRed">Don't stare</b> at it or it won't boil!<br/></span>,
@@ -161,7 +161,7 @@ var Bouillabaisse = {
       pretext: 'Drizzle the lobster with',
       instruction: 'olive oil & vinaigrette',
       posttext: '. Yum!',
-      timer: 12,
+      timer: 14,
       onComplete: function() {
         this.nextStep(false, 'yum');
       },

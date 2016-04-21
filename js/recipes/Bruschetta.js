@@ -16,7 +16,7 @@ var nextStep = function() {
 
 var Bruschetta = {
   name: 'Bruschetta',
-  chefName: 'Saucier',
+  chefName: 'Garde Manger',
   type: 'appetizer',
   difficulty: 'medium',
   ingredients: ['1/2 baguette', '2 lg cloves garlic', '1 tsp extra-virgin olive oil', '8 small plum tomatoes', '1/4 cup Parmesan cheese', '1/3 cup basil', '1 tbsp balsamic vinegar', '1/4 tsp black pepper', '1/4 tsp kosher salt'],
@@ -100,7 +100,7 @@ var Bruschetta = {
       pretext: 'Put the',
       instruction: 'veggies and cheese',
       posttext: 'into a large bowl.',
-      timer: 10,
+      timer: 12,
     },
     {
       pretext: <span>Using the arrow keys, toss the bowl around.<br/></span>,
@@ -153,7 +153,7 @@ var Bruschetta = {
       pretext: 'Cut the',
       instruction: 'b a g u e t t e',
       posttext: 'into multiple slices.',
-      timer: 9,
+      timer: 10,
     },
     {
       pretext: <span>Set the toaster oven dial to <b className="fireRed">TOAST</b>.<br/>WARM - BROIL - BAKE - TOAST - BURN<br/></span>,
@@ -226,7 +226,7 @@ var Bruschetta = {
       onHoldSound: 'pouring',
       onComplete: () => {},
       onTimeout: function(progress) {
-        if (progress >= 32 && progress <= 34) {
+        if (progress >= 30 && progress <= 34) {
           this.nextStep();
         } else {
           this.failure();

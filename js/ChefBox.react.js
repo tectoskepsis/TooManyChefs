@@ -139,7 +139,7 @@ var ChefBox = React.createClass({
       // Wait 250ms before updating for fade effect
       this.setTimeout(() => this.setState({
         backgroundClass: 'success',
-        content: <div>{this.renderRecipeDone()}{this.props.onComplete(this.props.chefId)}</div>,
+        content: <div key="complete">{this.renderRecipeDone()}{this.props.onComplete(this.props.chefId)}</div>,
         step: newStep,
       }), 250);
 
@@ -171,7 +171,7 @@ var ChefBox = React.createClass({
         this.timerInterval = this.setInterval(this.updateTimer, 1000);
         this.setState({
           backgroundClass: '',
-          content: <RecipeStep {...stepProps} />,
+          content: <RecipeStep key={'step' + newStep} {...stepProps} />,
           step: newStep,
         });
 
@@ -342,7 +342,7 @@ var ChefBox = React.createClass({
   renderChefSelect: function() {
     const keys = ['q', 'p', 'z', 'm'];
     return (
-      <div>
+      <div key="select">
         <p>{Chef[this.props.recipe.chefName]}</p>
         <p>Press <Inst onComplete={this.onChefSelect}>{keys[this.props.chefId]}</Inst> to join the kitchen.</p>
       </div>
@@ -350,12 +350,12 @@ var ChefBox = React.createClass({
   },
 
   renderChefWaiting: function() {
-    return <p>Waiting for other chefs...</p>;
+    return <p key="chef-waiting">Waiting for other chefs...</p>;
   },
 
   renderRecipeStart: function() {
     return (
-      <div>
+      <div key="recipe-start">
         <b>{this.props.recipe.name}</b> - {this.props.recipe.type} ({this.props.recipe.difficulty})
         <h5>Ingredients</h5>
         <ul className="ingredients">
@@ -373,7 +373,7 @@ var ChefBox = React.createClass({
       <p>Type <Inst onComplete={this.props.onReport}>report</Inst> to view your results.</p>
     </div>;
     return (
-      <div>
+      <div key="failure">
         <h4>GAME OVER - RECIPE FAILED</h4>
         <p>Steps completed: {this.state.step}/{this.props.recipe.steps.length}</p>
         {text}
@@ -383,7 +383,7 @@ var ChefBox = React.createClass({
 
   renderRescue: function() {
     return (
-      <div>
+      <div key="rescue">
         <h4>RECIPE FAILED</h4>
         <p>Ask the other chefs to save you.</p>
       </div>
@@ -429,7 +429,7 @@ var ChefBox = React.createClass({
                              transitionEnterTimeout={250}
                              transitionLeaveTimeout={250}>
               {this.state.content}
-              <CapsLock />
+              <CapsLock key="capslock" />
               {this.state.popups.map((popup) =>
                 <div key={popup.key} className={cx('popup', 'alert', 'alert-' + popup.type)}>
                   {popup.content}
