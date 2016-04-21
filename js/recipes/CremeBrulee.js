@@ -49,7 +49,7 @@ var CremeBrulee = {
         {name: 'mug', key: 'm', left: false},
         {name: 'skillet', key: 's', left: false},
       ],
-      timer: 7,
+      timer: 5,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -67,7 +67,7 @@ var CremeBrulee = {
       pretext: 'Buy a saucepan for',
       instruction: '$14.99',
       posttext: '.',
-      timer: 10,
+      timer: 8,
       onComplete: function() {
         this.nextStep(false, 'money');
       },
@@ -77,7 +77,7 @@ var CremeBrulee = {
       instruction: '<bike>',
       type: 'dial',
       startValue: 22,
-      timer: 10,
+      timer: 8,
       onTimeout: function(value) {
         if (value <= 4) {
           this.nextStep();
@@ -90,7 +90,7 @@ var CremeBrulee = {
       pretext: <span>Put the saucepan on the stove, and set it to <b className="fireRed">HIGH</b> heat.<br/>OFF LOW - - MED - - HIGH - - - - AHHHHHH<br/></span>,
       instruction: '^',
       type: 'dial',
-      timer: 10,
+      timer: 9,
       onTimeout: function(value) {
         if (value >= 20 && value <= 24) {
           this.nextStep();
@@ -146,7 +146,7 @@ var CremeBrulee = {
       instruction: '^',
       type: 'dial',
       startValue: 21,
-      timer: 10,
+      timer: 8,
       onTimeout: function(value) {
         if (value <= 3) {
           this.nextStep();
@@ -154,12 +154,6 @@ var CremeBrulee = {
           this.failure();
         }
       },
-    },
-    {
-      pretext: 'Grab a',
-      instruction: 'medium bowl',
-      posttext: 'from the pantry.',
-      timer: 8,
     },
     {
       pretext: <span>Pour <b>1/2 cup</b> of sugar into a measuring cup.<br/></span>,
@@ -201,11 +195,10 @@ var CremeBrulee = {
         }
       },
     },
-
     {
-      pretext: <span>Crack open 6 large eggs.<br/></span>,
+      pretext: <span>Crack open the eggs into a bowl.<br/></span>,
       instruction: 'egg egg egg egg egg egg',
-      timer: 15,
+      timer: 12,
       onProgress: function(value) {
         if (value % 4 === 0) {
           Audio.playSE('eggcrack');
@@ -225,7 +218,7 @@ var CremeBrulee = {
       type: 'mash',
       instruction: 'c',
       mashCount: 6,
-      timer: 20,
+      timer: 15,
     },
     {
       pretext: <span>Grab three <b>ramekins</b> from the pantry.</span>,
@@ -240,7 +233,7 @@ var CremeBrulee = {
         {name: 'also not a ramekin', key: 'a', left: false},
         {name: 'definitely not a ramekin', key: 'd', left: false},
       ],
-      timer: 9,
+      timer: 8,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -277,7 +270,7 @@ var CremeBrulee = {
       pretext: <span>Pour boiling water into the pan until it fills <b>halfway</b>.<br/></span>,
       instruction: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwater',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4</span>,
-      timer: 9,
+      timer: 7,
       onComplete: () => {},
       onHoldSound: 'pouring',
       onTimeout: function(progress) {
@@ -302,11 +295,6 @@ var CremeBrulee = {
           this.failure();
         }
       },
-    },
-    {
-      pretext: 'Sit back and wait for it to bake.',
-      timer: 10,
-      onTimeout: nextStep,
     },
     {
       pretext: 'While you\'re bored waiting, brush up on your pronunciation of',
@@ -376,7 +364,7 @@ var CremeBrulee = {
         {name: 'brown sugar', key: 'b', left: false},
         {name: 'race-agnostic sugar', key: 'r', left: false},
       ],
-      timer: 10,
+      timer: 8,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -392,41 +380,27 @@ var CremeBrulee = {
     {
       instruction: 'Spread',
       posttext: 'the brown sugar across the dessert.',
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: 'Grab a',
       instruction: 'blowtorch',
       posttext: '(how exciting!)',
-      timer: 10,
+      timer: 7,
     },
     {
-      pretext: <span>Plug the torch into the wall using the arrow keys.<br/><br/>|OUTLET|</span>,
-      instruction: '<=plug=',
-      type: 'dial',
-      startValue: 7,
-      onTimeout: function(value) {
-        if (value <= 2) {
-          this.nextStep();
-        } else {
-          this.failure();
-        }
-      },
-      timer: 10,
-    },
-    {
-      pretext: <span>Tap <b>CAPS-LOCK</b> to turn on the blowtorch.<br/></span>,
+      pretext: <span>Switch on the blowtorch by mashing CAPS-LOCK.<br/></span>,
       instruction: 'CAPSLOCK',
       type: 'mash',
-      mashCount: 1,
-      timer: 8,
+      mashCount: 7,
+      timer: 7,
     },
     {
-      pretext: <span>Melt the sugar by passing the fire <b className="darkBlue">above the creme brulees</b>. Hope to god you don't start another fire.<br/><br/></span>,
+      pretext: <span>Melt the sugar by passing the torch <b className="darkBlue">above the creme brulees</b>. Hope to god you don't start another fire.<br/><br/></span>,
       instruction: '=FIRE>',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\cb1/&nbsp;&nbsp;&nbsp;&nbsp;\cb2/&nbsp;&nbsp;&nbsp;&nbsp;\cb3/&nbsp;&nbsp;&nbsp;&nbsp;done&nbsp;&nbsp;&nbsp;&nbsp;too far&nbsp;&nbsp;&nbsp;&nbsp;PLEASE STOP</span>,
       type: 'dial',
-      timer: 10,
+      timer: 7,
       onTimeout: function(value) {
         if (value >= 22 && value <= 26) {
           this.nextStep();
@@ -434,13 +408,6 @@ var CremeBrulee = {
           this.failure();
         }
       },
-    },
-    {
-      pretext: <span>Turn off the blowtorch and breathe a sigh of relief.<br/></span>,
-      instruction: 'CAPSLOCK',
-      type: 'mash',
-      mashCount: 1,
-      timer: 7,
     },
   ],
 };

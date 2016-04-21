@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
 var RecipeStep = require('../RecipeStep.react.js');
 
@@ -57,7 +58,13 @@ var Bruschetta = {
       instruction: 'g a r l i c c l o v e s',
       posttext: 'with your knife.',
       timer: 10,
-    },
+      onProgress: function(value) {
+        if (value % 4 === 0) {
+          Audio.playSE('slice');
+        }
+        return value;
+      },
+  },
     {
       pretext: <span>Grab a <b>cheese grater</b> from the lower shelf.</span>,
       type: 'ingredients',
@@ -290,7 +297,7 @@ var Bruschetta = {
       },
     },
     {
-      pretext: <span>Ah, so refreshing. But now you really need to go to the bathroom! Use the arrow keys to run.<br/>BATHROOM&nbsp;&nbsp;&nbsp;&nbsp;DINING&nbsp;&nbsp;&nbsp;&nbsp;CLOSET&nbsp;&nbsp;&nbsp;&nbsp;KITCHEN&nbsp;&nbsp;&nbsp;&nbsp;OUTSIDE</span>,
+      pretext: <span>Ah, so refreshing. But now you really need to go to the bathroom! Use the arrow keys to run.<br/>BATHROOM&nbsp;&nbsp;&nbsp;&nbsp;DINING&nbsp;&nbsp;&nbsp;&nbsp;CLOSET&nbsp;&nbsp;&nbsp;&nbsp;KITCHEN&nbsp;&nbsp;&nbsp;&nbsp;OUTSIDE<br/></span>,
       type: 'dial',
       startValue: 33,
       instruction: '^',
@@ -308,6 +315,7 @@ var Bruschetta = {
       instruction: 'ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ not enough&nbsp;&nbsp;&nbsp;&nbsp;^ keep going&nbsp;&nbsp;&nbsp;&nbsp;^ almost there</span>,
       timer: 10,
+      onHoldSound: 'pouring',
       onComplete: nextStep,
       onTimeout: function(progress) {
         if (progress >= 40) {
@@ -318,6 +326,7 @@ var Bruschetta = {
       },
     },
     {
+      onStart: () => Audio.playSE('sink', {loop: 3}),
       pretext: <span>Mash 'w' to wash your hands.<br/></span>,
       instruction: 'w',
       type: 'mash',
@@ -338,6 +347,7 @@ var Bruschetta = {
         recipeData.right = right;
       },
       onTimeout: function() {
+        Audio.stopSE('sink');
         if (recipeData.right.length === 1) {
           this.nextStep();
         } else {
@@ -356,6 +366,16 @@ var Bruschetta = {
       instruction: 'l',
       type: 'arrows',
       timer: 7,
+    },
+    {
+      pretext: <span>Man, it smells good! Do your best <b className="fireRed">not</b> to</span>,
+      instruction: 'eat',
+      posttext: 'the toast.',
+      onComplete: function() {
+        this.failure();
+      },
+      onTimeout: nextStep,
+      timer: 10,
     },
     {
       pretext: 'Top the toasted bread with the',

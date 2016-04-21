@@ -278,7 +278,26 @@ var Bouillabaisse = {
       timer: 8,
     },
     {
-      pretext: <span>Pull yourself together! The soup is ready. Scoop into bowls and serve!<br/></span>,
+      pretext: <span>Take a few seconds to pull yourself together.<br/>Breathe in, breathe out.</span>,
+      timer: 10,
+      onTimeout: nextStep,
+    },
+    {
+      pretext: <span>Turn <b>off</b> the stove using the arrow keys.<br/>OFF LOW - - - MED - - - HIGH - - - - WAY TOO HIGH<br/></span>,
+      instruction: '^',
+      type: 'dial',
+      startValue: 20,
+      timer: 10,
+      onTimeout: function(value) {
+        if (value <= 3) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
+      },
+    },
+    {
+      pretext: <span>The soup is ready. Scoop into bowls and serve!<br/></span>,
       instruction: 'bowlbowlbowlbowl',
       timer: 10,
     },
