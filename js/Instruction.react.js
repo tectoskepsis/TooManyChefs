@@ -77,7 +77,7 @@ var Instruction = React.createClass({
         this.setTimeout(() => this.setState({
           progress: 0,
           complete: false,
-        }), 250);
+        }), 500);
       }
     }
   },

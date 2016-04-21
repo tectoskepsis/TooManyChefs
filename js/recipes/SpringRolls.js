@@ -11,7 +11,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var SpringRolls = {
   name: 'Spring Rolls',

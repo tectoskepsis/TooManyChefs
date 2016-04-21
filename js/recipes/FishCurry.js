@@ -9,7 +9,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var FishCurry = {
   name: 'Fish Curry',
@@ -209,6 +209,7 @@ var FishCurry = {
         if (value <= 3) {
           Audio.stopSE('frying');
         }
+        return value;
       },
       onTimeout: function(value) {
         Audio.stopSE('frying');

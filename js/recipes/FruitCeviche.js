@@ -10,7 +10,7 @@ var recipeData = {
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var FruitCeviche = {
   name: 'Fruit Ceviche',

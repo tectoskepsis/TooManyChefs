@@ -210,6 +210,7 @@ var CremeBrulee = {
         if (value % 4 === 0) {
           Audio.playSE('eggcrack');
         }
+        return value;
       },
     },
     {

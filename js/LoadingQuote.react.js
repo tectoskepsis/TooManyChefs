@@ -13,7 +13,7 @@ const LOADING_QUOTES = [
   {quote: <span><span className="goldenBrown">Perfect steaks</span>, like perfect men,<br/>are <span className="fireRed">very rare</span>.</span>, source: 'René Descartes'},
   {quote: <span>I cannot believe in a God who wants<br/> to be <span className="fireRed">fed all the time</span>.</span>, source: 'Friedrich Nietzsche'},
   {quote: <span><span className="goldenBrown">Cuisine</span> is the mediator between the spiritual and the sensual life.</span>, source: 'Ludwig van Beethoven'},
-  {quote: <span>I pay no attention whatever to anybody's praise or blame. <span className="green">I simply follow my own recipe.</span></span>, source: 'Wolfgang Amadeus Mozart'},
+  {quote: <span>I pay no attention whatever to anybody's praise or blame. I simply <span className="green">follow my own recipe.</span></span>, source: 'Wolfgang Amadeus Mozart'},
   {quote: <span>There is no substitute for <span className="fireRed">good spices</span>.</span>, source: 'Thomas Edison'},
   {quote: <span>Associate with chefs of good quality if you esteem your own reputation; for it is better to <span className="darkBlue">be alone</span> than in <span className="fireRed">bad company</span>.</span>, source: 'George Washington'},
   {quote: <span>It's the recipe that's <span className="fireRed">never started</span> as takes <span className="green">longest to finish</span>.</span>, source: 'J. R. R. Tolkien'},

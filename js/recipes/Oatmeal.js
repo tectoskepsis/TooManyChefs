@@ -4,7 +4,7 @@ var RecipeStep = require('../RecipeStep.react.js');
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 /* Used for tutorial or testing */
 var Oatmeal = {

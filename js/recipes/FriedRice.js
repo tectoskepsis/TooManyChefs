@@ -166,6 +166,7 @@ var FriedRice = {
         if (value === 5 || value === 10) {
           Audio.playSE('eggcrack');
         }
+        return value;
       },
     },
     {
@@ -243,6 +244,7 @@ var FriedRice = {
         if (value <= 3) {
           Audio.stopSE('frying');
         }
+        return value;
       },
       onTimeout: function(value) {
         Audio.stopSE('frying');

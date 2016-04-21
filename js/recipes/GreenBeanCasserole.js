@@ -131,7 +131,7 @@ var GreenBeanCasserole = {
       onComplete: () => {},
       onHoldSound: 'pouring',
       onTimeout: function(progress) {
-        if (progress >= 6 && progress <= 9) {
+        if (progress >= 16 && progress <= 20) {
           this.nextStep();
         } else {
           this.failure();

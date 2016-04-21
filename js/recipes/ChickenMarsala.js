@@ -224,6 +224,7 @@ var ChickenMarsala = {
         if (value === 8) {
           Audio.playSE('frying', {loop: 3});
         }
+        return value;
       },
     },
     {

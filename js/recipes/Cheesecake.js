@@ -5,7 +5,7 @@ var RecipeStep = require('../RecipeStep.react.js');
 
 var nextStep = function() {
   return this.nextStep();
-}
+};
 
 var Cheesecake = {
   name: 'Cheesecake Delight',
@@ -90,6 +90,7 @@ var Cheesecake = {
         } else if (value < 4) {
           Audio.pauseSE('mixer');
         }
+        return value;
       },
       onTimeout: function(value) {
         if (value >= 4 && value <= 7) {
@@ -117,6 +118,7 @@ var Cheesecake = {
         } else if (value < 4) {
           Audio.pauseSE('mixer');
         }
+        return value;
       },
       onTimeout: function(value) {
         Audio.stopSE('mixer');

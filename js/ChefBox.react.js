@@ -1,7 +1,6 @@
 var Progress = require('rc-progress').Line;
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
-var PureRenderMixin = require('react-addons-pure-render-mixin');
 var TransitionGroup = require('react-addons-css-transition-group');
 
 var _ = require('lodash');
@@ -17,7 +16,7 @@ var RecipeStep = require('./RecipeStep.react.js');
 const RESCUE_TEXT = ['save', 'rescue', 'help', 'assist', 'support', 'inspire', 'bail', 'hug', 'heal', 'comfort', 'tickle', 'calm', 'feed'];
 
 var ChefBox = React.createClass({
-  mixins: [PureRenderMixin, TimerMixin],
+  mixins: [TimerMixin],
 
   propTypes: {
     chefId: React.PropTypes.number.isRequired,
@@ -47,6 +46,16 @@ var ChefBox = React.createClass({
       gameOver: false, // true if lost or won
       justFailed: false,
     };
+  },
+
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return (
+      nextState.backgroundClass !== this.state.backgroundClass ||
+      nextState.content !== this.state.content ||
+      nextState.timer !== this.state.timer ||
+      nextState.lives !== this.state.lives ||
+      nextState.popups !== this.state.popups
+    );
   },
 
   componentDidMount: function() {
@@ -141,6 +150,12 @@ var ChefBox = React.createClass({
         stepProps.onComplete = stepProps.onComplete.bind(
           this, this.state.progress, this.state.timer);
       }
+      if (!stepProps.onProgress) {
+        stepProps.onProgress = this.onProgress;
+      } else {
+        // Compose functions
+        stepProps.onProgress = _.flow(stepProps.onProgress, this.onProgress);
+      }
 
       // Clear content of recipe step first
       this.setState({
@@ -155,7 +170,7 @@ var ChefBox = React.createClass({
         this.timerInterval = this.setInterval(this.updateTimer, 1000);
         this.setState({
           backgroundClass: '',
-          content: <RecipeStep onProgress={this.onProgress} {...stepProps} />,
+          content: <RecipeStep {...stepProps} />,
           step: newStep,
         });
 
@@ -226,18 +241,14 @@ var ChefBox = React.createClass({
     var popups = this.state.popups;
     popups.push(this.renderRescuePopup(chefName, onRescue));
     this.setState({popups: popups});
-  },
-
-  showPopup: function(chefName, popup) {
-    var popups = this.state.popups;
-    popups.push(popup);
-    this.setState({popups: popups});
+    this.forceUpdate();
   },
 
   hidePopup: function(key) {
     var popups = this.state.popups;
     _.remove(popups, (p) => p.key === key);
     this.setState({popups: popups});
+    this.forceUpdate();
   },
 
   rescue: function(loser) {

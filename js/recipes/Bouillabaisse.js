@@ -204,6 +204,7 @@ var Bouillabaisse = {
         if (value % 7 === 0) {
           Audio.playSE('halibut');
         }
+        return value;
       },
     },
     {

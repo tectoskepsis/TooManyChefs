@@ -130,7 +130,7 @@ var Game = React.createClass({
       }
     }
 
-    if (this.state.singlePlayer === null) {
+    if (this.state.gameState === 'title') {
       this.setTimeout(() => {
         this.setStateDelay('menu');
       }, 1500);
@@ -164,8 +164,6 @@ var Game = React.createClass({
     }
 
     var stillAlive = this.state.stillAlive - 1;
-    var gameOver = !canSave || stillAlive === this.state.completed;
-
     var chefs = this.state.chefs;
     chefs[loser].dead = true;
     this.setState({
@@ -182,7 +180,7 @@ var Game = React.createClass({
       var chef = this.refs['chef' + i];
       var chefName = chefs[loser].chefName;
 
-      if (gameOver) {
+      if (!canSave) {
         chef.gameOver(<p>{chefName} failed to complete their recipe!</p>);
       } else if (!chefs[i].dead) {
         chef.showRescuePopup(chefName,
@@ -190,7 +188,7 @@ var Game = React.createClass({
       }
     }
 
-    if (gameOver) {
+    if (!canSave) {
       // Send Google Analytics event
       Audio.stopAllSounds();
       ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);

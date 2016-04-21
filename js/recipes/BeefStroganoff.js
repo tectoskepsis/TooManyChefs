@@ -125,7 +125,7 @@ var BeefStroganoff = {
       },
     },
     {
-      pretext: <span>Lower the heat on the stove to LOW.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
+      pretext: <span>Lower the heat on the stove to <b className="lightRed">LOW</b>.<br/>OFF LOW - - MED - - HIGH - - - - WAY TOO HIGH<br/></span>,
       instruction: '^',
       type: 'dial',
       startValue: 13,
@@ -149,6 +149,7 @@ var BeefStroganoff = {
         if (value >= 7 && value <= 12) {
           Audio.pauseSE('frying');
         }
+        return value;
       },
       onTimeout: function(value) {
         Audio.stopSE('frying');
