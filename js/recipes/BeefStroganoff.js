@@ -34,7 +34,7 @@ var BeefStroganoff = {
         {name: 'paring knife', key: 'p', left: false},
         {name: 'fork', key: 'f', left: false},
       ],
-      timer: 10,
+      timer: 9,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;

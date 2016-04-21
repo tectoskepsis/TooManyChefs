@@ -151,7 +151,7 @@ var ChickenMarsala = {
         {name: 'very sticky pan', key: 'v', left: false, sound: 'cupboard'},
         {name: 'wok', key: 'w', left: false, sound: 'cupboard'},
       ],
-      timer: 10,
+      timer: 8,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -181,7 +181,7 @@ var ChickenMarsala = {
         {name: 'garlic', key: 'g', left: false},
         {name: 'leftover Chinese', key: 'l', left: false},
       ],
-      timer: 10,
+      timer: 8,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -230,10 +230,10 @@ var ChickenMarsala = {
       pretext: 'Wait for the moisture to evaporate, then',
       instruction: 'remove',
       posttext: <span>the pan and set it aside.<br/><br/>&nbsp;&nbsp;&nbsp;<ColorChange toColor="#5cb85c">&#9679;</ColorChange> evaporated</span>,
-      timer: 30,
+      timer: 20,
       onComplete: function(progress, time) {
         Audio.stopSE('frying');
-        if (time <= 20) {
+        if (time <= 10) {
           this.nextStep();
         } else {
           this.failure();
@@ -308,7 +308,7 @@ var ChickenMarsala = {
       instruction: 'p',
       type: 'mash',
       mashCount: 10,
-      timer: 10,
+      timer: 9,
     },
     {
       pretext: 'Add the',

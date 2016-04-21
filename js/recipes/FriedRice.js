@@ -27,7 +27,7 @@ var FriedRice = {
       pretext: 'Type',
       instruction: 'g',
       posttext: 'to grab a cutting board from the kitchen cabinet.',
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: <span>Equip a <b>paring knife</b> for +3 attack vs. vegetables.</span>,

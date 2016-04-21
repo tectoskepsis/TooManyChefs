@@ -26,7 +26,7 @@ var ChocolateCupcakes = {
       pretext: 'Type',
       instruction: '350',
       posttext: '°F to preheat the oven.',
-      timer: 10,
+      timer: 8,
     },
     {
       pretext: <span>Grab a <b>muffin pan</b> from the pantry.</span>,

@@ -18,7 +18,7 @@ var CremeBrulee = {
   name: 'Crème Brûlée',
   chefName: 'Pâtissier',
   type: 'dessert',
-  difficulty: 'medium',
+  difficulty: 'hard',
   ingredients: ['1 qt heavy cream', '1 vanilla bean', '1 cup vanilla sugar', '6 large eggs', '2 qt hot water', '1 blowtorch'],
   description: 'A creamy custard topped with caramelized sugar, sweet enough to melt a sweetheart\'s heart.',
 
@@ -276,7 +276,7 @@ var CremeBrulee = {
       pretext: <span>Pour boiling water into the pan until it fills <b>halfway</b>.<br/></span>,
       instruction: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwater',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4</span>,
-      timer: 10,
+      timer: 9,
       onComplete: () => {},
       onHoldSound: 'pouring',
       onTimeout: function(progress) {
@@ -338,7 +338,7 @@ var CremeBrulee = {
       ingredients: [
         {name: 'ramekins', key: 'r', left: true},
       ],
-      timer: 7,
+      timer: 5,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -355,9 +355,9 @@ var CremeBrulee = {
       pretext: 'Wait a bit for it to freeze; then take it out to',
       instruction: 'thaw',
       posttext: <span>.<br/><br/>&nbsp;&nbsp;&nbsp;<ColorChange toColor="#659cf3">&#9679;</ColorChange> frozen</span>,
-      timer: 30,
+      timer: 20,
       onComplete: function(progress, time) {
-        if (time <= 20) {
+        if (time <= 10) {
           this.nextStep();
         } else {
           this.failure();
@@ -403,7 +403,7 @@ var CremeBrulee = {
       pretext: <span>Plug the torch into the wall using the arrow keys.<br/><br/>|OUTLET|</span>,
       instruction: '<=plug=',
       type: 'dial',
-      startValue: 10,
+      startValue: 7,
       onTimeout: function(value) {
         if (value <= 2) {
           this.nextStep();

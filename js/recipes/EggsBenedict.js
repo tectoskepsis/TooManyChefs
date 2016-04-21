@@ -55,7 +55,9 @@ var EggsBenedict = {
     {
       pretext: <span>Learn some vocabulary while the butter melts.<br/>Butyraceous (<i>adj</i>). of or like butter.</span>,
       timer: 10,
-      onTimeout: nextStep,
+      onTimeout: function() {
+        this.nextStep(false, 'butyraceous');
+      },
     },
     {
       pretext: <span>Plug in the blender using the arrow keys.<br/><br/>|OUTLET|</span>,

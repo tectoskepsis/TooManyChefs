@@ -25,7 +25,7 @@ var FishCurry = {
       pretext: 'Take out a',
       instruction: 'grinder',
       posttext: 'from your back pocket.',
-      timer: 10,
+      timer: 9,
     },
     {
       pretext: <span>Type to add onions, ginger, cumin seeds, and chili into the grinder.<br/></span>,

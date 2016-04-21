@@ -18,7 +18,7 @@ var Bouillabaisse = {
   name: 'Bouillabaisse',
   chefName: 'Entremetier',
   type: 'side',
-  difficulty: 'medium',
+  difficulty: 'hard',
   ingredients: ['3 tbsp virgin oil', '2 leeks', '1 onion', '4 garlic cloves', '2 tomatoes', 'one 2-lb live lobster', '2 dozen littleneck clams', '1 lb monkfish', '1 lb red snapper fillet', '1 lb halibut fillet'],
   description: 'A diverse fish stew, as savory as it is unpronounceable.',
 
@@ -28,7 +28,7 @@ var Bouillabaisse = {
       pretext: 'Grab a',
       instruction: 'large skillet',
       posttext: 'from the pantry.',
-      timer: 10,
+      timer: 11,
     },
     {
       pretext: <span>Put <b className="green">3 tbsp</b> of olive oil (but <b>no more</b>) into the pan.<br/></span>,

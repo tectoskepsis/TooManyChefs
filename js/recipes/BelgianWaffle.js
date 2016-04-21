@@ -27,7 +27,7 @@ var BelgianWaffle = {
       pretext: <span>Pour <b className="green">1/4</b> cup warm milk into a small bowl by holding 'm'.<br/></span>,
       instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmilk',
       posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4&nbsp;&nbsp;&nbsp;&nbsp;^4/4</span>,
-      timer: 10,
+      timer: 9,
       onComplete: () => {},
       onHoldSound: 'pouring',
       onTimeout: function(progress) {

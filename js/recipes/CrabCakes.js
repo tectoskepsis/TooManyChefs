@@ -190,7 +190,7 @@ var CrabCakes = {
       instruction: '^',
       type: 'dial',
       startValue: 13,
-      timer: 10,
+      timer: 9,
       onProgress: function(value) {
         if (value <= 3) {
           Audio.stopSE('frying');

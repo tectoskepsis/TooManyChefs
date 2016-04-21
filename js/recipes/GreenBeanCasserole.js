@@ -26,7 +26,7 @@ var GreenBeanCasserole = {
       pretext: 'Grab a cutting board and knife by tapping',
       instruction: 'g',
       posttext: '.',
-      timer: 10,
+      timer: 7,
     },
     {
       pretext: 'Type',

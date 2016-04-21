@@ -1,4 +1,6 @@
 module.exports = [
+  // TODO: tutorial recipe with Oatmeal
+  //    require('./Oatmeal.js'),
   {
     name: 'American Diner',
     key: 'amer-diner',
@@ -38,9 +40,7 @@ module.exports = [
     locked: true,
     rating: 5,
     recipes: [
-      // TODO: get rid of oatmeal
-      //require('./Bruschetta.js'),
-      require('./Oatmeal.js'),
+      require('./Bruschetta.js'),
       require('./ChickenMarsala.js'),
       require('./Bouillabaisse.js'),
       require('./CremeBrulee.js'),
