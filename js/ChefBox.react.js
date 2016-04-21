@@ -42,6 +42,7 @@ var ChefBox = React.createClass({
       content: null,
       popups: [],
       lives: 3,
+      failCount: 0, // how many times failed
       rescue: 0, // how many times been rescued
       gameOver: false, // true if lost or won
       justFailed: false,
@@ -202,13 +203,17 @@ var ChefBox = React.createClass({
       this.timeout = this.setTimeout(() => {
         if (livesLeft === 0) {
           this.timerInterval = this.setInterval(this.updateTimer, 1000);
+          // Compute rescue time based on fail count
+          var failCount = this.state.failCount + 1;
+          var rescueTime = Math.max(10 - (failCount === 1 ? 0 : failCount), 3);
           this.setState({
             popups: [],
-            startTime: 10,
-            timer: 10,
+            startTime: rescueTime,
+            timer: rescueTime,
             onTimeout: this.onRescueTimeout,
             content: this.renderRescue(),
             rescue: 0,
+            failCount: failCount,
           });
           this.props.onFailure(true);
         } else {
@@ -276,6 +281,7 @@ var ChefBox = React.createClass({
     this.setState({
       content: null,
       timer: 10,
+      failCount: 0,
     });
     this.setTimeout(() => this.setState({content: this.renderRecipeStart()}), 250);
   },

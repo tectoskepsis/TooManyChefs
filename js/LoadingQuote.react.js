@@ -25,6 +25,8 @@ const LOADING_QUOTES = [
   {quote: <span>A <span className="darkBlue">single grain of rice</span> can tip the scale.</span>, source: 'The Emperor of China, Mulan'},
   {quote: <span><span className="darkBlue">The oven.</span> It is a beautiful and terrible thing, and should therefore be treated with great caution.</span>, source: 'Albus Dumbledore, J. K. Rowling'},
   {quote: <span>Food is the only force capable of<br/>transforming an <span className="fireRed">enemy</span> into <span className="green">friend</span>.</span>, source: 'Martin Luther King, Jr.'},
+  {quote: <span>She who succeeds in gaining the <span className="green">mastery of the dish</span> will gain the <span className="darkBlue">mastery of life</span>.</span>, source: 'Susan B. Anthony'},
+  {quote: <span>I can calculate the motion of heavenly bodies, but not the <span className="fireRed">madness of cooks</span>.</span>, source: 'Isaac Newton'},
 ];
 
 var LoadingQuote = React.createClass({
