@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var _ = require('lodash');
+var _throttle = require('lodash/throttle');
 
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
@@ -43,7 +43,7 @@ var KeyboardMixin = {
 
     if (this.checkHeldKey) {
       var holdInterval = this.holdInterval || 50;
-      this.checkHeldKey = _.throttle(this.checkHeldKey, holdInterval);
+      this.checkHeldKey = _throttle(this.checkHeldKey, holdInterval);
       this.timerInterval = this.setInterval(this.checkHeldKey, holdInterval);
       $doc.on('keydown', this.checkHeldKey);
     }

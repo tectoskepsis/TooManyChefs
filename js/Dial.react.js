@@ -1,5 +1,5 @@
 var React = require('react');
-var _ = require('lodash');
+var _repeat = require('lodash/repeat');
 
 var Audio = require('./Audio.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
@@ -51,7 +51,7 @@ var Dial = React.createClass({
   render: function() {
     return (
       <code>
-        {_.repeat('\xa0', this.state.value) /* non-breakable space */}
+        {_repeat('\xa0', this.state.value) /* non-breakable space */}
         <span className="input">{this.props.children}</span>
       </code>
     );

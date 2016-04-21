@@ -1,5 +1,5 @@
 var React = require('react');
-var _ = require('lodash');
+var _isFunction = require('lodash/isFunction');
 
 var Arrows = require('./Arrows.react.js');
 var Counter = require('./Counter.react.js');
@@ -45,7 +45,7 @@ var RecipeStep = React.createClass({
 
     // Unravel closures in case they are functions
     function unravel(data) {
-      return _.isFunction(data) ? data() : data;
+      return _isFunction(data) ? data() : data;
     }
     pretext = unravel(pretext);
     posttext = unravel(posttext);

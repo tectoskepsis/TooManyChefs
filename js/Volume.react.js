@@ -1,7 +1,6 @@
 var React = require('react');
 var TransitionGroup = require('react-addons-css-transition-group');
 
-var _ = require('lodash');
 var cx = require('classnames');
 
 var Inst = require('./Instruction.react.js');

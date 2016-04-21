@@ -1,6 +1,6 @@
 var React = require('react');
 
-var _ = require('lodash');
+var _sample = require('lodash/sample');
 
 const LOADING_QUOTES = [
   {quote: <span><span className="fireRed">Well done</span> is better than well said, except for steaks, which should always be<br/><span className="fireRed">medium-rare</span>.</span>, source: 'Benjamin Franklin'},
@@ -32,7 +32,7 @@ const LOADING_QUOTES = [
 var LoadingQuote = React.createClass({
   getInitialState: function() {
     return {
-      quote: _.sample(LOADING_QUOTES),
+      quote: _sample(LOADING_QUOTES),
     };
   },
 
