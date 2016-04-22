@@ -1,6 +1,12 @@
 module.exports = [
-  // TODO: tutorial recipe with Oatmeal
-  //    require('./Oatmeal.js'),
+  {
+    name: 'Breakfast Tutorial',
+    key: 'brkf-tutorial',
+    rating: 1,
+    recipes: [
+      require('./Oatmeal.js'),
+    ],
+  },
   {
     name: 'American Diner',
     key: 'amer-diner',
@@ -24,17 +30,6 @@ module.exports = [
     ],
   },
   {
-    name: 'Pan-Asian Lunch',
-    key: 'asia-lunch',
-    rating: 4,
-    recipes: [
-      require('./SpringRolls.js'),
-      require('./FishCurry.js'),
-      require('./FriedRice.js'),
-      require('./Cheesecake.js'),
-    ],
-  },
-  {
     name: 'Mashed Potatoes',
     key: 'bonus-potatoes',
     locked: true,
@@ -43,6 +38,18 @@ module.exports = [
     rating: 3,
     recipes: [
       require('./MashedPotatoes.js'),
+    ],
+  },
+  {
+    name: 'Pan-Asian Lunch',
+    key: 'asia-lunch',
+    locked: true,
+    rating: 4,
+    recipes: [
+      require('./SpringRolls.js'),
+      require('./FishCurry.js'),
+      require('./FriedRice.js'),
+      require('./Cheesecake.js'),
     ],
   },
   {

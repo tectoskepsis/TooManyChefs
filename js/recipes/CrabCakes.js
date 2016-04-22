@@ -2,7 +2,6 @@ var React = require('react');
 
 var Audio = require('../Audio.js');
 var ColorChange = require('../ColorChange.react.js');
-var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
   crabName: 'charlie',

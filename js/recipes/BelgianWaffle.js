@@ -1,7 +1,6 @@
 var React = require('react');
 
 var ColorChange = require('../ColorChange.react.js');
-var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
   name: 'waffley',

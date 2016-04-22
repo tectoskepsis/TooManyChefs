@@ -1,7 +1,5 @@
 var React = require('react');
 
-var RecipeStep = require('../RecipeStep.react.js');
-
 var recipeData = {
   left: [],
   right: [],

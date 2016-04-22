@@ -172,7 +172,7 @@ var Game = React.createClass({
     });
 
     // Propagate failure to everyone
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < this.state.chefs.length; i++) {
       if (i === loser) {
         continue;
       }

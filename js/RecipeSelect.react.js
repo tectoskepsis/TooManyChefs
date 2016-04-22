@@ -62,7 +62,7 @@ var RecipeSelect = React.createClass({
     };
     var mealLocked = meal.locked && (i === 0 || !_.get(this.props.saveData, [Recipes[i-1].key, 'completed'], false));
     var recordText = mealData.bestTime && (meal.record === 'count'
-      ? <p className="green">Best Count: {mealData.bestTime}</p>
+      ? <p className="green">Best Score: {mealData.bestTime}</p>
       : <p className="green">Best Time: {renderTime(mealData.bestTime)}</p>);
 
     return (

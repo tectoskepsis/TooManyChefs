@@ -1,7 +1,6 @@
 var React = require('react');
 
 var Audio = require('../Audio.js');
-var RecipeStep = require('../RecipeStep.react.js');
 
 var recipeData = {
   left: [],
