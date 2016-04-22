@@ -11,7 +11,7 @@ const LOADING_QUOTES = [
   {quote: <span>To improve is <span className="darkBlue">to cook</span>;<br/>to be perfect is <span className="green">to cook often</span>.</span>, source: 'Winston Churchill'},
   {quote: <span><span className="green">To cook</span> or <span className="darkBlue">not to cook</span>,<br/>that is the question.</span>, source: 'Hamlet, William Shakespeare'},
   {quote: <span><span className="goldenBrown">Perfect steaks</span>, like perfect men,<br/>are <span className="fireRed">very rare</span>.</span>, source: 'René Descartes'},
-  {quote: <span>I cannot believe in a God who wants<br/> to be <span className="fireRed">fed all the time</span>.</span>, source: 'Friedrich Nietzsche'},
+  {quote: <span>That which does not <span className="fireRed">poison</span> us<br/> makes us stronger.</span>, source: 'Friedrich Nietzsche'},
   {quote: <span><span className="goldenBrown">Cuisine</span> is the mediator between the spiritual and the sensual life.</span>, source: 'Ludwig van Beethoven'},
   {quote: <span>I pay no attention whatever to anybody's praise or blame. I simply <span className="green">follow my own recipe.</span></span>, source: 'Wolfgang Amadeus Mozart'},
   {quote: <span>There is no substitute for <span className="fireRed">good spices</span>.</span>, source: 'Thomas Edison'},
@@ -27,6 +27,8 @@ const LOADING_QUOTES = [
   {quote: <span>Food is the only force capable of<br/>transforming an <span className="fireRed">enemy</span> into <span className="green">friend</span>.</span>, source: 'Martin Luther King, Jr.'},
   {quote: <span>She who succeeds in gaining the <span className="green">mastery of the dish</span> will gain the <span className="darkBlue">mastery of life</span>.</span>, source: 'Susan B. Anthony'},
   {quote: <span>I can calculate the motion of heavenly bodies, but not the <span className="fireRed">madness of cooks</span>.</span>, source: 'Isaac Newton'},
+  {quote: <span><span className="darkBlue">Thoughts without content</span> are empty;<br/><span className="fireRed">dishes without spices</span> are blind.</span>, source: 'Immanuel Kant'},
+  {quote: <span>Chefs of the world unite; you have<br/><span className="darkBlue">nothing to lose</span> but your <span className="fireRed">chains</span>.</span>, source: 'Karl Marx'},
 ];
 
 var LoadingQuote = React.createClass({

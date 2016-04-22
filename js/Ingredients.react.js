@@ -1,4 +1,5 @@
 var React = require('react');
+var _cloneDeep = require('lodash/cloneDeep');
 
 var Audio = require('./Audio.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
@@ -21,7 +22,7 @@ var Ingredients = React.createClass({
 
   getInitialState: function() {
     return {
-      ingredients: this.props.ingredients,
+      ingredients: _cloneDeep(this.props.ingredients),
     };
   },
 
