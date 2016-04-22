@@ -35,6 +35,17 @@ module.exports = [
     ],
   },
   {
+    name: 'Mashed Potatoes',
+    key: 'bonus-potatoes',
+    locked: true,
+    bonus: true,
+    record: 'count',
+    rating: 3,
+    recipes: [
+      require('./MashedPotatoes.js'),
+    ],
+  },
+  {
     name: 'French-Italian Bistro',
     key: 'frit-bistro',
     locked: true,

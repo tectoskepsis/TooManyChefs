@@ -42,7 +42,7 @@ var Game = React.createClass({
       fadeTitle: false,
       gameOver: false,
       report: null,
-      mealTime: 0,
+      newRecord: 0,
       saveData: {},
     };
   },
@@ -110,7 +110,7 @@ var Game = React.createClass({
         gameOver: false,
         chefs: Recipes[this.state.meal].recipes.map(_.clone),
         report: null,
-        mealTime: null,
+        newRecord: null,
       });
     }, 500 + _.random(8000, 10000));
   },
@@ -146,10 +146,10 @@ var Game = React.createClass({
     });
 
     // Are all chefs ready to begin?
-    if (stillAlive === 4) {
+    if (stillAlive === this.state.chefs.length) {
       Audio.playSE(['ready', 'begin']);
       this.setState({startTime: new Date().getTime()});
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < this.state.chefs.length; i++) {
         var chef = this.refs['chef' + i];
         chef.startGame();
       }
@@ -207,22 +207,21 @@ var Game = React.createClass({
     });
   },
 
-  onComplete: function(winner) {
+  onComplete: function(winner, newRecord) {
     var completed = this.state.completed + 1;
     var chefs = this.state.chefs;
-    var newTime = ((new Date().getTime() - this.state.startTime) / 1000) << 0;
     chefs[winner].completed = true;
     this.setState({
       chefs: chefs,
       completed: completed,
-      mealTime: newTime,
+      newRecord: newRecord,
     });
 
-    if (completed === 4) {
+    if (completed === this.state.chefs.length) {
       // Send Google Analytics event
       Audio.stopAllSounds();
-      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, newTime);
-      this.saveData(true, newTime);
+      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, newRecord);
+      this.saveData(true, newRecord);
       return <p>Type <Inst onComplete={this.onReport}>report</Inst> to view your results.</p>;
     }
     return null;
@@ -232,13 +231,16 @@ var Game = React.createClass({
     this.setState({report: this.renderReport()});
   },
 
-  saveData: function(completed, newTime) {
+  saveData: function(completed, newRecord) {
+    // NOTE: for legacy reasons, the record is saved as "bestTime"
+    // but it holds either times and counts
     var meal = Recipes[this.state.meal];
+    var recordCmp = meal.record === 'count' ? Math.max : Math.min;
     var saveData = this.state.saveData;
     var mealData = _.get(saveData, meal.key, {});
     mealData.completed = completed;
     mealData.bestTime = _.has(mealData, 'bestTime')
-      ? Math.min(newTime, mealData.bestTime) : newTime;
+      ? recordCmp(newRecord, mealData.bestTime) : newRecord;
     saveData[meal.key] = mealData;
     this.setState({saveData: saveData});
   },
@@ -363,6 +365,7 @@ var Game = React.createClass({
         {this.state.chefs.map((recipe, i) =>
           <ChefBox key={i} ref={'chef' + i} chefId={i}
                    chefName={recipe.chefName}
+                   numChefs={this.state.chefs.length}
                    recipe={recipe}
                    onReady={_.partial(this.onReady, i)}
                    onFailure={_.partial(this.onFailure, i)}
@@ -384,8 +387,11 @@ var Game = React.createClass({
   renderReport: function() {
     var meal = Recipes[this.state.meal];
     var mealData = _.get(this.state.saveData, meal.key);
-    var won = this.state.completed === 4;
-    var newRecord = won && this.state.mealTime <= mealData.bestTime;
+    var won = this.state.completed === this.state.chefs.length;
+    var newRecord = won && (meal.record === 'count'
+      ? this.state.newRecord >= mealData.bestTime
+      : this.state.newRecord <= mealData.bestTime);
+
     var completeText = won
       ? <b className="green">SUCCESS {newRecord && '- NEW RECORD'}</b>
       : <b className="fireRed">FAILURE</b>;
@@ -394,6 +400,9 @@ var Game = React.createClass({
       var sec = time % 60;
       return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
     };
+    var recordText = won && (meal.record === 'count'
+      ? <p>Count: {this.state.newRecord}</p>
+      : <p>Cook Time: {renderTime(this.state.newRecord)}</p>);
 
     if (newRecord) {
       Audio.playSE('newrecord');
@@ -405,7 +414,7 @@ var Game = React.createClass({
       <div className="report center">
         <h3><b>{meal.name} - Review</b></h3>
         <h4>{completeText}</h4>
-        {won && <p>Cook Time: {renderTime(this.state.mealTime)}</p>}
+        {recordText}
         {this.state.chefs.map((r, i) =>
           <div key={i} className={cx({green: r.completed, fireRed: !r.completed})}>{r.name}</div>)}
         <br/>

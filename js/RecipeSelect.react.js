@@ -61,6 +61,9 @@ var RecipeSelect = React.createClass({
       return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
     };
     var mealLocked = meal.locked && (i === 0 || !_.get(this.props.saveData, [Recipes[i-1].key, 'completed'], false));
+    var recordText = mealData.bestTime && (meal.record === 'count'
+      ? <p className="green">Best Count: {mealData.bestTime}</p>
+      : <p className="green">Best Time: {renderTime(mealData.bestTime)}</p>);
 
     return (
       <div className={cx('meal', 'padTop', {locked: mealLocked})}>
@@ -69,8 +72,9 @@ var RecipeSelect = React.createClass({
           Difficulty: {_.range(5).map((i) => i < meal.rating ? fullStar(i) : emptyStar(i))}
         </p>
         {mealLocked ? <h4 className="fireRed">Locked</h4> :
+         meal.bonus ? <h4 className="darkBlue">BONUS ROUND</h4> :
          mealData.completed ? <h4 className="green">Completed!</h4> : <br/>}
-        {mealData.bestTime && <p className="green">Best Time: {renderTime(mealData.bestTime)}</p>}
+        {recordText}
 
         {meal.recipes.map((r, i) => (
           <div key={i}>{mealLocked ? '??????' : r.name} ({r.type})</div>

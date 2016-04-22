@@ -36,7 +36,7 @@ var Mash = React.createClass({
   },
 
   onKeyUp: function(e) {
-    if (this.state.value === 0) {
+    if (this.state.value === 0 && this.props.mashCount > 0) {
       return;
     }
 
@@ -48,7 +48,7 @@ var Mash = React.createClass({
         Audio.playRandomClick();
       }
 
-      var newValue = this.state.value - 1;
+      var newValue = this.state.value + (this.props.mashCount > 0 ? -1 : 1);
       this.setState({value: newValue});
 
       if (this.props.onComplete && newValue === 0) {

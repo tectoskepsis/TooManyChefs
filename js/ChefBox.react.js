@@ -21,6 +21,7 @@ var ChefBox = React.createClass({
   propTypes: {
     chefId: React.PropTypes.number.isRequired,
     chefName: React.PropTypes.string.isRequired,
+    numChefs: React.PropTypes.number.isRequired,
     recipe: React.PropTypes.object.isRequired,
     onFailure: React.PropTypes.func.isRequired,
     onReady: React.PropTypes.func.isRequired,
@@ -137,9 +138,15 @@ var ChefBox = React.createClass({
       });
 
       // Wait 250ms before updating for fade effect
+      var record = this.getRecord();
       this.setTimeout(() => this.setState({
         backgroundClass: 'success',
-        content: <div key="complete">{this.renderRecipeDone()}{this.props.onComplete(this.props.chefId)}</div>,
+        content: (
+          <div key="complete">
+            {this.renderRecipeDone(record)}
+            {this.props.onComplete(this.props.chefId, record)}
+          </div>
+        ),
         step: newStep,
       }), 250);
 
@@ -390,15 +397,30 @@ var ChefBox = React.createClass({
     );
   },
 
-  renderRecipeDone: function() {
-    var time = (new Date().getTime() - this.props.startTime) / 1000;
-    var min = (time / 60) << 0;
-    var sec = (time % 60) << 0;
+  getRecord: function() {
+    if (this.props.recipe.record === 'count') {
+      return this.state.progress;
+    } else {
+      return ((new Date().getTime() - this.props.startTime) / 1000) << 0;
+    }
+  },
+
+  renderRecipeDone: function(record) {
+    var recordName;
+    if (this.props.recipe.record === 'count') {
+      recordName = 'Count';
+    } else {
+      var min = (record / 60) << 0;
+      var sec = (record % 60) << 0;
+
+      recordName = 'Time Taken';
+      record = _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
+    }
 
     return (
       <div>
         <p>Great work! You've completed the recipe for {this.props.recipe.name}.</p>
-        <b>Time Taken</b>: {_.padStart(min, 2, '0')}:{_.padStart(sec, 2, '0')}
+        <b>{recordName}</b>: {record}
         <br/>
       </div>
     );
@@ -417,9 +439,13 @@ var ChefBox = React.createClass({
 
   render: function() {
     var style = {height: window.innerHeight / 2 - 20};
+    var sizeClass = cx('col-xs-12', 'col-sm-6', {
+      'col-sm-offset-3': this.props.numChefs === 1,
+      'vmiddle': this.props.numChefs <= 2,
+    });
 
     return (
-      <div className="col-xs-12 col-sm-6">
+      <div className={sizeClass}>
         <div className={cx('chefBox', this.state.backgroundClass)} style={style}>
           <h4>{this.props.chefName} {this.renderLives()} {this.renderTime()}</h4>
           <b className="recipeName pull-right">{this.props.recipe.name}</b>
