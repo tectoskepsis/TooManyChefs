@@ -7,6 +7,7 @@ var MashedPotatoes = {
   type: 'entrée',
   record: 'count',
   difficulty: 'easy',
+  lives: 1,
   ingredients: ['potatoes', 'more potatoes', 'strength', 'determination'],
   description: 'BONUS ROUND: mash the potatoes as fast as possible!',
 
@@ -18,8 +19,12 @@ var MashedPotatoes = {
       instruction: 'm',
       mashCount: 0, // count up
       timer: 10,
-      onTimeout: function() {
-        this.nextStep();
+      onTimeout: function(progress) {
+        if (progress > 0) {
+          this.nextStep();
+        } else {
+          this.failure();
+        }
       },
     },
   ],

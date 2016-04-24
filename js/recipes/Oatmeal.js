@@ -49,7 +49,7 @@ var Oatmeal = {
       },
     },
     {
-      pretext: <span>Hold 'w' to pour <b className="green">1 cup</b> of water into the bowl. Stop at the <b>^</b> indicator!<br/></span>,
+      pretext: <div>Hold 'w' to pour <b className="green">1 cup</b> of water into the bowl.<br/>(Stop at the correct <b>^</b> indicator!)<br/><br/></div>,
       instruction: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwater',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/2 cup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1 cup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 3/2 cups</span>,
       timer: 10,
@@ -96,7 +96,6 @@ var Oatmeal = {
       timer: 7,
       onTimeout: nextStep,
     },
-    // TODO: one of each type of instruction for tutorial
   ],
 };
 

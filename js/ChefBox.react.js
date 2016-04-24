@@ -42,7 +42,7 @@ var ChefBox = React.createClass({
       backgroundClass: '',
       content: null,
       popups: [],
-      lives: 3,
+      lives: this.props.recipe.lives || 3,
       failCount: 0, // how many times failed
       rescue: 0, // how many times been rescued
       gameOver: false, // true if lost or won
@@ -204,7 +204,7 @@ var ChefBox = React.createClass({
     });
 
     // Wait 250ms before updating for fade effect
-    if (this.props.stillAlive <= 1) {
+    if (livesLeft === 0 && this.props.stillAlive <= 1) {
       this.onRescueTimeout();
     } else {
       this.timeout = this.setTimeout(() => {
@@ -429,10 +429,11 @@ var ChefBox = React.createClass({
   renderLives: function() {
     var heartFull = (i) => <span key={i} className="fireRed glyphicon glyphicon-heart" />;
     var heartEmpty = (i) => <span key={i} className="lightRed glyphicon glyphicon-heart-empty" />;
+    var numLives = this.props.recipe.lives || 3;
 
     return (
       <span className="padLeft">
-        {_.range(3).map(i => this.state.lives > i ? heartFull(i) : heartEmpty(i))}
+        {_.range(numLives).map(i => this.state.lives > i ? heartFull(i) : heartEmpty(i))}
       </span>
     );
   },
