@@ -43,7 +43,7 @@ code > .correct {
   margin-top: 5%;
 }
 .vmiddle {
-  margin-top: 10%;
+  margin-top: 12%;
 }
 
 .list-inline > li > code {
@@ -176,7 +176,7 @@ ul.ingredients-step > li {
 }
 
 .report {
-  background-color: #edf4ff;
+  background-color: #f3f8ff;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -185,6 +185,7 @@ ul.ingredients-step > li {
   margin-left: -200px;
   margin-top: -175px;
   padding: 15px 10px;
+  border: 1px solid #659cf3;
   border-radius: 10px;
 }
 
