@@ -374,6 +374,7 @@ var Game = React.createClass({
                    onReport={this.onReport}
                    stillAlive={this.state.stillAlive}
                    startTime={this.state.startTime}
+                   singlePlayer={this.state.singlePlayer}
           />)}
         <TransitionGroup transitionName="fade"
                          transitionEnterTimeout={250}

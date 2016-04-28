@@ -9,7 +9,7 @@ var nextStep = function() {
   return this.nextStep();
 };
 
-/* Used for tutorial or testing */
+/* Used for tutorial */
 var Oatmeal = {
   name: 'Oatmeal',
   chefName: 'Garçon de cuisine',
@@ -94,7 +94,13 @@ var Oatmeal = {
       instruction: 'Name the oatmeal: ',
       type: 'textinput',
       timer: 7,
-      onTimeout: nextStep,
+      onTimeout: function(name) {
+        if (!name) {
+          this.failure();
+        } else {
+          this.nextStep();
+        }
+      },
     },
   ],
 };

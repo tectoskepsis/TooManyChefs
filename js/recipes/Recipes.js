@@ -5,6 +5,7 @@ module.exports = [
     rating: 1,
     recipes: [
       require('./Oatmeal.js'),
+      require('./Cereal.js'),
     ],
   },
   {

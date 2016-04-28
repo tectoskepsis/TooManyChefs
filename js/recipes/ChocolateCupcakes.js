@@ -24,7 +24,7 @@ var ChocolateCupcakes = {
       pretext: 'Type',
       instruction: '350',
       posttext: '°F to preheat the oven.',
-      timer: 8,
+      timer: 9,
     },
     {
       pretext: <span>Grab a <b>muffin pan</b> from the pantry.</span>,
@@ -74,7 +74,7 @@ var ChocolateCupcakes = {
       pretext: <span>Cream together butter and sugar in a bowl by tapping 'c'.<br/></span>,
       instruction: 'c',
       type: 'mash',
-      mashCount: 8,
+      mashCount: 10,
       timer: 10,
     },
     {
@@ -92,7 +92,7 @@ var ChocolateCupcakes = {
       type: 'mash',
       onPressSound: ['eggbeat1', 'eggbeat2'],
       mashCount: 10,
-      timer: 10,
+      timer: 12,
     },
     {
       pretext: <span>Stir the mixture with the arrow keys.<br/></span>,
@@ -109,7 +109,7 @@ var ChocolateCupcakes = {
       pretext: 'Fill the muffin cups with',
       instruction: 'y',
       posttext: '.',
-      timer: 6,
+      timer: 8,
     },
     {
       pretext: <span>Put the <b>muffin pan</b> in the oven.</span>,
@@ -119,7 +119,7 @@ var ChocolateCupcakes = {
       ingredients: [
         {name: 'muffin pan', key: 'm', left: true, sound: 'boop'},
       ],
-      timer: 7,
+      timer: 8,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -141,7 +141,7 @@ var ChocolateCupcakes = {
       pretext: 'Remove the cupcakes from the oven with',
       instruction: 'r',
       posttext: '.',
-      timer: 7,
+      timer: 8,
     },
     {
       pretext: <span>Choose your <b>favorite</b> frosting (but <b>just one</b>)!</span>,

@@ -30,6 +30,7 @@ var ChefBox = React.createClass({
     onReport: React.PropTypes.func.isRequired,
     stillAlive: React.PropTypes.number.isRequired,
     startTime: React.PropTypes.number.isRequired,
+    singlePlayer: React.PropTypes.bool.isRequired,
   },
 
   getInitialState: function() {
@@ -348,16 +349,18 @@ var ChefBox = React.createClass({
 
   renderChefSelect: function() {
     const keys = ['q', 'p', 'z', 'm'];
+    var text = this.props.singlePlayer ? 'don this hat' : 'join the kitchen';
     return (
       <div key="select">
         <p>{Chef[this.props.recipe.chefName]}</p>
-        <p>Press <Inst onComplete={this.onChefSelect}>{keys[this.props.chefId]}</Inst> to join the kitchen.</p>
+        <p>Press <Inst onComplete={this.onChefSelect}>{keys[this.props.chefId]}</Inst> to {text}.</p>
       </div>
     );
   },
 
   renderChefWaiting: function() {
-    return <p key="chef-waiting">Waiting for other chefs...</p>;
+    var text = this.props.singlePlayer ? 'stations' : 'chefs';
+    return <p key="chef-waiting">Waiting for other {text}...</p>;
   },
 
   renderRecipeStart: function() {

@@ -28,7 +28,7 @@ var Cornbread = {
       type: 'counter',
       stepValue: 10,
       goalValue: 400,
-      timer: 10,
+      timer: 11,
       onTimeout: function(value) {
         if (value >= 395 && value <= 405) {
           this.nextStep();
@@ -53,13 +53,13 @@ var Cornbread = {
       pretext: 'Unwrap a stick of butter by tapping',
       instruction: 'u',
       posttext: '.',
-      timer: 8,
+      timer: 11,
     },
     {
       pretext: <span>Pour <b className="green">1 cup</b> of milk into a mixing bowl by holding 'm'.<br/><br/></span>,
       instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmilk',
       posttext: <span><br/>cups:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 1/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 2/2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ 3/2</span>,
-      timer: 10,
+      timer: 12,
       onHoldSound: 'pouring',
       onComplete: () => {},
       onTimeout: function(progress) {
@@ -74,7 +74,7 @@ var Cornbread = {
       pretext: 'Crack an egg into the bowl with',
       instruction: 'c',
       posttext: '.',
-      timer: 8,
+      timer: 10,
       onComplete: function() {
         this.nextStep(false, 'eggcrack');
       },
@@ -88,14 +88,13 @@ var Cornbread = {
       timer: 10,
     },
     {
-      pretext: <span>Add <b>cornmeal</b>, <b>flour</b>, <b>sugar</b>, and <b>baking powder</b> into the bowl.</span>,
+      pretext: <span>Add <b>cornmeal</b>, <b>flour</b>, and <b>baking powder</b> into the bowl.</span>,
       type: 'ingredients',
       leftName: 'Ingredients',
       rightName: 'Bowl',
       ingredients: [
         {name: 'cornmeal', key: 'c', left: true},
         {name: 'flour', key: 'f', left: true},
-        {name: 'sugar', key: 's', left: true},
         {name: 'baking powder', key: 'b', left: true},
       ],
       timer: 10,
@@ -121,7 +120,7 @@ var Cornbread = {
       pretext: 'Pour the batter into the pan with',
       instruction: 'b',
       posttext: '.',
-      timer: 8,
+      timer: 9,
     },
     {
       pretext: <span>Put the <b>pan</b> in the oven.</span>,
@@ -131,7 +130,7 @@ var Cornbread = {
       ingredients: [
         {name: 'pan of batter', key: 'p', left: true},
       ],
-      timer: 8,
+      timer: 10,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -181,7 +180,7 @@ var Cornbread = {
       pretext: () => <span>Cut {recipeData.name} into little squares with 'c' and serve!<br/></span>,
       instruction: 'c',
       type: 'mash',
-      mashCount: 7,
+      mashCount: 9,
       timer: 10,
     },
   ],

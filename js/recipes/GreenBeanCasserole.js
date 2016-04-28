@@ -25,7 +25,7 @@ var GreenBeanCasserole = {
       pretext: 'Grab a cutting board and knife by tapping',
       instruction: 'g',
       posttext: '.',
-      timer: 7,
+      timer: 8,
     },
     {
       pretext: 'Type',
@@ -39,7 +39,7 @@ var GreenBeanCasserole = {
       type: 'mash',
       mashCount: 10,
       onPressSound: 'slice',
-      timer: 10,
+      timer: 12,
     },
     {
       pretext: <span>Using the arrow keys, preheat the oven to <b className="fireRed">350°F</b>.<br/></span>,

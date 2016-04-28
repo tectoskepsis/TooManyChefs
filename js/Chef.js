@@ -7,4 +7,5 @@ module.exports = {
   'Garde Manger': 'The foodkeeper. Creator of cold hors d\'oeuvres, pâtes, and salads.',
   Friturier: 'The fry cook. Guru of oils and ancient pan techniques.',
   'Garçon de cuisine': 'The kitchen boy. Apprentice and helper to the more experienced cooks.',
+  Apprenti: 'The apprentice. Student studying under the instruction of the chef-senpai.'
 };
