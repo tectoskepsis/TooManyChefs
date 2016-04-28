@@ -444,7 +444,7 @@ var ChefBox = React.createClass({
   render: function() {
     var style = {height: window.innerHeight / 2 - 20};
     var sizeClass = cx('col-xs-12', 'col-sm-6', {
-      'col-sm-offset-3': this.props.numChefs === 1,
+      'col-sm-offset-3': this.props.numChefs % 2 !== 0 && this.props.chefId === this.props.numChefs - 1,
       'vmiddle': this.props.numChefs <= 2,
     });
 

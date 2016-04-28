@@ -16,6 +16,7 @@ var RecipeSelect = React.createClass({
     onProgress: React.PropTypes.func.isRequired,
     onSelect: React.PropTypes.func.isRequired,
     saveData: React.PropTypes.object,
+    singlePlayer: React.PropTypes.bool.isRequired,
   },
 
   getInitialState: function() {
@@ -52,6 +53,10 @@ var RecipeSelect = React.createClass({
 
   renderRecipe: function(i) {
     var meal = Recipes[i];
+    var recipes = this.props.singlePlayer
+      ? _.get(meal, 'soloRecipes', meal.recipes)
+      : meal.recipes;
+
     var emptyStar = (i) => <span key={i} className="lightBlue glyphicon glyphicon-star-empty" />;
     var fullStar = (i) => <span key={i} className="darkBlue glyphicon glyphicon-star" />;
     var mealData = _.get(this.props.saveData, meal.key, {});
@@ -76,7 +81,7 @@ var RecipeSelect = React.createClass({
          mealData.completed ? <h4 className="green">Completed!</h4> : <br/>}
         {recordText}
 
-        {meal.recipes.map((r, i) => (
+        {recipes.map((r, i) => (
           <div key={i}>{mealLocked ? '??????' : r.name} ({r.type})</div>
         ))}
 

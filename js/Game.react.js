@@ -97,9 +97,13 @@ var Game = React.createClass({
 
   onStartGame: function() {
     this.setStateDelay('loading', 500);
+    var meal = Recipes[this.state.meal];
+    var chefs = this.state.singlePlayer
+      ? _.get(meal, 'soloRecipes', meal.recipes)
+      : meal.recipes;
 
     // Send Google Analytics event
-    ga('send', 'event', 'Game', 'play', Recipes[this.state.meal].name);
+    ga('send', 'event', 'Game', 'play', meal.name);
 
     // Wait a random amount of time before loading (8-10s)
     this.setTimeout(() => {
@@ -108,11 +112,11 @@ var Game = React.createClass({
         stillAlive: 0,
         completed: 0,
         gameOver: false,
-        chefs: Recipes[this.state.meal].recipes.map(_.clone),
+        chefs: chefs.map(_.clone),
         report: null,
         newRecord: null,
       });
-    }, 500 + _.random(8000, 10000));
+    }, 500 + _.random(7500, 9000));
   },
 
   onChooseMode: function(singlePlayer) {
@@ -307,6 +311,7 @@ var Game = React.createClass({
         <RecipeSelect onProgress={this.onRecipeProgress}
                       onSelect={this.onStartGame}
                       saveData={this.state.saveData}
+                      singlePlayer={this.state.singlePlayer}
                       />
         <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst>
       </div>
