@@ -3,7 +3,7 @@ var React = require('react');
 var _sample = require('lodash/sample');
 
 const LOADING_QUOTES = [
-  {quote: <span><span className="fireRed">Well done</span> is better than well said, except for steaks, which should always be<br/><span className="fireRed">medium-rare</span>.</span>, source: 'Benjamin Franklin'},
+  {quote: <span><span className="goldenBrown">Well done</span> is better than well said, except for steaks, which should always be<br/><span className="fireRed">medium-rare</span>.</span>, source: 'Benjamin Franklin'},
   {quote: <span>A kitchen <span className="fireRed">divided</span> against itself<br/>cannot stand.</span>, source: 'Abraham Lincoln'},
   {quote: <span>Human behavior flows from three main sources: desire, emotion, and <span className="goldenBrown">cooking</span>.</span>, source: 'Plato'},
   {quote: <span>At his best, man is the noblest of all animals; <span className="fireRed">separated from cuisine</span> he is the worst.</span>, source: 'Aristotle'},
@@ -29,6 +29,7 @@ const LOADING_QUOTES = [
   {quote: <span>I can calculate the motion of heavenly bodies, but not the <span className="fireRed">madness of cooks</span>.</span>, source: 'Isaac Newton'},
   {quote: <span><span className="darkBlue">Thoughts without content</span> are empty;<br/><span className="fireRed">dishes without spices</span> are blind.</span>, source: 'Immanuel Kant'},
   {quote: <span>Chefs of the world unite; you have<br/><span className="darkBlue">nothing to lose</span> but your <span className="fireRed">chains</span>.</span>, source: 'Karl Marx'},
+  {quote: <span>The <span className="fireRed">strength</span> of a kitchen derives from<br/>the <span className="green">integrity</span> of its chefs.</span>, source: 'Confucius'},
 ];
 
 var LoadingQuote = React.createClass({
