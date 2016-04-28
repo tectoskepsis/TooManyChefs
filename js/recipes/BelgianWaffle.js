@@ -24,8 +24,8 @@ var BelgianWaffle = {
   steps: [
     {
       pretext: <span>Pour <b className="green">1/4</b> cup warm milk into a small bowl by holding 'm'.<br/></span>,
-      instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmilk',
-      posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4&nbsp;&nbsp;&nbsp;&nbsp;^4/4</span>,
+      instruction: 'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmilk',
+      posttext: <span><br/>CUPS:&nbsp;&nbsp;&nbsp;&nbsp;^ 1/4&nbsp;&nbsp;&nbsp;&nbsp;^ 2/4&nbsp;&nbsp;&nbsp;&nbsp;^ 3/4&nbsp;&nbsp;&nbsp;&nbsp;^ 4/4</span>,
       timer: 9,
       onComplete: () => {},
       onHoldSound: 'pouring',
@@ -145,9 +145,9 @@ var BelgianWaffle = {
       leftName: 'Weapon',
       rightName: 'Cabinet',
       ingredients: [
-        {name: 'steam iron', key: 's', left: false},
-        {name: 'golf iron', key: 'g', left: false},
-        {name: 'waffle iron', key: 'w', left: false},
+        {name: 'steam iron', key: 's', left: false, sound: 'boop'},
+        {name: 'golf iron', key: 'g', left: false, sound: 'boop'},
+        {name: 'waffle iron', key: 'w', left: false, sound: 'boop'},
       ],
       timer: 10,
       onProgress: function(left, right) {

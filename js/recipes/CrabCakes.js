@@ -164,7 +164,7 @@ var CrabCakes = {
         if (!joke) {
           this.failure(<p>Recipe failed. Failed to tell joke!</p>);
         } else {
-          this.nextStep();
+          this.nextStep(false, 'haha');
         }
       },
     },
@@ -176,9 +176,15 @@ var CrabCakes = {
       instruction: '<=finger=',
       posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-skillet-</span>,
       timer: 10,
+      onProgress: function(value) {
+        if (value === 0) {
+          this.playSE('haha');
+        }
+        return value;
+      },
       onTimeout: function(value) {
         if (value <= 2) {
-          this.nextStep();
+          this.nextStep(false, 'haha');
         } else {
           this.failure(<p>Recipe failed, failed to poke patty!</p>);
         }
@@ -194,8 +200,10 @@ var CrabCakes = {
         if (value <= 3) {
           Audio.stopSE('frying');
         }
+        return value;
       },
       onTimeout: function(value) {
+        console.log(value);
         Audio.stopSE('frying');
         if (value <= 3) {
           this.nextStep();
