@@ -16,6 +16,8 @@ var FruitCeviche = require('./FruitCeviche.js');
 var GreenBeanCasserole = require('./GreenBeanCasserole.js');
 var MashedPotatoes = require('./MashedPotatoes.js');
 var Oatmeal = require('./Oatmeal.js');
+var Pancakes = require('./Pancakes.js');
+var ScrambledEggs = require('./ScrambledEggs.js');
 var SpringRolls = require('./SpringRolls.js');
 
 module.exports = [
@@ -23,7 +25,8 @@ module.exports = [
     name: 'Breakfast Tutorial',
     key: 'brkf-tutorial',
     rating: 1,
-    recipes: [Oatmeal, Cereal],
+    recipes: [Oatmeal, Cereal, ScrambledEggs, Pancakes],
+    soloRecipes: [Oatmeal, Cereal],
   },
   {
     name: 'American Diner',

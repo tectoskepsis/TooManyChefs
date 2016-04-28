@@ -23,7 +23,7 @@ var Cereal = {
   steps: [
     {
       pretext: 'Wait a few seconds to gather your thoughts...',
-      timer: 8,
+      timer: 10,
       onTimeout: nextStep,
     },
     {
@@ -49,7 +49,7 @@ var Cereal = {
         {name: 'bowl', key: 'b', left: false, sound: 'boop'},
         {name: 'plate', key: 'p', left: false, sound: 'boop'},
       ],
-      timer: 8,
+      timer: 10,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
@@ -66,7 +66,7 @@ var Cereal = {
       pretext: 'Type',
       instruction: 'check',
       posttext: 'to make sure your milk hasn\'t expired.',
-      timer: 10,
+      timer: 12,
     },
     {
       pretext: <div>Hold 'm' to pour <b className="green">1 cup</b> of milk into the bowl.<br/>(Stop at the correct <b>^</b> indicator!)<br/><br/></div>,

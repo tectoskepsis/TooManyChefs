@@ -35,7 +35,7 @@ var Oatmeal = {
         {name: 'pot', key: 'p', left: false, sound: 'boop'},
         {name: 'not a pot', key: 'n', left: false, sound: 'boop'},
       ],
-      timer: 8,
+      timer: 10,
       onProgress: function(left, right) {
         recipeData.left = left;
         recipeData.right = right;
