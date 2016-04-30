@@ -42,6 +42,7 @@ var SpringRolls = {
       },
     },
     {
+      onStart: () => Audio.playSE('boil', {loop: 3}),
       pretext: <span>Drop the <b>rice vermicelli</b> into the boiling water.</span>,
       type: 'ingredients',
       leftName: 'Ingredients',
@@ -55,6 +56,7 @@ var SpringRolls = {
         recipeData.right = right;
       },
       onTimeout: function() {
+        Audio.stopSE('boil');
         if (recipeData.right.length === 1) {
           this.nextStep();
         } else {
@@ -181,7 +183,7 @@ var SpringRolls = {
     {
       pretext: <span>Pour <b>2 tbsp</b> of lime juice into the bowl by holding 'l'.<br/></span>,
       instruction: 'llllllllllllllllllllllllllllllllllllllllime',
-      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 1.5 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2.5</span>,
+      posttext: <span><br/>&nbsp;&nbsp;&nbsp;&nbsp;^ 1.5 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2 tbsp&nbsp;&nbsp;&nbsp;&nbsp;^ 2.5 tbsp</span>,
       timer: 10,
       onHoldSound: 'pouring',
       onComplete: () => {},

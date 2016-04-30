@@ -84,9 +84,9 @@ var Cheesecake = {
       type: 'dial',
       timer: 10,
       onProgress: function(value) {
-        if (value >= 4) {
+        if (value === 4) {
           Audio.unpauseSE('mixer', {loop: 3});
-        } else if (value < 4) {
+        } else if (value === 3) {
           Audio.pauseSE('mixer');
         }
         return value;
@@ -112,9 +112,9 @@ var Cheesecake = {
       startValue: 5,
       timer: 10,
       onProgress: function(value) {
-        if (value >= 4) {
-          Audio.unpauseSE('mixer', {loop: 3});
-        } else if (value < 4) {
+        if (value === 4) {
+          Audio.unpauseSE('mixer');
+        } else if (value === 3) {
           Audio.pauseSE('mixer');
         }
         return value;

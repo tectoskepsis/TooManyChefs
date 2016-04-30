@@ -1,5 +1,7 @@
 var React = require('react');
 
+var Audio = require('../Audio.js');
+
 var recipeData = {
   left: [],
   right: [],
@@ -68,6 +70,14 @@ var Oatmeal = {
       instruction: '^',
       type: 'dial',
       timer: 10,
+      onProgress: function(value) {
+        if (value === 10) {
+          Audio.unpauseSE('boil', {loop: 5});
+        } else if (value === 9) {
+          Audio.pauseSE('boil');
+        }
+        return value;
+      },
       onTimeout: function(value) {
         if (value >= 10 && value <= 16) {
           this.nextStep();
@@ -90,6 +100,7 @@ var Oatmeal = {
       timer: 10,
     },
     {
+      onStart: () => Audio.stopSE('boil'),
       pretext: <span>Type a creative name for your brilliant breakfast.<br/></span>,
       instruction: 'Name the oatmeal: ',
       type: 'textinput',

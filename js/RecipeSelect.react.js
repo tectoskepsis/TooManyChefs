@@ -17,12 +17,13 @@ var RecipeSelect = React.createClass({
     onSelect: React.PropTypes.func.isRequired,
     saveData: React.PropTypes.object,
     singlePlayer: React.PropTypes.bool.isRequired,
+    startValue: React.PropTypes.number.isRequired,
   },
 
   getInitialState: function() {
     return {
-      value: 0,
-      content: this.renderRecipe(0),
+      value: this.props.startValue,
+      content: this.renderRecipe(this.props.startValue),
     };
   },
 

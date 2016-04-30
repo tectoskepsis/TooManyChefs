@@ -103,7 +103,7 @@ var Cornbread = {
         recipeData.right = right;
       },
       onTimeout: function() {
-        if (recipeData.right.length === 4) {
+        if (recipeData.right.length === 3) {
           this.nextStep();
         } else {
           this.failure();

@@ -170,6 +170,14 @@ var Bouillabaisse = {
       instruction: '^',
       type: 'dial',
       timer: 10,
+      onProgress: function(value) {
+        if (value === 18) {
+          Audio.unpauseSE('boil', {loop: 5});
+        } else if (value === 17) {
+          Audio.pauseSE('boil');
+        }
+        return value;
+      },
       onTimeout: function(value) {
         if (value >= 18 && value <= 22) {
           this.nextStep();
@@ -196,6 +204,7 @@ var Bouillabaisse = {
       onTimeout: nextStep,
     },
     {
+      onStart: () => Audio.stopSE('boil'),
       pretext: <span>Try to say halibut three times fast:<br/></span>,
       instruction: 'halibuthalibuthalibut',
       timer: 10,

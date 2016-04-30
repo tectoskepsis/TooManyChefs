@@ -306,12 +306,14 @@ var Game = React.createClass({
   },
 
   renderRecipeMenu: function() {
+    var meal = this.state.meal;
     return (
       <div key="recipe-menu">
         <RecipeSelect onProgress={this.onRecipeProgress}
                       onSelect={this.onStartGame}
                       saveData={this.state.saveData}
                       singlePlayer={this.state.singlePlayer}
+                      startValue={meal}
                       />
         <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst>
       </div>
