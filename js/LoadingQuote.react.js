@@ -3,6 +3,8 @@ var React = require('react');
 var _sample = require('lodash/sample');
 
 const LOADING_QUOTES = [
+  {quote: <span><span className="fireRed">Too many cooks</span> spoil the broth.</span>, source: 'Proverb'},
+  {quote: <span>It takes a lot to make a stew.</span>, source: 'Too Many Cooks'},
   {quote: <span><span className="goldenBrown">Well done</span> is better than well said, except for steaks, which should always be<br/><span className="fireRed">medium-rare</span>.</span>, source: 'Benjamin Franklin'},
   {quote: <span>A kitchen <span className="fireRed">divided</span> against itself<br/>cannot stand.</span>, source: 'Abraham Lincoln'},
   {quote: <span>Human behavior flows from three main sources: desire, emotion, and <span className="goldenBrown">cooking</span>.</span>, source: 'Plato'},
