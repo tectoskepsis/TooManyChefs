@@ -74,9 +74,6 @@ var RecipeSelect = React.createClass({
       ? <p className="green">Best Score: {mealData.bestTime}</p>
       : <p className="green">Best Time: {Leaderboard.renderTime(mealData.bestTime)}</p>);
 
-    var leaderboard = <Leaderboard meal={meal} numTop={6}
-                                   singlePlayer={this.props.singlePlayer} />;
-
     return (
       <div className={cx('meal', 'padTop', {locked: mealLocked})}>
         <div className="mealInfo">
@@ -94,13 +91,17 @@ var RecipeSelect = React.createClass({
           ))}
         </div>
 
-        {leaderboard}
+        <Leaderboard meal={meal} numTop={6}
+                     singlePlayer={this.props.singlePlayer} />
       </div>
     );
   },
 
   render: function() {
-    var locked = Recipes[this.state.value].locked && (this.state.value === 0 || !_.get(this.props.saveData, [Recipes[this.state.value - 1].key, 'completed'], false));
+    var mode = this.props.singlePlayer ? 'solo' : 'party';
+    var locked = Recipes[this.state.value].locked && (this.state.value === 0 ||
+        !_.get(this.props.saveData, [mode, Recipes[this.state.value-1].key, 'completed'],
+        _.get(this.props.saveData, [Recipes[this.state.value-1].key, 'completed'], false)));
 
     return (
       <div>
