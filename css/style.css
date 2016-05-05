@@ -174,7 +174,6 @@ ul.ingredients-step > li {
 .meal {
   min-height: 250px;
   max-height: 500px;
-  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -187,8 +186,11 @@ ul.ingredients-step > li {
   vertical-align: middle;
 }
 
-.leaderboard th {
-  text-align: center;
+.leaderboard th, .leaderboard td {
+  text-align: left;
+}
+.leaderboard th:last-child, .leaderboard td:last-child {
+  text-align: right;
 }
 
 .leaderboard.table > thead > tr > th {
@@ -197,7 +199,7 @@ ul.ingredients-step > li {
 .leaderboard.table > tbody > tr > th,
 .leaderboard.table > tbody > tr > td {
   border-top: none;
-  padding: 2px;
+  padding: 2px 8px;
 }
 
 .report {

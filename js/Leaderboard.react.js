@@ -1,17 +1,15 @@
 var Firebase = require('firebase');
 var React = require('react');
-var ReactFireMixin = require('reactfire');
 
 var _ = require('lodash');
 
 const FIREBASE_URI = 'https://toomanychefs.firebaseio.com/';
 
 var Leaderboard = React.createClass({
-  mixins: [ReactFireMixin],
-
   propTypes: {
     meal: React.PropTypes.object.isRequired,
     singlePlayer: React.PropTypes.bool.isRequired,
+    numTop: React.PropTypes.number.isRequired,
   },
 
   statics: {
@@ -23,6 +21,7 @@ var Leaderboard = React.createClass({
       var sec = time % 60;
       return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
     },
+    firebaseUri: FIREBASE_URI,
   },
 
   getInitialState: function() {
@@ -31,33 +30,58 @@ var Leaderboard = React.createClass({
     };
   },
 
-  componentWillMount: function() {
-    var mode = this.props.singlePlayer ? 'solo' : 'party';
-    this.bindAsObject(new Firebase(FIREBASE_URI + 'leaderboard/' + mode), 'leaderboard');
+  componentDidMount: function() {
+    this.refreshLeaderboard(this.props);
   },
 
-  canRender: function() {
-    return this.state && _.has(this.state.leaderboard, this.props.meal.key);
+  componentWillUpdate: function(nextProps, nextState) {
+    if (this.props.meal !== nextProps.meal) {
+      this.refreshLeaderboard(nextProps);
+    }
+  },
+
+  componentWillUnmount: function() {
+    if (this._query) {
+      this._query.off();
+    }
+  },
+
+  refreshLeaderboard: function(props) {
+    if (props.meal.tutorial) {
+      this.setState({leaderboard: null});
+      return;
+    }
+
+    var mode = props.singlePlayer ? 'solo/' : 'party/';
+    var ref = new Firebase(FIREBASE_URI + 'leaderboard/' + mode + props.meal.key);
+    var isCount = props.meal.record === 'count';
+    this._query = isCount ? ref.limitToFirst(this.props.numTop) : ref.limitToLast(this.props.numTop);
+    // Find top scores and sort accordingly
+    if (this._query) {
+      this._query.once('value', (snapshot) => {
+        var val = snapshot.val();
+        var leaderboard = _.sortBy(_.isArray(val) ? val : _.toArray(val),
+          isCount ? e => -e.bestTime : 'bestTime');
+        this.setState({leaderboard: leaderboard});
+      });
+    }
   },
 
   render: function() {
-    if (!this.state) {
-      return null; // might try to render before state appears?
+    if (!this.state || this.props.meal.tutorial || !this.state.leaderboard) {
+      return null; // don't render if no leaderboard
     }
 
     // Array of {name: "", bestTime: number}
-    var mealStats = _.get(this.state.leaderboard, this.props.meal.key, null);
-    if (mealStats === null) {
-      return null;
-    }
-    var numStats = mealStats.length;
-    if (numStats < 5) {
+    var leaderboard = this.state.leaderboard;
+    var numStats = leaderboard.length;
+    if (numStats < this.props.numTop) {
       // Fill extra spaces with placeholders
-      mealStats = _.concat(mealStats, new Array(5 - numStats));
-      _.fill(mealStats, {name: '---', bestTime: '---'}, numStats);
+      leaderboard = _.concat(leaderboard, new Array(this.props.numTop - numStats));
+      _.fill(leaderboard, {name: '---', bestTime: '---'}, numStats);
     }
     var isCount = this.props.meal.record === 'count';
-    var recordText = isCount ? 'Best Score' : 'Best Time';
+    var recordText = isCount ? 'Score' : 'Time';
 
     return (
       <div className="mealInfo">
@@ -71,7 +95,7 @@ var Leaderboard = React.createClass({
             </tr>
           </thead>
           <tbody>
-            {mealStats.map((stat, i) =>
+            {leaderboard.map((stat, i) =>
               <tr key={'stat' + i}>
                 <th>{i + 1}</th>
                 <td>{stat.name}</td>

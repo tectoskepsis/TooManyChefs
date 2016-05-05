@@ -1,3 +1,4 @@
+var Firebase = require('firebase');
 var Progress = require('rc-progress').Line;
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');

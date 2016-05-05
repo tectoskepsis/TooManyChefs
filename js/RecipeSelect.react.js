@@ -61,13 +61,21 @@ var RecipeSelect = React.createClass({
 
     var emptyStar = (i) => <span key={i} className="lightBlue glyphicon glyphicon-star-empty" />;
     var fullStar = (i) => <span key={i} className="darkBlue glyphicon glyphicon-star" />;
-    var mealData = _.get(this.props.saveData, meal.key, {});
-    var mealLocked = meal.locked && (i === 0 || !_.get(this.props.saveData, [Recipes[i-1].key, 'completed'], false));
+    var mode = this.props.singlePlayer ? 'solo' : 'party';
+
+    // Extract saved data. As of v1.4.0 it is saved under 'solo' or 'party',
+    // but for backwards compatibility we also look directly in the object.
+    var mealData = _.get(this.props.saveData, [mode, meal.key],
+                   _.get(this.props.saveData, meal.key, {}));
+    var mealLocked = meal.locked && (i === 0 ||
+        !_.get(this.props.saveData, [mode, Recipes[i-1].key, 'completed'],
+        _.get(this.props.saveData, [Recipes[i-1].key, 'completed'], false)));
     var recordText = mealData.bestTime && (meal.record === 'count'
       ? <p className="green">Best Score: {mealData.bestTime}</p>
       : <p className="green">Best Time: {Leaderboard.renderTime(mealData.bestTime)}</p>);
 
-    var leaderboard = <Leaderboard meal={meal} singlePlayer={this.props.singlePlayer} />;
+    var leaderboard = <Leaderboard meal={meal} numTop={6}
+                                   singlePlayer={this.props.singlePlayer} />;
 
     return (
       <div className={cx('meal', 'padTop', {locked: mealLocked})}>
