@@ -172,7 +172,32 @@ ul.ingredients-step > li {
 }
 
 .meal {
+  min-height: 250px;
+  max-height: 500px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.mealInfo {
+  display: inline-block;
   height: 250px;
+  min-width: 200px;
+  max-width: 300px;
+  margin: 0 50px;
+  vertical-align: middle;
+}
+
+.leaderboard th {
+  text-align: center;
+}
+
+.leaderboard.table > thead > tr > th {
+  border-bottom: none;
+}
+.leaderboard.table > tbody > tr > th,
+.leaderboard.table > tbody > tr > td {
+  border-top: none;
+  padding: 2px;
 }
 
 .report {
