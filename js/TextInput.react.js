@@ -1,4 +1,5 @@
 var React = require('react');
+var _trim = require('lodash/trim');
 
 var KeyboardMixin = require('./KeyboardMixin.react.js');
 var Audio = require('./Audio.js');
@@ -20,7 +21,7 @@ var TextInput = React.createClass({
 
   componentDidUpdate: function(prevProps, prevState) {
     if (this.state.value != prevState.value) {
-      this.props.onProgress(this.state.value);
+      this.props.onProgress(_trim(this.state.value));
     }
   },
 
