@@ -52,9 +52,13 @@ code > .correct {
 }
 
 ul.ingredients {
-  columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
+  -moz-column-count: 2;
+  -moz-column-gap: 15px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 15px;
+  column-count: 2;
+  column-gap: 15px;
+  list-style-position: inside;
 }
 
 ul.ingredients-step > li {
@@ -172,7 +176,34 @@ ul.ingredients-step > li {
 }
 
 .meal {
+  min-height: 250px;
+  max-height: 500px;
+  margin: 0 auto;
+}
+
+.mealInfo {
+  display: inline-block;
   height: 250px;
+  min-width: 200px;
+  max-width: 300px;
+  margin: 0 50px;
+  vertical-align: middle;
+}
+
+.leaderboard th, .leaderboard td {
+  text-align: left;
+}
+.leaderboard th:last-child, .leaderboard td:last-child {
+  text-align: right;
+}
+
+.leaderboard.table > thead > tr > th {
+  border-bottom: none;
+}
+.leaderboard.table > tbody > tr > th,
+.leaderboard.table > tbody > tr > td {
+  border-top: none;
+  padding: 2px 8px;
 }
 
 .report {
