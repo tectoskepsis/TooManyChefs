@@ -44,7 +44,8 @@ var Game = React.createClass({
       fadeTitle: false,
       gameOver: false,
       report: null,
-      newRecord: 0,
+      record: 0,
+      newRecord: false,
       saveData: {},
     };
   },
@@ -107,7 +108,7 @@ var Game = React.createClass({
     // Send Google Analytics event
     ga('send', 'event', 'Game', 'play', meal.name);
 
-    // Wait a random amount of time before loading (8-10s)
+    // Wait a random amount of time before loading (7-9s)
     this.setTimeout(() => {
       this.setState({
         gameState: 'started',
@@ -116,9 +117,10 @@ var Game = React.createClass({
         gameOver: false,
         chefs: chefs.map(_.clone),
         report: null,
-        newRecord: null,
+        record: 0,
+        newRecord: false,
       });
-    }, 500 + _.random(7500, 9000));
+    }, 500 + _.random(7000, 9000));
   },
 
   onChooseMode: function(singlePlayer) {
@@ -213,21 +215,21 @@ var Game = React.createClass({
     });
   },
 
-  onComplete: function(winner, newRecord) {
+  onComplete: function(winner, record) {
     var completed = this.state.completed + 1;
     var chefs = this.state.chefs;
     chefs[winner].completed = true;
     this.setState({
       chefs: chefs,
       completed: completed,
-      newRecord: newRecord,
+      record: record,
     });
 
     if (completed === this.state.chefs.length) {
       // Send Google Analytics event
       Audio.stopAllSounds();
-      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, newRecord);
-      this.saveData(newRecord);
+      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, record);
+      this.saveData();
       return <p>Type <Inst onComplete={this.onReport}>report</Inst> to view your results.</p>;
     }
     return null;
@@ -238,20 +240,26 @@ var Game = React.createClass({
   },
 
   /* Save to localStorage */
-  saveData: function(newRecord) {
+  saveData: function() {
     // NOTE: for legacy reasons, the record is saved as "bestTime"
-    // but it holds either times and counts
+    // but it holds either times or counts
     var meal = Recipes[this.state.meal];
-    var recordCmp = meal.record === 'count' ? Math.max : Math.min;
     var mode = this.state.singlePlayer ? 'solo' : 'party';
     var saveData = this.state.saveData;
     var mealData = _.get(saveData, [mode, meal.key], {});
     mealData.completed = true;
-    mealData.bestTime = _.has(mealData, 'bestTime')
-      ? recordCmp(newRecord, mealData.bestTime) : newRecord;
+    var newRecord = !_.has(mealData, 'bestTime') || (meal.record === 'count'
+        ? this.state.record > mealData.bestTime
+        : this.state.record < mealData.bestTime);
+    if (newRecord) {
+      mealData.bestTime = this.state.record;
+    }
 
     _.set(saveData, [mode, meal.key], mealData);
-    this.setState({saveData: saveData});
+    this.setState({
+      newRecord: newRecord,
+      saveData: saveData,
+    });
   },
 
   /* Save to Firebase (global leaderboard) */
@@ -417,16 +425,14 @@ var Game = React.createClass({
     var mode = this.state.singlePlayer ? 'solo' : 'party';
     var mealData = _.get(this.state.saveData, [mode, meal.key]);
     var won = this.state.completed === this.state.chefs.length;
-    var newRecord = won && (meal.record === 'count'
-      ? this.state.newRecord >= mealData.bestTime
-      : this.state.newRecord <= mealData.bestTime);
+    var newRecord = this.state.newRecord;
 
     var completeText = won
       ? <b className="green">SUCCESS {newRecord && '- NEW RECORD'}</b>
       : <b className="fireRed">FAILURE</b>;
     var recordText = won && (meal.record === 'count'
-      ? <p>Count: {this.state.newRecord}</p>
-      : <p>Cook Time: {Leaderboard.renderTime(this.state.newRecord)}</p>);
+      ? <p>Count: {this.state.record}</p>
+      : <p>Cook Time: {Leaderboard.renderTime(this.state.record)}</p>);
 
     if (!withInstructions) {
       if (newRecord) {
