@@ -460,7 +460,7 @@ var Game = React.createClass({
         {this.state.chefs.map((r, i) =>
           <div key={i} className={cx({green: r.completed, fireRed: !r.completed})}>{r.name}</div>)}
         <br/>
-        {withInstructions || !newRecord ? instructions : typeName}
+        {withInstructions || !newRecord || meal.tutorial ? instructions : typeName}
       </div>
     );
   },
