@@ -55,7 +55,7 @@ var Leaderboard = React.createClass({
     var mode = props.singlePlayer ? 'solo/' : 'party/';
     var ref = new Firebase(FIREBASE_URI + 'leaderboard/' + mode + props.meal.key);
     var isCount = props.meal.record === 'count';
-    this._query = isCount ? ref.limitToFirst(this.props.numTop) : ref.limitToLast(this.props.numTop);
+    this._query = isCount ? ref.limitToLast(this.props.numTop) : ref.limitToFirst(this.props.numTop);
     // Find top scores and sort accordingly
     if (this._query) {
       this._query.once('value', (snapshot) => {
