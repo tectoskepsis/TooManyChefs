@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "watchify -o js/bundle.js -v -d js/main.js",
-    "build": "NODE_ENV=production browserify js/main.js | uglifyjs -mc warnings=false > js/bundle.js"
+    "build": "NODE_ENV=production browserify js/main.js | uglifyjs -mc warnings=false > js/bundle.js && uglifycss css/style.css > css/bundle.css"
   },
   "babel": {
     "presets": [
