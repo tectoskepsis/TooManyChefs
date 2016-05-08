@@ -446,6 +446,9 @@ var Game = React.createClass({
       <div>
         <p>Type <Inst onComplete={this.onStartGame}>replay</Inst> to restart the meal.</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>back</Inst> to return to the menu.</p>
+        <div id="fb-share" className="center padTop">
+          <div className="fb-share-button" data-href="http://www.toomanychefs.party" data-layout="button_count" data-mobile-iframe="false" />
+        </div>
       </div>
     );
 
@@ -457,6 +460,11 @@ var Game = React.createClass({
                    allowEnter allowBackspace />
       </div>
     );
+
+    // HACK: Re-render FB share button after report renders
+    if (FB && FB.XFBML) {
+      this.setTimeout(() => FB.XFBML.parse(document.getElementById('fb-share')), 250);
+    }
 
     return (
       <div className="report center">
