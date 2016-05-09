@@ -39,10 +39,9 @@ var TextInput = React.createClass({
 
     // normal key (only accept alphanumeric values)
     var key = String.fromCharCode(keyCode);
-    if (/[a-zA-Z0-9-_ ]/.test(key) && this.state.value.length < this.props.maxLength) {
+    if (/[a-zA-Z0-9-_]/.test(key) && this.state.value.length < this.props.maxLength) {
       Audio.playRandomClick();
-      var newValue = this.state.value.concat(key);
-      this.setState({value: newValue});
+      this.setState({value: this.state.value.concat(key)});
     }
   },
 
@@ -53,9 +52,12 @@ var TextInput = React.createClass({
       if (val) {
         this.props.onComplete(val);
       }
-    } else if (this.props.allowBackspace && keyCode === 8) {
+    } else if (this.props.allowBackspace && keyCode === 8) { // backspace
       Audio.playRandomClick();
       this.setState({value: this.state.value.slice(0, -1)});
+    } else if (keyCode === 32 && this.state.value.length < this.props.maxLength) { // space
+      Audio.playRandomClick();
+      this.setState({value: this.state.value.concat(' ')});
     }
   },
 
