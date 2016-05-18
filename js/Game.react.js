@@ -380,7 +380,7 @@ var Game = React.createClass({
   renderCredits: function() {
     return (
       <div key="credits" className="padTop">
-        <br/><br/>
+        <br/>
         <h4>Credits</h4>
         <p>
           <b>Chef de cuisine</b>: Ivan Wang (design, programming)<br/>
@@ -388,6 +388,9 @@ var Game = React.createClass({
           <b>Culinary consultant</b>: Anshu Bansal<br/>
           <b>Café jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena
         </p>
+        <br/>
+        <h4>Contact</h4>
+        <p><b>Email</b>: <a href="mailto:chef@toomanychefs.party" target="_top">chef@toomanychefs.party</a></p>
         <br/><br/>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>
       </div>
