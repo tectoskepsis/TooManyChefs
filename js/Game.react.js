@@ -462,8 +462,8 @@ var Game = React.createClass({
     );
 
     // HACK: Re-render FB share button after report renders
-    if (FB && FB.XFBML) {
-      this.setTimeout(() => FB.XFBML.parse(document.getElementById('fb-share')), 250);
+    if (typeof(FB) !== 'undefined' && _.has(FB, 'XFBML.parse')) {
+      this.setTimeout(() => FB.XFBML.parse(document.getElementById('fb-share')), 200);
     }
 
     return (
