@@ -1,9 +1,7 @@
-var Firebase = require('firebase');
 var React = require('react');
-
 var _ = require('lodash');
 
-const FIREBASE_URI = 'https://toomanychefs.firebaseio.com/';
+var Firebase = require('./FirebaseConfig.js');
 
 var Leaderboard = React.createClass({
   propTypes: {
@@ -21,7 +19,6 @@ var Leaderboard = React.createClass({
       var sec = time % 60;
       return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
     },
-    firebaseUri: FIREBASE_URI,
   },
 
   getInitialState: function() {
@@ -53,7 +50,7 @@ var Leaderboard = React.createClass({
     }
 
     var mode = props.singlePlayer ? 'solo/' : 'party/';
-    var ref = new Firebase(FIREBASE_URI + 'leaderboard/' + mode + props.meal.key);
+    var ref = Firebase.database().ref('leaderboard/' + mode + props.meal.key);
     var isCount = props.meal.record === 'count';
     this._query = isCount ? ref.limitToLast(this.props.numTop) : ref.limitToFirst(this.props.numTop);
     // Find top scores and sort accordingly

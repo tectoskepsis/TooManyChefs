@@ -10,6 +10,7 @@ var cx = require('classnames');
 var Audio = require('./Audio.js');
 var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
+var Firebase = require('./FirebaseConfig.js');
 var RecipeSelect = require('./RecipeSelect.react.js');
 var TextInput = require('./TextInput.react.js');
 var Inst = require('./Instruction.react.js');
@@ -271,7 +272,7 @@ var Game = React.createClass({
 
     var mode = this.state.singlePlayer ? 'solo' : 'party';
     var newRecord = this.state.saveData[mode][meal.key].bestTime;
-    var ref = new Firebase(Leaderboard.firebaseUri + 'leaderboard/' + mode + '/' + meal.key);
+    var ref = Firebase.database().ref('leaderboard/' + mode + '/' + meal.key);
     ref.push({name: name, bestTime: newRecord}).setPriority(newRecord);
 
     this.setState({report: this.renderReport(true)});
