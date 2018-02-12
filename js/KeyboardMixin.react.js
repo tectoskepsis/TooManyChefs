@@ -1,4 +1,3 @@
-var $ = require('jquery');
 var _throttle = require('lodash/throttle');
 
 var React = require('react');
@@ -10,7 +9,7 @@ var Keyboard = require('./threex.keyboardstate.js');
  * Note: this breaks inputs. See
  * http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back
  */
-$(document).unbind('keydown').on('keydown', function(e) {
+document.addEventListener('keydown', function(e) {
   e = e || event;
   var keyCode = e.which || e.keyCode || 0;
 
@@ -30,42 +29,38 @@ var KeyboardMixin = {
   mixins: [TimerMixin],
 
   componentDidMount: function() {
-    var $doc = $(document);
-
     if (this.onKeyDown) {
-      $doc.on('keydown', this.onKeyDown);
+      document.addEventListener('keydown', this.onKeyDown, false);
     }
     if (this.onKeyPress) {
-      $doc.on('keypress', this.onKeyPress);
+      document.addEventListener('keypress', this.onKeyPress, false);
     }
     if (this.onKeyUp) {
-      $doc.on('keyup', this.onKeyUp);
+      document.addEventListener('keyup', this.onKeyUp, false);
     }
 
     if (this.checkHeldKey) {
       var holdInterval = this.holdInterval || 50;
       this.checkHeldKey = _throttle(this.checkHeldKey, holdInterval);
       this.timerInterval = this.setInterval(this.checkHeldKey, holdInterval);
-      $doc.on('keydown', this.checkHeldKey);
+      document.addEventListener('keydown', this.checkHeldKey, false);
     }
   },
 
   componentWillUnmount: function() {
-    var $doc = $(document);
-
     if (this.onKeyDown) {
-      $doc.off('keydown', this.onKeyDown);
+      document.removeEventListener('keydown', this.onKeyDown, false);
     }
     if (this.onKeyPress) {
-      $doc.off('keypress', this.onKeyPress);
+      document.removeEventListener('keypress', this.onKeyPress, false);
     }
     if (this.onKeyUp) {
-      $doc.off('keyup', this.onKeyUp);
+      document.removeEventListener('keyup', this.onKeyUp, false);
     }
 
     if (this.checkHeldKey) {
       this.clearInterval(this.timerInterval);
-      $doc.off('keydown', this.checkHeldKey);
+      document.removeEventListener('keydown', this.checkHeldKey, false);
     }
   },
 

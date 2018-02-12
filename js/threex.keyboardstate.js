@@ -15,7 +15,7 @@ var _ = require('lodash');
 //
 // This will return true if shift and A are pressed, false otherwise
 //
-// ```keyboard.pressed("shift+A")```
+// ```keyboard.pressed('shift+A')```
 //
 // **Step 3**: Stop listening to the keyboard
 //
@@ -51,8 +51,7 @@ var THREEx = THREEx || {};
  *   - in this._onkeyChange, generate a string from the DOM event
  *   - use this as event name
 */
-THREEx.KeyboardState = function(domElement) {
-  this.domElement = domElement || document;
+THREEx.KeyboardState = function() {
   // to store the current state
   this.keyCodes = {};
   this.modifiers = {};
@@ -62,8 +61,8 @@ THREEx.KeyboardState = function(domElement) {
   this._onKeyUp = this._onKeyChange.bind(this);
 
   // bind keyEvents
-  this.domElement.addEventListener("keydown", this._onKeyDown, false);
-  this.domElement.addEventListener("keyup", this._onKeyUp, false);
+  document.addEventListener('keydown', this._onKeyDown, false);
+  document.addEventListener('keyup', this._onKeyUp, false);
 
   // create callback to bind/unbind window blur event
   this._onBlur = () => {
@@ -72,7 +71,7 @@ THREEx.KeyboardState = function(domElement) {
   }
 
   // bind window blur
-  window.addEventListener("blur", this._onBlur, false);
+  window.addEventListener('blur', this._onBlur, false);
 }
 
 /**
@@ -80,11 +79,11 @@ THREEx.KeyboardState = function(domElement) {
 */
 THREEx.KeyboardState.prototype.destroy = function() {
   // unbind keyEvents
-  this.domElement.removeEventListener("keydown", this._onKeyDown, false);
-  this.domElement.removeEventListener("keyup", this._onKeyUp, false);
+  document.removeEventListener('keydown', this._onKeyDown, false);
+  document.removeEventListener('keyup', this._onKeyUp, false);
 
   // unbind window blur event
-  window.removeEventListener("blur", this._onBlur, false);
+  window.removeEventListener('blur', this._onBlur, false);
 }
 
 THREEx.KeyboardState.MODIFIERS = ['shift', 'ctrl', 'alt', 'meta'];
