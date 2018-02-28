@@ -20,4 +20,5 @@ var renderGameDOM = ReactDOM.render.bind(this,
 // Load sounds, play BGM
 Audio.loadAllSounds(() => renderGameDOM(), () => {
   console.error('failed to load sounds!');
+  renderGameDOM();
 });

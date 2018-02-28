@@ -384,7 +384,7 @@ var Game = React.createClass({
         <br/>
         <h4>Credits</h4>
         <p>
-          <b>Chef de cuisine</b>: Ivan Wang (design, programming)<br/>
+          <b>Chef de cuisine</b>: <a href="http://www.naviwang.me" target="_blank">Navi Wang</a> (design, programming)<br/>
           <b>Sous-chef</b>: James Wu (design)<br/>
           <b>Culinary consultant</b>: Anshu Bansal<br/>
           <b>Café jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena
