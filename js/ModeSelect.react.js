@@ -24,7 +24,7 @@ var ModeSelect = React.createClass({
       <div className="padTop">
         <p>Select mode:</p>
         <p><Inst reset onComplete={this.onSolo}>solo</Inst> (single-player)</p>
-        <p><Inst reset onComplete={this.onParty}>party</Inst> (2-4 players)</p>
+        <p><Inst reset onComplete={this.onParty}>party</Inst> (2-4 players, local)</p>
       </div>
     );
   },

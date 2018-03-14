@@ -392,6 +392,9 @@ var Game = React.createClass({
         <br/>
         <h4>Contact</h4>
         <p><b>Email</b>: <a href="mailto:chef@toomanychefs.party" target="_top">chef@toomanychefs.party</a></p>
+        <p><a href="https://www.facebook.com/navignaw/" target="_blank"><b>Facebook</b></a></p>
+        <p><a href="http://www.naviwang.me" target="_blank"><b>Website</b></a></p>
+        <p><a href="http://www.naviwang.me/#subscribe" target="_blank"><b>Subscribe</b></a></p>
         <br/><br/>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'title')}>back</Inst> to return to title</p>
       </div>
