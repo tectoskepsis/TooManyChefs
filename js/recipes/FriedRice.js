@@ -74,7 +74,7 @@ var FriedRice = {
     },
     {
       pretext: <span>Wipe away a single tear.<br/></span>,
-      instruction: ':\'(',
+      instruction: 'sad react',
       timer: 8,
     },
     {

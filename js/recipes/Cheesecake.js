@@ -251,7 +251,7 @@ var Cheesecake = {
     },
     {
       pretext: <span>Taste a little bit of the cheesecake.<br/></span>,
-      instruction: 'yum?',
+      instruction: 'yummy',
       timer: 8,
       onComplete: function() {
         this.nextStep(false, 'yum');
