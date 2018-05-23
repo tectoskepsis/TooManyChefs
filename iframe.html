@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- Wrapper for embedding Too Many Chefs in an iframe. -->
+<html lang="en">
+  <head>
+    <title>Too Many Chefs</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .iframe {
+        display: block;       /* iframes are inline by default */
+        background: #000;
+        border: none;         /* Reset default border */
+        height: 100vh;        /* Viewport-relative units */
+        width: 100vw;
+      }
+    </style>
+  </head>
+
+  <body>
+    <iframe src="https://www.toomanychefs.party" class="iframe"
+            onload="this.contentWindow.focus()">
+      Apologies, this browser is unsupported. Please visit our main kitchen at https://www.toomanychefs.party.
+    </iframe>
+  </body>
+</html>
