@@ -194,26 +194,32 @@ ul.ingredients-step > li {
 }
 
 .meal {
-  height: 16em;
+  height: 24em;
 }
 
 .mealInfo {
   display: inline-block;
   min-width: 200px;
-  max-width: 300px;
+  max-width: 400px;
   margin: 0 50px;
   vertical-align: top;
 }
 
 .leaderboard th, .leaderboard td {
-  text-align: left;
-}
-.leaderboard th:last-child, .leaderboard td:last-child {
   text-align: right;
+}
+.leaderboard th:nth-child(2), .leaderboard td:nth-child(2) {
+  text-align: left;
 }
 
 .leaderboard.table {
+  display: block;
   margin-bottom: 0;
+  max-height: 17.5em;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-right: 16px;
+  white-space: nowrap;
 }
 
 .leaderboard.table > thead > tr > th {
@@ -266,6 +272,18 @@ blockquote > footer {
   margin-left: 100px;
 }
 
+/* Scrollbar modifications */
+.leaderboard::-webkit-scrollbar {
+  background: rgba(0,0,0,0.05);
+  border-radius: 6px;
+  width: 12px;
+}
+
+.leaderboard::-webkit-scrollbar-thumb {
+  background: url(../images/fork.svg) no-repeat center;
+  height: 50px;
+}
+
 .chefHat {
   position: absolute;
   width: 50px;
@@ -278,6 +296,10 @@ blockquote > footer {
   -webkit-animation: hatFadeIn 1s; /* Chrome, Safari, Opera */
       -ms-animation: hatFadeIn 1s; /* Internet Explorer */
           animation: hatFadeIn 1s;
+}
+
+.disabled {
+  opacity: 50%;
 }
 
 /* Decrease timer bar animation speed */
