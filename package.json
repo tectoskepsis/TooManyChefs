@@ -2,11 +2,11 @@
   "name": "TooManyChefs",
   "main": "js/main.js",
   "dependencies": {
-    "bootstrap": "~3.3.6",
+    "bootstrap": "^3.4.1",
     "chroma-js": "~1.1.1",
     "classnames": "~2.2.3",
     "firebase": "^3.0.3",
-    "lodash": "~4.11.1",
+    "lodash": "^4.17.15",
     "rc-progress": "~1.0.4",
     "react": "~15.0.1",
     "react-addons-css-transition-group": "~15.0.1",
