@@ -212,6 +212,10 @@ ul.ingredients-step > li {
   text-align: left;
 }
 
+.leaderboard tr.selected {
+  background-color: rgba(0,255,0,0.1);
+}
+
 .leaderboard.table {
   display: block;
   margin-bottom: 0;

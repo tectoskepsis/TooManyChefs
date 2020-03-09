@@ -12,6 +12,7 @@ var Leaderboard = React.createClass({
     meal: React.PropTypes.object.isRequired,
     singlePlayer: React.PropTypes.bool.isRequired,
     numTop: React.PropTypes.number.isRequired,
+    leaderboardName: React.PropTypes.string,
   },
 
   statics: {
@@ -20,8 +21,15 @@ var Leaderboard = React.createClass({
         return time;
       }
       var min = (time / 60) << 0; // floor
-      var sec = time % 60;
-      return _.padStart(min, 2, '0') + ':' + _.padStart(sec, 2, '0');
+      var sec = (time % 60) << 0; // floor
+      var ms = time.toFixed(3).split('.')[1];
+      return [
+        _.padStart(min, 2, '0'),
+        ':',
+        _.padStart(sec, 2, '0'),
+        '.',
+        _.padStart(ms, 3, '0'),
+      ].join('');
     },
   },
 
@@ -87,9 +95,13 @@ var Leaderboard = React.createClass({
           leaderboard = _.concat(leaderboard, new Array(this.props.numTop - numStats));
           _.fill(leaderboard, {name: '---', bestTime: '---'}, numStats);
         }
+
+        // Find the chef, if they're on the leaderboard!
+        var chefRow = _.findIndex(
+            leaderboard, (stat) => this.props.leaderboardName === stat.name);
         this.setState({
           leaderboard: leaderboard,
-          selectedRow: 0,
+          selectedRow: chefRow >= 0 ? Math.max(0, chefRow - 5) : 0,
         });
       });
     }
@@ -117,12 +129,20 @@ var Leaderboard = React.createClass({
             </tr>
           </thead>
           <tbody>
-            {leaderboard.map((stat, i) =>
-              <tr key={'stat' + i} ref={i === this.state.selectedRow ? 'selected' : null}>
-                <th>{i + 1}</th>
-                <td>{stat.name}</td>
-                <td>{isCount ? stat.bestTime : Leaderboard.renderTime(stat.bestTime)}</td>
-              </tr>
+            {leaderboard.map((stat, i) => {
+              var isMe = this.props.leaderboardName === stat.name;
+              return (
+                <tr key={'stat' + i}
+                    className={cx({selected: isMe})}
+                    ref={i === this.state.selectedRow ? 'selected' : null}>
+                  <th>
+                    {isMe && <img width="20" height="20" src="images/chefhat.png" alt="" />}
+                    {' '}{i + 1}
+                  </th>
+                  <td>{stat.name}</td>
+                  <td>{isCount ? stat.bestTime : Leaderboard.renderTime(stat.bestTime)}</td>
+                </tr>
+              )}
              )}
           </tbody>
         </table>

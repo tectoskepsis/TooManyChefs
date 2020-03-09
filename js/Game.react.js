@@ -275,7 +275,16 @@ var Game = React.createClass({
     var ref = Firebase.database().ref('leaderboard/' + mode + '/' + meal.key);
     ref.push({name: name, bestTime: newRecord}).setPriority(newRecord);
 
-    this.setState({report: this.renderReport(true)});
+    // Update the user's name for this meal in localStorage.
+    var saveData = this.state.saveData;
+    var mealData = _.get(saveData, [mode, meal.key], {});
+    mealData.leaderboardName = name;
+    _.set(saveData, [mode, meal.key], mealData);
+
+    this.setState({
+      report: this.renderReport(true),
+      saveData: saveData,
+    });
   },
 
   onRenderMode: function() {
@@ -503,7 +512,7 @@ var Game = React.createClass({
     return (
       <div className="center">
         <div className={cx('vcenter', {vtop: this.state.gameState !== 'title'})}>
-          <img className="chefHat" src="images/chefhat.png" />
+          <img className="chefHat" src="images/chefhat.png" alt="" />
           <h1><span className={fadeClass}>{titleText}</span> Chefs{spacing}</h1>
           <h4>A text-based <span className={fadeWithColor}>{description}</span> cooking game</h4>
         </div>

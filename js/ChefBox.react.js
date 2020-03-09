@@ -404,7 +404,7 @@ var ChefBox = React.createClass({
     if (this.props.recipe.record === 'count') {
       return this.state.progress;
     } else {
-      return ((new Date().getTime() - this.props.startTime) / 1000) << 0;
+      return (new Date().getTime() - this.props.startTime) / 1000;
     }
   },
 

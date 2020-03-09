@@ -92,6 +92,7 @@ var RecipeSelect = React.createClass({
         </div>
 
         <Leaderboard meal={meal} numTop={100}
+                     leaderboardName={mealData.leaderboardName}
                      singlePlayer={this.props.singlePlayer} />
       </div>
     );
