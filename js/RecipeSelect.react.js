@@ -91,7 +91,7 @@ var RecipeSelect = React.createClass({
           ))}
         </div>
 
-        <Leaderboard meal={meal} numTop={6}
+        <Leaderboard meal={meal} numTop={100}
                      singlePlayer={this.props.singlePlayer} />
       </div>
     );
@@ -112,10 +112,14 @@ var RecipeSelect = React.createClass({
         </TransitionGroup>
 
         <div className="padTop">
-          <span className="padRight10 glyphicon glyphicon-triangle-left" />
+          <span className={cx('padRight10 glyphicon glyphicon-triangle-left', {
+            disabled: this.state.value === 0,
+          })} />
           {_.range(Recipes.length).map((i) =>
              <span key={i} className={cx('dot', {active: this.state.value === i})} />)}
-          <span className="padLeft10 glyphicon glyphicon-triangle-right" />
+          <span className={cx('padLeft10 glyphicon glyphicon-triangle-right', {
+            disabled: this.state.value === Recipes.length - 1,
+          })} />
         </div>
         <br/>
         <p>Select a meal with the arrow keys.</p>
