@@ -172,6 +172,7 @@ var ChefBox = React.createClass({
         startTime: timer,
         timer: timer,
         onTimeout: onTimeout ? onTimeout.bind(this) : null,
+        progress: 0,
       });
 
       // Wait 250ms before updating for fade effect
