@@ -465,7 +465,7 @@ var Game = React.createClass({
         <p>Type <Inst onComplete={this.onStartGame}>replay</Inst> to restart the meal.</p>
         <p>Type <Inst onComplete={_.partial(this.setStateDelay, 'menu')}>back</Inst> to return to the menu.</p>
         <div id="fb-share" className="center padTop">
-          <div className="fb-share-button" data-href="http://www.toomanychefs.party" data-layout="button_count" data-mobile-iframe="false" />
+          <div className="fb-share-button" data-href="https://www.toomanychefs.party" data-layout="button_count" data-mobile-iframe="false" />
         </div>
       </div>
     );
