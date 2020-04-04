@@ -21,6 +21,8 @@ var Recipes = require('./recipes/Recipes.js');
 var Volume = require('./Volume.react.js');
 
 
+var VERSION = 'version 1.1.0'
+
 var Game = React.createClass({
   mixins: [LocalStorageMixin, PureRenderMixin, TimerMixin],
 
@@ -527,6 +529,12 @@ var Game = React.createClass({
         <div className="visible-xs-block alert alert-danger" role="alert">
           Sorry! This restaurant is incompatible with mobile devices. Please come back on a desktop web browser.
         </div>
+
+        {this.state.gameState === 'title' && (
+          <div className="corner">
+            {VERSION}
+          </div>
+        )}
       </div>
     );
   },

@@ -306,6 +306,12 @@ blockquote > footer {
   opacity: 50%;
 }
 
+.corner {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
 /* Decrease timer bar animation speed */
 .rc-progress-line-path {
   transition: stroke-dashoffset 2s ease,
