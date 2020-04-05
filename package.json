@@ -13,7 +13,8 @@
     "react-addons-pure-render-mixin": "~15.0.1",
     "react-dom": "~15.0.1",
     "react-localstorage": "~0.2.9",
-    "react-timer-mixin": "~0.13.3"
+    "react-timer-mixin": "~0.13.3",
+    "string.prototype.matchall": "^4.0.2"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
@@ -24,7 +25,7 @@
     "react-addons-perf": "~15.0.1",
     "uglify": "^0.1.5",
     "uglifycss": "0.0.27",
-    "watchify": "^3.7.0"
+    "watchify": "^3.11.1"
   },
   "scripts": {
     "start": "watchify -o js/bundle.js -v -d js/main.js",

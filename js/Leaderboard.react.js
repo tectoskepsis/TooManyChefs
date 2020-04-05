@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('lodash');
 var cx = require('classnames')
+var matchAll = require('string.prototype.matchall')
 
 var Firebase = require('./FirebaseConfig.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
@@ -155,7 +156,7 @@ var Leaderboard = React.createClass({
                 var separated = statName.split(new RegExp(profanity, 'i'));
                 if (separated.length > 1) {
                   var fucksGiven =
-                    _.toArray(statName.matchAll(new RegExp(profanity, 'ig')))
+                    _.toArray(matchAll(statName, new RegExp(profanity, 'ig')))
                     .map((match) => ({
                       profanity: match[0],
                       index: match.index,
