@@ -21,7 +21,8 @@ var Recipes = require('./recipes/Recipes.js');
 var Volume = require('./Volume.react.js');
 
 
-var VERSION = 'version 1.1.0'
+var VERSION = 'version 1.1.1'
+var VERSION_CHANGELOG = 'https://toomanychefs-game.tumblr.com/post/614597271932256256/'
 
 var Game = React.createClass({
   mixins: [LocalStorageMixin, PureRenderMixin, TimerMixin],
@@ -532,7 +533,7 @@ var Game = React.createClass({
 
         {this.state.gameState === 'title' && (
           <div className="corner">
-            {VERSION}
+            <a href={VERSION_CHANGELOG} target="blank_">{VERSION}</a>
           </div>
         )}
       </div>

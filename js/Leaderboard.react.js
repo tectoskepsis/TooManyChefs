@@ -6,6 +6,23 @@ var cx = require('classnames')
 var Firebase = require('./FirebaseConfig.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
 
+function matchCase(word, wordToMatch) {
+  return _.map(word, (char, i) => {
+    var character = wordToMatch.charAt(i);
+    var isUpper = character == character.toUpperCase();
+    return isUpper ? char.toUpperCase() : char.toLowerCase();
+  })
+}
+
+var PROFANITIES = {
+  fuck: 'fork',
+  penis: 'pan',
+  dick: 'duck',
+  bitch: 'birch',
+  shit: 'chip',
+};
+
+
 var Leaderboard = React.createClass({
   mixins: [KeyboardMixin],
   propTypes: {
@@ -131,6 +148,28 @@ var Leaderboard = React.createClass({
           <tbody>
             {leaderboard.map((stat, i) => {
               var isMe = this.props.leaderboardName === stat.name;
+              var statName = stat.name;
+              var censored = [];
+              // Censor the profanities!
+              _.forEach(PROFANITIES, (replacement, profanity) => {
+                var separated = statName.split(new RegExp(profanity, 'i'));
+                if (separated.length > 1) {
+                  var fucksGiven =
+                    _.toArray(statName.matchAll(new RegExp(profanity, 'ig')))
+                    .map((match) => ({
+                      profanity: match[0],
+                      index: match.index,
+                    }));
+                  censored.push(...fucksGiven.map(({profanity, index}, i) => (
+                    <span key={`${stat.name}-${replacement}-${i}`}
+                          className="fireRed censored"
+                          style={{left: `${index * 0.6 + 0.4}em`}}>
+                        {matchCase(replacement, profanity)}
+                    </span>
+                  )));
+                }
+              });
+
               return (
                 <tr key={'stat' + i}
                     className={cx({selected: isMe})}
@@ -139,7 +178,7 @@ var Leaderboard = React.createClass({
                     {isMe && <img width="20" height="20" src="images/chefhat.png" alt="" />}
                     {' '}{i + 1}
                   </th>
-                  <td>{stat.name}</td>
+                  <td className="name">{stat.name}{censored}</td>
                   <td>{isCount ? stat.bestTime : Leaderboard.renderTime(stat.bestTime)}</td>
                 </tr>
               )}

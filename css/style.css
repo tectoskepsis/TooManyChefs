@@ -235,6 +235,10 @@ ul.ingredients-step > li {
   padding: 1px 8px;
 }
 
+.leaderboard .name {
+  position: relative;
+}
+
 .report {
   background-color: #f3f8ff;
   position: fixed;
@@ -310,6 +314,19 @@ blockquote > footer {
   position: absolute;
   right: 20px;
   bottom: 20px;
+}
+
+.censored {
+  background: rgba(0,0,0,0.75);
+  border-radius: 12px;
+  font-weight: 800;
+  padding: 0 1px;
+  position: absolute;
+  bottom: 0;
+  left: 0.4em;
+      -ms-transform: rotate(-12deg); /* IE-9 */
+  -webkit-transform: rotate(-12deg); /* Chrome, Safari, Opera */
+          transform: rotate(-12deg);
 }
 
 /* Decrease timer bar animation speed */
