@@ -41,7 +41,7 @@ var Mash = React.createClass({
       return;
     }
 
-    if (Keyboard.eventMatches(e, this.props.children) || (this.props.children === 'CAPSLOCK' && e.getModifierState && e.getModifierState('CapsLock'))) {
+    if (!e.repeat && (Keyboard.eventMatches(e, this.props.children) || (this.props.children === 'CAPSLOCK' && e.getModifierState && e.getModifierState('CapsLock')))) {
       if (this.props.onPressSound) {
         Audio.playSE(this.props.onPressSound);
       } else {
