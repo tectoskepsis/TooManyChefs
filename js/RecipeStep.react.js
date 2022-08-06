@@ -1,13 +1,13 @@
 var React = require('react');
 var _isFunction = require('lodash/isFunction');
 
-var Arrows = require('./Arrows.react.js');
-var Counter = require('./Counter.react.js');
-var Dial = require('./Dial.react.js');
-var Inst = require('./Instruction.react.js');
-var Ingredients = require('./Ingredients.react.js');
-var Mash = require('./Mash.react.js');
-var TextInput = require('./TextInput.react.js');
+var Arrows = require('./inputs/Arrows.react.js');
+var Counter = require('./inputs/Counter.react.js');
+var Dial = require('./inputs/Dial.react.js');
+var Inst = require('./inputs/Instruction.react.js');
+var Ingredients = require('./inputs/Ingredients.react.js');
+var Mash = require('./inputs/Mash.react.js');
+var TextInput = require('./inputs/TextInput.react.js');
 
 var RecipeStep = React.createClass({
   propTypes: {

@@ -1,8 +1,8 @@
 var React = require('react');
 var _repeat = require('lodash/repeat');
 
-var Audio = require('./Audio.js');
-var KeyboardMixin = require('./KeyboardMixin.react.js');
+var Audio = require('../Audio.js');
+var KeyboardMixin = require('../KeyboardMixin.react.js');
 
 var Dial = React.createClass({
   holdInterval: 75,

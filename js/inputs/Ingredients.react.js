@@ -1,8 +1,8 @@
 var React = require('react');
 var _cloneDeep = require('lodash/cloneDeep');
 
-var Audio = require('./Audio.js');
-var KeyboardMixin = require('./KeyboardMixin.react.js');
+var Audio = require('../Audio.js');
+var KeyboardMixin = require('../KeyboardMixin.react.js');
 
 var Ingredients = React.createClass({
   mixins: [KeyboardMixin],

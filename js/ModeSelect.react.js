@@ -1,7 +1,7 @@
 var React = require('react');
 
 var Audio = require('./Audio.js');
-var Inst = require('./Instruction.react.js');
+var Inst = require('./inputs/Instruction.react.js');
 
 var ModeSelect = React.createClass({
   propTypes: {

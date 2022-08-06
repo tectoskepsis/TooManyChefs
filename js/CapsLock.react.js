@@ -16,25 +16,27 @@ var CapsLock = React.createClass({
     this.setTimeout(this.setState.bind(this, {needsVerify: true}), 1000);
   },
 
-  onKeyPress: function(e) {
-    if (!this.state.needsVerify) {
-      return;
-    }
+  // onKeyPress: function(e) {
+  //   if (!this.state.needsVerify) {
+  //     return;
+  //   }
 
-    var shiftKey = this.isKeyPressed('shift');
-    var keyCode = e.which || e.keyCode || 0;
-    var key = String.fromCharCode(keyCode);
-    if (/[a-z0-9]/.test(key)) {
-      this.setState({on: shiftKey, needsVerify: false});
-    } else if (/[A-Z]/.test(key)) {
-      this.setState({on: !shiftKey, needsVerify: false});
-    }
-  },
+  //   var shiftKey = this.isKeyPressed('shift');
+  //   var keyCode = e.which || e.keyCode || 0;
+  //   var key = String.fromCharCode(keyCode);
+  //   if (/[a-z0-9]/.test(key)) {
+  //     this.setState({on: shiftKey, needsVerify: false});
+  //   } else if (/[A-Z]/.test(key)) {
+  //     this.setState({on: !shiftKey, needsVerify: false});
+  //   }
+  // },
 
   onKeyDown: function(e) {
-    if (this.isKeyPressed('capslock')) {
-      this.setState({on: !this.state.on, needsVerify: true});
-    }
+    this.setState({on: this.isKeyPressed('shift'), needsVerify: true});
+  },
+
+  onKeyUp: function(e) {
+    this.setState({on: this.isKeyPressed('shift'), needsVerify: true});
   },
 
   render: function() {
@@ -44,7 +46,7 @@ var CapsLock = React.createClass({
 
     return (
       <div className="padTop capslock alert alert-danger">
-        <b><span className="glyphicon glyphicon-alert" /> CAPS-LOCK</b>
+        <b><span className="glyphicon glyphicon-alert" /> UPPERCASE</b>
       </div>
     );
   },

@@ -140,18 +140,45 @@ THREEx.KeyboardState.KEYMAP = {
   '{' : 'shift+[',
   '}' : 'shift+]',
   '|' : 'shift+\\',
+  'A' : 'shift+a',
+  'B' : 'shift+b',
+  'C' : 'shift+c',
+  'D' : 'shift+d',
+  'E' : 'shift+e',
+  'F' : 'shift+f',
+  'G' : 'shift+g',
+  'H' : 'shift+h',
+  'I' : 'shift+i',
+  'J' : 'shift+j',
+  'K' : 'shift+k',
+  'L' : 'shift+l',
+  'M' : 'shift+m',
+  'N' : 'shift+n',
+  'O' : 'shift+o',
+  'P' : 'shift+p',
+  'Q' : 'shift+q',
+  'R' : 'shift+r',
+  'S' : 'shift+s',
+  'T' : 'shift+t',
+  'U' : 'shift+u',
+  'V' : 'shift+v',
+  'W' : 'shift+w',
+  'X' : 'shift+x',
+  'Y' : 'shift+y',
+  'Z' : 'shift+z',
 };
 
 /**
  * to process the keyboard dom event
 */
+// DOES NOT WORK WHEN THERE ARE MULTIPLE KEYBOARDS
 THREEx.KeyboardState.prototype._onKeyChange = function(e) {
   // update keyCodes
   var keyCode = e.keyCode || e.which || 0;
-  var pressed = e.type === 'keydown';
-  this.keyCodes[keyCode] = pressed;
+  this.keyCodes[keyCode] = e.type === 'keydown';
+  this.keyCodes[20] = e.getModifierState && e.getModifierState('CapsLock');
   // update modifiers
-  this.modifiers['shift'] = e.shiftKey;
+  this.modifiers['shift'] = (e.shiftKey ^ this.keyCodes[20]) === 1;
   this.modifiers['ctrl']  = e.ctrlKey;
   this.modifiers['alt'] = e.altKey;
   this.modifiers['meta']  = e.metaKey;
@@ -167,18 +194,21 @@ THREEx.KeyboardState.prototype.pressed = function(keyDesc) {
   keyDesc = _.get(THREEx.KeyboardState.KEYMAP, keyDesc, keyDesc);
 
   var keys = keyDesc.split('+');
-  return _.every(keys, (key, i) => {
-    if (_.includes(THREEx.KeyboardState.MODIFIERS, key)) {
-      return this.modifiers[key];
-    }
-    if (_.has(THREEx.KeyboardState.ALIAS, key)) {
-      return this.keyCodes[THREEx.KeyboardState.ALIAS[key]];
-    }
+  return THREEx.KeyboardState.MODIFIERS.every((special) => {
+    return keys.includes(special) ? this.modifiers[special] : !this.modifiers[special];
+  }) && 
+    keys.every((key) => {
+      if (THREEx.KeyboardState.MODIFIERS.includes(key)) {
+        return this.modifiers[key];
+      }
+      if (key in THREEx.KeyboardState.ALIAS) {
+        return this.keyCodes[THREEx.KeyboardState.ALIAS[key]];
+      }
 
-    return this.keyCodes[key.toUpperCase().charCodeAt()] ||
-           (_.has(THREEx.KeyboardState.NUMPAD, key) &&
-            this.keyCodes[THREEx.KeyboardState.NUMPAD[key]]);
-  });
+      return this.keyCodes[key.toUpperCase().charCodeAt()] ||
+            (key in THREEx.KeyboardState.NUMPAD &&
+              this.keyCodes[THREEx.KeyboardState.NUMPAD[key]]);
+    });
 };
 
 /**
@@ -188,27 +218,21 @@ THREEx.KeyboardState.prototype.pressed = function(keyDesc) {
  * @return {Boolean} true if the event match keyDesc, false otherwise
  */
 THREEx.KeyboardState.prototype.eventMatches = function(e, keyDesc) {
-  var keyCode = e.keyCode || e.which || 0;
   const aliases = THREEx.KeyboardState.ALIAS;
+  var keyCode = e.keyCode || e.which || 0;
+  keyDesc = _.get(THREEx.KeyboardState.KEYMAP, keyDesc, keyDesc);
   var keys = keyDesc.split('+');
 
-  return _.every(keys, (key) => {
-    var pressed = false;
-    switch (key) {
-      case 'shift':
-        return e.shiftKey;
-      case 'ctrl':
-        return e.ctrlKey;
-      case 'alt':
-        return e.altKey;
-      case 'meta':
-        return e.metaKey;
+  var match = _.every(THREEx.KeyboardState.MODIFIERS, (special) => {
+    return _.has(keys, special) ? this.modifiers[special] : !this.modifiers[special];
+  });
 
-      default:
-        if (_.has(aliases, key)) {
-          return keyCode === aliases[key];
-        }
-        return keyCode === key.toUpperCase().charCodeAt(0);
+  return match && _.every(keys, (key) => {
+    if (!_.includes(THREEx.KeyboardState.MODIFIERS, key)) {
+      if (_.has(aliases, key)) {
+        return keyCode === aliases[key];
+      }
+      return keyCode === key.toUpperCase().charCodeAt(0);
     }
   });
 };

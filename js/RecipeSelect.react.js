@@ -5,7 +5,7 @@ var _ = require('lodash');
 var cx = require('classnames');
 
 var Audio = require('./Audio.js');
-var Inst = require('./Instruction.react.js');
+var Inst = require('././inputs/Instruction.react.js');
 var Leaderboard = require('./Leaderboard.react.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
 var Recipes = require('./recipes/Recipes.js');
@@ -67,9 +67,10 @@ var RecipeSelect = React.createClass({
     // but for backwards compatibility we also look directly in the object.
     var mealData = _.get(this.props.saveData, [mode, meal.key],
                    _.get(this.props.saveData, meal.key, {}));
-    var mealLocked = meal.locked && (i === 0 ||
+    /* var mealLocked = meal.locked && (i === 0 ||
         !_.get(this.props.saveData, [mode, Recipes[i-1].key, 'completed'],
-        _.get(this.props.saveData, [Recipes[i-1].key, 'completed'], false)));
+        _.get(this.props.saveData, [Recipes[i-1].key, 'completed'], false))); */
+    var mealLocked = false;
     var recordText = mealData.bestTime && (meal.record === 'count'
       ? <p className="green">Best Score: {mealData.bestTime}</p>
       : <p className="green">Best Time: {Leaderboard.renderTime(mealData.bestTime)}</p>);

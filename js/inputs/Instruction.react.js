@@ -2,8 +2,8 @@ var React = require('react');
 
 var cx = require('classnames');
 
-var Audio = require('./Audio.js');
-var KeyboardMixin = require('./KeyboardMixin.react.js');
+var Audio = require('../Audio.js');
+var KeyboardMixin = require('../KeyboardMixin.react.js');
 
 var Instruction = React.createClass({
   mixins: [KeyboardMixin],
@@ -46,8 +46,8 @@ var Instruction = React.createClass({
     if (this.state.complete || this.props.disabled) {
       return;
     }
-
-    if (this.isKeyPressed(this.props.children.charAt(this.state.progress))) {
+    key = this.props.children.charAt(this.state.progress);
+    if (this.isKeyPressed((key.toLowerCase() === key ? '' : 'shift+') + this.props.children.charAt(this.state.progress))) {
       if (!this.props.onHoldSound) {
         if (this.props.onPressSound) {
           Audio.playSE(this.props.onPressSound);

@@ -2,8 +2,8 @@ var React = require('react');
 
 var cx = require('classnames');
 
-var Audio = require('./Audio.js');
-var KeyboardMixin = require('./KeyboardMixin.react.js');
+var Audio = require('../Audio.js');
+var KeyboardMixin = require('../KeyboardMixin.react.js');
 
 var Counter = React.createClass({
   mixins: [KeyboardMixin],

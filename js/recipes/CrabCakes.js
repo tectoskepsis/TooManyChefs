@@ -178,7 +178,7 @@ var CrabCakes = {
       timer: 10,
       onProgress: function(value) {
         if (value === 0) {
-          this.playSE('haha');
+          Audio.playSE('haha');
         }
         return value;
       },
@@ -203,7 +203,6 @@ var CrabCakes = {
         return value;
       },
       onTimeout: function(value) {
-        console.log(value);
         Audio.stopSE('frying');
         if (value <= 3) {
           this.nextStep();

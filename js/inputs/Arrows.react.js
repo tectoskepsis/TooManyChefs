@@ -1,7 +1,7 @@
 var React = require('react');
 
-var Audio = require('./Audio.js');
-var KeyboardMixin = require('./KeyboardMixin.react.js');
+var Audio = require('../Audio.js');
+var KeyboardMixin = require('../KeyboardMixin.react.js');
 
 // Arrow keycodes
 const KEYCODES = {

@@ -10,7 +10,7 @@ var cx = require('classnames');
 var Audio = require('./Audio.js');
 var CapsLock = require('./CapsLock.react.js');
 var Chef = require('./Chef.js');
-var Inst = require('./Instruction.react.js');
+var Inst = require('./inputs/Instruction.react.js');
 var RecipeStep = require('./RecipeStep.react.js');
 
 const RESCUE_TEXT = ['save', 'rescue', 'help', 'assist', 'support', 'inspire', 'bail', 'hug', 'heal', 'comfort', 'tickle', 'calm', 'feed'];

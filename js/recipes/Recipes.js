@@ -2,6 +2,7 @@ var BeefStroganoff = require('./BeefStroganoff.js');
 var BelgianWaffle = require('./BelgianWaffle.js');
 var Bouillabaisse = require('./Bouillabaisse.js');
 var Bruschetta = require('./Bruschetta.js');
+var Capslock = require('./Capslock.js');
 var Cereal = require('./Cereal.js');
 var Cheesecake = require('./Cheesecake.js');
 var ChickenMarsala = require('./ChickenMarsala.js');
@@ -46,7 +47,7 @@ module.exports = [
   {
     name: 'Mashed Potatoes',
     key: 'bonus-potatoes',
-    locked: true,
+    locked: false,
     bonus: true,
     record: 'count',
     rating: 3,
@@ -55,15 +56,22 @@ module.exports = [
   {
     name: 'Pan-Asian Lunch',
     key: 'asia-lunch',
-    locked: true,
+    locked: false,
     rating: 4,
     recipes: [SpringRolls, FishCurry, FriedRice, Cheesecake],
   },
   {
     name: 'French-Italian Bistro',
     key: 'frit-bistro',
-    locked: true,
+    locked: false,
     rating: 5,
     recipes: [Bruschetta, ChickenMarsala, Bouillabaisse, CremeBrulee],
   },
+  {
+    name: 'Caps Lock',
+    key: 'caps-lock',
+    locked: false,
+    rating: 6,
+    recipes: [Capslock],
+  }
 ];

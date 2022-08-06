@@ -1,7 +1,8 @@
 var React = require('react');
 
-var Audio = require('./Audio.js');
-var KeyboardMixin = require('./KeyboardMixin.react.js');
+var Audio = require('../Audio.js');
+var KeyboardMixin = require('../KeyboardMixin.react.js');
+var Keyboard = require('../threex.keyboardstate.js');
 
 var Mash = React.createClass({
   mixins: [KeyboardMixin],
@@ -35,13 +36,12 @@ var Mash = React.createClass({
     }
   },
 
-  onKeyUp: function(e) {
+  onKeyDown: function(e) {
     if (this.state.value === 0 && this.props.mashCount > 0) {
       return;
     }
 
-    var keyCode = e.which || e.keyCode || 0;
-    if (String.fromCharCode(keyCode).toLowerCase() === this.props.children || (this.props.children === 'CAPSLOCK' && keyCode === 20)) {
+    if (Keyboard.eventMatches(e, this.props.children) || (this.props.children === 'CAPSLOCK' && e.getModifierState && e.getModifierState('CapsLock'))) {
       if (this.props.onPressSound) {
         Audio.playSE(this.props.onPressSound);
       } else {

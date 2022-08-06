@@ -3,7 +3,7 @@ var TransitionGroup = require('react-addons-css-transition-group');
 
 var cx = require('classnames');
 
-var Inst = require('./Instruction.react.js');
+var Inst = require('./inputs/Instruction.react.js');
 var KeyboardMixin = require('./KeyboardMixin.react.js');
 var Audio = require('./Audio.js');
 

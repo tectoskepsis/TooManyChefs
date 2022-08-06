@@ -12,8 +12,8 @@ var CapsLock = require('./CapsLock.react.js');
 var ChefBox = require('./ChefBox.react.js');
 var Firebase = require('./FirebaseConfig.js');
 var RecipeSelect = require('./RecipeSelect.react.js');
-var TextInput = require('./TextInput.react.js');
-var Inst = require('./Instruction.react.js');
+var TextInput = require('./inputs/TextInput.react.js');
+var Inst = require('./inputs/Instruction.react.js');
 var Leaderboard = require('./Leaderboard.react.js');
 var LoadingQuote = require('./LoadingQuote.react.js');
 var ModeSelect = require('./ModeSelect.react.js');
@@ -109,8 +109,8 @@ var Game = React.createClass({
       ? _.get(meal, 'soloRecipes', meal.recipes)
       : meal.recipes;
 
-    // Send Google Analytics event
-    ga('send', 'event', 'Game', 'play', meal.name);
+    // // Send Google Analytics event
+    // ga('send', 'event', 'Game', 'play', meal.name);
 
     // Wait a random amount of time before loading (7-9s)
     this.setTimeout(() => {
@@ -203,7 +203,7 @@ var Game = React.createClass({
     if (!canSave) {
       // Send Google Analytics event
       Audio.stopAllSounds();
-      ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
+      // ga('send', 'event', 'Game', 'lose', Recipes[this.state.meal].name);
       Audio.playSE('failure');
       this.setState({gameOver: true});
     }
@@ -232,7 +232,7 @@ var Game = React.createClass({
     if (completed === this.state.chefs.length) {
       // Send Google Analytics event
       Audio.stopAllSounds();
-      ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, record);
+      // ga('send', 'event', 'Game', 'win', Recipes[this.state.meal].name, record);
       this.saveData();
       return <p>Type <Inst onComplete={this.onReport}>report</Inst> to view your results.</p>;
     }
