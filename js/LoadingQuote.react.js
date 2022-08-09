@@ -32,6 +32,11 @@ const LOADING_QUOTES = [
   {quote: <span><span className="darkBlue">Thoughts without content</span> are empty;<br/><span className="fireRed">dishes without spices</span> are blind.</span>, source: 'Immanuel Kant'},
   {quote: <span>Chefs of the world unite; you have<br/><span className="darkBlue">nothing to lose</span> but your <span className="fireRed">chains</span>.</span>, source: 'Karl Marx'},
   {quote: <span>The <span className="fireRed">strength</span> of a kitchen derives from<br/>the <span className="green">integrity</span> of its chefs.</span>, source: 'Confucius'},
+  {quote: <span><span className="green">All that we are</span> is the result<br/>of what we have <span className="goldenBrown">cooked</span>.</span>, source: 'Buddha'},
+  {quote: <span>The <span className="green">successful</span> chef is the average man, with laser-like focus.</span>, source: 'Bruce Lee'},
+  {quote: <span>Ask not what <span className="darkBlue">your kitchen</span> can do for you,<br/>but what <span className="green">you</span> can do for your kitchen.</span>, source: 'John F. Kennedy'},
+  {quote: <span><span className="goldenBrown">Cook</span> whenever possible.<br/>It is <span className="fireRed">always</span> possible.</span>, source: 'Dalai Lama'},
+  {quote: <span>One may know how to cook<br/><span className="fireRed">without</span> being able to do it.</span>, source: 'Sun Tzu'},
 ];
 
 var LoadingQuote = React.createClass({

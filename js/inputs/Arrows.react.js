@@ -3,12 +3,12 @@ var React = require('react');
 var Audio = require('../Audio.js');
 var KeyboardMixin = require('../KeyboardMixin.react.js');
 
-// Arrow keycodes
-const KEYCODES = {
-  l: 37,
-  u: 38,
-  r: 39,
-  d: 40,
+// Arrow aliases
+const ALIASES = {
+  l: 'ArrowLeft',
+  u: 'ArrowUp',
+  r: 'ArrowRight',
+  d: 'ArrowDown',
 };
 
 var Arrows = React.createClass({
@@ -41,8 +41,8 @@ var Arrows = React.createClass({
       return;
     }
 
-    var keyCode = e.which || e.keyCode || 0;
-    if (keyCode === KEYCODES[this.props.children.charAt(this.state.progress)]) {
+    var keyCode = e.key;
+    if (keyCode === ALIASES[this.props.children.charAt(this.state.progress)]) {
       if (this.props.onPressSound) {
         Audio.playSE(this.props.onPressSound);
       } else {

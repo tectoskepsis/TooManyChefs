@@ -3,20 +3,20 @@ var _throttle = require('lodash/throttle');
 var React = require('react');
 var TimerMixin = require('react-timer-mixin');
 
-var Keyboard = require('./threex.keyboardstate.js');
+var Keyboard = require('./KeyboardState.js');
 
 /* Prevent backspace from navigating back in browser, or Ctrl-T/Ctrl-S in Firefox.
  * Note: this breaks inputs. See
  * http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back
  */
 document.addEventListener('keydown', function(e) {
-  e = e || event;
-  var keyCode = e.which || e.keyCode || 0;
-
   // Check for backspace, space, and arrow keys
-  if ([8, 32, 37, 38, 39, 40].indexOf(keyCode) >= 0) {
+  const prevent = ['Backspace', ' ', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
+  var key = e.key;
+
+  if (prevent.includes(key)) {
     e.preventDefault();
-  } else if (e.ctrlKey && (keyCode === 84 || keyCode === 85)) {
+  } else if (e.ctrlKey && (key === 's' || key === 't')) {
     e.preventDefault();
   }
 });
@@ -65,7 +65,7 @@ var KeyboardMixin = {
   },
 
   isKeyPressed: function(key) {
-    return Keyboard.pressed(key);
+    return Keyboard.isPressed(key);
   },
 };
 

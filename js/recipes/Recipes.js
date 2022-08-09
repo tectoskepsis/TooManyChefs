@@ -15,6 +15,7 @@ var FishCurry = require('./FishCurry.js');
 var FriedRice = require('./FriedRice.js');
 var FruitCeviche = require('./FruitCeviche.js');
 var GreenBeanCasserole = require('./GreenBeanCasserole.js');
+var Macedonia = require('./Macedonia.js');
 var MashedPotatoes = require('./MashedPotatoes.js');
 var Oatmeal = require('./Oatmeal.js');
 var Pancakes = require('./Pancakes.js');
@@ -68,10 +69,10 @@ module.exports = [
     recipes: [Bruschetta, ChickenMarsala, Bouillabaisse, CremeBrulee],
   },
   {
-    name: 'Caps Lock',
-    key: 'caps-lock',
+    name: 'Testing',
+    key: 'testing',
     locked: false,
-    rating: 6,
+    rating: 5,
     recipes: [Capslock],
   }
 ];

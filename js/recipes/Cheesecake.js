@@ -169,14 +169,14 @@ var Cheesecake = {
     },
     {
       pretext: <span>Has it been 55 minutes yet? Tap CAPS-LOCK to turn on the oven light and check on the cheesecake.<br/></span>,
-      instruction: 'CAPSLOCK',
+      instruction: 'CapsLock',
       type: 'mash',
       mashCount: 1,
       timer: 10,
     },
     {
       pretext: <span>Turn off the oven light and apologize profusely to the other chefs.<br/></span>,
-      instruction: 'CAPSLOCK',
+      instruction: 'CapsLock',
       type: 'mash',
       mashCount: 1,
       timer: 10,

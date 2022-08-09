@@ -36,8 +36,8 @@ var Counter = React.createClass({
   },
 
   onKeyDown: function(e) {
-    var keyCode = e.which || e.keyCode || 0;
-    if (keyCode === 38) {
+    var key = e.key;
+    if (key === 'ArrowUp') {
       // up arrow pressed
       Audio.playRandomClick();
 
@@ -48,7 +48,7 @@ var Counter = React.createClass({
       } else {
         this.setState({colorClass: 'input'});
       }
-    } else if (keyCode === 40) {
+    } else if (key === 'ArrowDown') {
       // down arrow pressed
       Audio.playRandomClick();
 

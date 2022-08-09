@@ -39,10 +39,10 @@ var Dial = React.createClass({
   },
 
   checkHeldKey: function() {
-    if (this.isKeyPressed('left') && this.state.value > 0) {
+    if (this.isKeyPressed('ArrowLeft') && this.state.value > 0) {
       Audio.playRandomClick();
       this.setState({value: this.state.value - 1});
-    } else if (this.isKeyPressed('right') && this.state.value < this.props.maxValue) {
+    } else if (this.isKeyPressed('ArrowRight') && this.state.value < this.props.maxValue) {
       Audio.playRandomClick();
       this.setState({value: this.state.value + 1});
     }

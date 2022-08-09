@@ -1,5 +1,6 @@
 var React = require('react');
 var _trim = require('lodash/trim');
+var _every = require('lodash/every');
 
 var KeyboardMixin = require('../KeyboardMixin.react.js');
 var Audio = require('../Audio.js');
@@ -35,27 +36,25 @@ var TextInput = React.createClass({
   },
 
   onKeyPress: function(e) {
-    var keyCode = e.which || e.keyCode || 0;
+    var key = e.key;
 
-    // normal key (only accept alphanumeric values)
-    var key = String.fromCharCode(keyCode);
-    if (/[a-zA-Z0-9-_]/.test(key) && this.state.value.length < this.props.maxLength) {
+    if (this.state.value.length < this.props.maxLength) {
       Audio.playRandomClick();
       this.setState({value: this.state.value.concat(key)});
     }
   },
 
   onKeyDown: function(e) {
-    var keyCode = e.which || e.keyCode || 0;
-    if (this.props.allowEnter && keyCode === 13) { // enter
+    var key = e.key;
+    if (this.props.allowEnter && key === 'Enter') {
       var val = _trim(this.state.value);
       if (val) {
         this.props.onComplete(val);
       }
-    } else if (this.props.allowBackspace && keyCode === 8) { // backspace
+    } else if (this.props.allowBackspace && key === 'Backspace') { // backspace
       Audio.playRandomClick();
       this.setState({value: this.state.value.slice(0, -1)});
-    } else if (keyCode === 32 && this.state.value.length < this.props.maxLength) { // space
+    } else if (key === ' ' && this.state.value.length < this.props.maxLength) { // space
       Audio.playRandomClick();
       this.setState({value: this.state.value.concat(' ')});
     }

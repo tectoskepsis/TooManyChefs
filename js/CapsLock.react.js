@@ -32,11 +32,11 @@ var CapsLock = React.createClass({
   // },
 
   onKeyDown: function(e) {
-    this.setState({on: this.isKeyPressed('shift'), needsVerify: true});
+    this.setState({on: this.isKeyPressed('Shift') || this.isKeyPressed('CapsLock'), needsVerify: true});
   },
 
   onKeyUp: function(e) {
-    this.setState({on: this.isKeyPressed('shift'), needsVerify: true});
+    this.setState({on: this.isKeyPressed('Shift') || this.isKeyPressed('CapsLock'), needsVerify: true});
   },
 
   render: function() {

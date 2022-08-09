@@ -3,6 +3,7 @@ var _cloneDeep = require('lodash/cloneDeep');
 
 var Audio = require('../Audio.js');
 var KeyboardMixin = require('../KeyboardMixin.react.js');
+var Keyboard = require('../KeyboardState.js');
 
 var Ingredients = React.createClass({
   mixins: [KeyboardMixin],
@@ -36,10 +37,8 @@ var Ingredients = React.createClass({
 
   onKeyPress: function(e) {
     var ingredients = this.state.ingredients;
-    var keyCode = e.which || e.keyCode || 0;
-
     for (var i = 0; i < ingredients.length; i++) {
-      if (keyCode === ingredients[i].key.charCodeAt(0)) {
+      if (Keyboard.eventMatches(e, ingredients[i].key)) {
         if (ingredients[i].sound) {
           Audio.playSE(ingredients[i].sound);
         } else {

@@ -40,7 +40,7 @@ var RecipeSelect = React.createClass({
     }
   },
 
-  onKeyUp: function(e) {
+  onKeyDown: function(e) {
     var keyCode = e.which || e.keyCode || 0;
     if (keyCode === 37 && this.state.value > 0) {
       // left arrow pressed

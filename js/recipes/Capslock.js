@@ -6,7 +6,7 @@ var nextStep = function() {
   return this.nextStep();
 };
 
-var Cheesecake = {
+var Capslock = {
   name: 'Capslock',
   chefName: 'Pâtissier',
   type: 'dessert',
@@ -17,20 +17,11 @@ var Cheesecake = {
   /* A recipe is a list of json steps */
   steps: [
     {
-      pretext: <span>Tap CAPS-LOCK to turn on the oven light.<br/></span>,
-      instruction: 'CAPSLOCK',
-      type: 'mash',
-      mashCount: 1,
-      timer: 10,
-    },
-    {
-      pretext: <span>Turn off the oven light and apologize profusely to the other chefs.<br/></span>,
-      instruction: 'CAPSLOCK',
-      type: 'mash',
-      mashCount: 1,
-      timer: 10,
+      pretext: <span>Type a capital</span>,
+      instruction: 'S',
+      timer: 7,
     },
   ],
 };
 
-module.exports = Cheesecake;
+module.exports = Capslock;

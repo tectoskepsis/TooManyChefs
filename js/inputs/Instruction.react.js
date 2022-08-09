@@ -46,8 +46,7 @@ var Instruction = React.createClass({
     if (this.state.complete || this.props.disabled) {
       return;
     }
-    key = this.props.children.charAt(this.state.progress);
-    if (this.isKeyPressed((key.toLowerCase() === key ? '' : 'shift+') + this.props.children.charAt(this.state.progress))) {
+    if (this.isKeyPressed(this.props.children.charAt(this.state.progress))) {
       if (!this.props.onHoldSound) {
         if (this.props.onPressSound) {
           Audio.playSE(this.props.onPressSound);

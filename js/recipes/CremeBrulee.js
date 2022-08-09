@@ -389,7 +389,7 @@ var CremeBrulee = {
     },
     {
       pretext: <span>Switch on the blowtorch by mashing CAPS-LOCK.<br/></span>,
-      instruction: 'CAPSLOCK',
+      instruction: 'CapsLock',
       type: 'mash',
       mashCount: 7,
       timer: 7,
