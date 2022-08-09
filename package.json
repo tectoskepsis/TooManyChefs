@@ -2,9 +2,6 @@
   "name": "TooManyChefs",
   "main": "js/main.js",
   "dependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/types": "^7.18.10",
     "bootstrap": "^3.4.1",
     "bundle": "^2.1.0",
     "chroma-js": "~1.1.1",
@@ -19,10 +16,12 @@
     "react-dom": "^15.0.2",
     "react-localstorage": "^1.0.0",
     "react-timer-mixin": "^0.13.4",
-    "string.prototype.matchall": "^4.0.2",
-    "webpack-cli": "^4.10.0"
+    "string.prototype.matchall": "^4.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/types": "^7.18.10",
     "@babel/core": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
     "babel-loader": "^8.2.5",
@@ -32,7 +31,8 @@
     "uglify": "^0.1.5",
     "uglifycss": "0.0.27",
     "watchify": "^4.0.0",
-    "webpack": "^5.74.0"
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "scripts": {
     "start": "watchify -o js/bundle.js -v -d js/main.js",
