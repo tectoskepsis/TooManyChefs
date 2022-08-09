@@ -50,7 +50,7 @@ KeyboardState.prototype.isPressed = function(key) {
  * return true if an event matches a character typed
  * @param  {KeyboardEvent} e    keyboard event
  * @param  {String} key         the character
- * @return {Boolean}            true if the event match keyDesc, false otherwise
+ * @return {Boolean}            true if the event match key, false otherwise
  */
 KeyboardState.prototype.eventMatches = function(e, key) {
     return e.key === key;

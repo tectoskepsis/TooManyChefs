@@ -22,7 +22,7 @@ var Volume = require('./Volume.react.js');
 
 
 var VERSION = 'version 2.0.0'
-var VERSION_CHANGELOG = 'https://toomanychefs-game.tumblr.com/post/614597271932256256/'
+var VERSION_CHANGELOG = 'https://github.com/tectoskepsis/TooManyChefs'
 
 var Game = React.createClass({
   mixins: [LocalStorageMixin, PureRenderMixin, TimerMixin],
@@ -399,7 +399,8 @@ var Game = React.createClass({
           <b>Chef de cuisine</b>: <a href="http://www.naviwang.me" target="_blank">Navi Wang</a> (design, programming)<br/>
           <b>Sous-chef</b>: James Wu (design)<br/>
           <b>Culinary consultant</b>: Anshu Bansal<br/>
-          <b>Café jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena
+          <b>Café jazz</b>: <i>Fortaleza</i> by Topher Mohr and Alex Elena <br/>
+          <b>Chef amateur</b>: Oscar Coppola
         </p>
         <br/>
         <h4>Contact</h4>
